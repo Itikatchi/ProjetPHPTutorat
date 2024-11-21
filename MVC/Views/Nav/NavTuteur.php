@@ -12,24 +12,26 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"
 </head>
 <body>
-<div class="MainContainer">
-    <div class="MainTitle">
-        <h1>PARTIE TUTEUR</h1>
-        <h2>Bienvenue : PROF MULTIPRISE</h2>
-    </div>
-    <div class="Description">
-        <p>
-            Bienvenue dans votre application de gestion de tutorat.
-            En temps que tuteur vous pouvez consulté vos élèves et certaine alerte pouvant être liée
-        </p>
-        <img src="./MVC/Image/FSI_logo.png">
+<nav>
+    <div class="nav-bar">
+        <a href="#">
+            <img src="./MVC/Image/reception.svg" alt="">
+        </a>
+        <a href="#">
+            <img src="./MVC/Image/utilisateurs-alt.svg" alt="">
+        </a>
+        <a href="#">
+            <img src="./MVC/Image/cloche.svg" alt="">
+        </a>
+        <a href="#">
+
+            <img src="#" alt="">
+        </a>
+
     </div>
 
-</div>
+</nav>
+
 
 </body>
 </html>
-
-
-
-

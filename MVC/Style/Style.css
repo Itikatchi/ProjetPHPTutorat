@@ -1,0 +1,82 @@
+:root {
+    --theme-1: #7aa97d;
+    --theme-2: #FAFEF5;
+}
+body{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background: var(--theme-1);
+}
+nav {
+    margin-left: 40px;
+    display: flex;
+    height: 85%;
+}
+.nav-bar {
+
+    background: var(--theme-2);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px;
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 10px 40px -20px #00000091;
+    flex-direction: column;
+
+}
+.nav-bar img{
+    height: 85px;
+    width: 85px;
+}
+.MainContainer{
+    background: var(--theme-2);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 20px 20px 20px;
+    border-radius: 10px;
+    position: relative;
+    height: 85%;
+    width: 80%;
+    margin-left: 3%;
+    box-shadow: 0 10px 40px -20px #00000091;
+    flex-direction: column;
+    overflow: hidden;
+
+}
+.MainContainer .MainTitle{
+    margin-left: 7%;
+    margin-top: 5%;
+
+}
+.MainContainer .MainTitle h2{
+    margin-top: 5%;
+    font-size: 44px;
+    font-family: Inter;
+
+}
+.MainContainer .MainTitle h1{
+    font-size: 76px;
+    font-family: Inter;
+
+}
+.MainContainer .Description{
+    margin-top: 7%;
+    margin-right: 10%;
+    margin-left: 10%;
+    margin-bottom: 7%;
+    padding-bottom: inherit;
+    font-size: 28px;
+    text-align: center;
+    display: flex;
+    gap: 20%;
+    align-items: center;
+    justify-content: center;
+
+}
+.MainContainer .Description img{
+    height: 250px;
+    width: 250px;
+    margin-bottom: 10px;
+
+}
