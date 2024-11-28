@@ -23,7 +23,7 @@ class AlerteDAO extends DAO
         // TODO: Implement update() method.
     }
 
-    public function find(int $id): array
+    public function find(int $id): object
     {
         // TODO: Implement find() method.
     }

@@ -1,23 +1,26 @@
 <?php
-namespace ProjetPHPTutorat\MVC\DAO;
-
+namespace DAO;
 use BO\Classe;
+
+use PDO;
+use PDOException;
+use ProjetPHPTutorat\MVC\DAO\DAO;
+
+require_once 'DAO.php';
 
 class ClasseDAO extends DAO
 {
 
 
-    use PDO;
-    use PDOException;
 
     public function create($obj): bool
     {
         $result = false;
         if ($obj instanceof Classe) {
-            $query = "INSERT INTO Classe(classe_nom) VALUES(:nomCla)";
+            $query = "INSERT INTO Classe(classe_nom) VALUES(:classe_nom)";
             $stmt = $this->bdd->prepare($query);
             $r = $stmt->execute([
-                "nomCla" => $obj->getNomCla()
+                "classe_nom" => $obj->getNomCla()
             ]);
             if ($r !== false) {
                 $result = true;
@@ -34,10 +37,10 @@ class ClasseDAO extends DAO
             $tmp = $this->find($obj->getIdCla());
             if ($tmp !== null) {
                 if ($obj->getIdCla() == $tmp->getIdCla()) {
-                    $query = "DELETE FROM Classe WHERE classe_id = :idCla";
+                    $query = "DELETE FROM Classe WHERE classe_id = :classe_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
-                        "idCla" => $obj->getIdCla()
+                        "classe_id" => $obj->getIdCla()
                     ]);
                     if ($r !== false) {
                         $result = true;
@@ -56,11 +59,11 @@ class ClasseDAO extends DAO
             $tmp = $this->find($obj->getIdCla());
             if ($tmp !== null) {
                 if ($obj->getIdCla() == $tmp->getIdCla()) {
-                    $query = "UPDATE Classe SET classe_nom = :libCla WHERE classe_id = :idCla";
+                    $query = "UPDATE Classe SET classe_nom = :classe_nom WHERE classe_id = :classe_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
-                        "nomCla" => $obj->getNomCla(),
-                        "idCla" => $obj->getIdCla()
+                        "classe_nom" => $obj->getNomCla(),
+                        "classe_id" => $obj->getIdCla()
                     ]);
                     if ($r !== false) {
                         $result = true;
@@ -72,18 +75,18 @@ class ClasseDAO extends DAO
     }
 
 
-    public function find(int $id): array
+    public function find(int $id): object
     {
         $result = null;
-        $query = "SELECT * FROM Classe WHERE classe_id = :idCla";
+        $query = "SELECT * FROM Classe WHERE classe_id = :classe_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
-            "idCla" => $id
+            "classe_id" => $id
         ]);
         if ($r !== false) {
             $row = ($tmp = $stmt->fetch(PDO::FETCH_ASSOC)) ? $tmp : null;
             if (!is_null($row)) {
-                $result = new Classe($row['idCla'], $row['nomCla']);
+                $result = new Classe($row['classe_id'], $row['classe_nom']);
             }
         }
         return $result;
@@ -97,7 +100,7 @@ class ClasseDAO extends DAO
         if ($stmt) {
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             foreach ($stmt as $row) {
-                $result[] = new Classe($row['idCla'], $row['nomCla']);
+                $result[] = new Classe($row['classe_id'], $row['classe_nom']);
             }
         } else {
             $result = [null] ;

@@ -2,7 +2,7 @@
 function initialiseConnexionBDD() {
     $bdd = null;
     try {
-        $bdd = new PDO('mysql:host=localhost;dbname=ortflix;charset=utf8',
+        $bdd = new PDO('mysql:host=localhost;dbname=phptutorat;charset=utf8',
             'root',
             ''
         );

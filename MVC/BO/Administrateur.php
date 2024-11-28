@@ -2,6 +2,8 @@
 
 namespace BO;
 
+use BO\Utilisateur;
+require_once 'Utilisateur.php';
 
 class Administrateur extends Utilisateur
 {

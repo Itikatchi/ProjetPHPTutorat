@@ -10,7 +10,7 @@ abstract class Bilan
     protected string $remBil;
     protected float $notDosBil;
     protected float $notOraBil;
-    protected Etudiant $monEtu;
+    protected ?Etudiant $monEtu;
 
     public function __construct(int $idBil, string $remBil, float $notDosBil, float $notOraBil, Etudiant $monEtu)
     {
