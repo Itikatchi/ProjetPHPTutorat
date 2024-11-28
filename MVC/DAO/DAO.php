@@ -38,7 +38,7 @@ public abstract function update($obj): bool;
 Méthode de recherche des informations
 @param int $id
 @return mixed*/
-public abstract function find(int $id);
+public abstract function find(int $id): array;
 
 /**
 
