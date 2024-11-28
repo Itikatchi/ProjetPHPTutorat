@@ -95,6 +95,17 @@ class EntrepriseDAO extends DAO
 
     public function getAll(): array
     {
-        // TODO: Implement getAll() method.
+        $query = "SELECT * FROM Entreprise";
+        $stmt = $this->bdd->query($query);
+        if ($stmt) {
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            foreach ($stmt as $row) {
+                $result[] = new Entreprise($row['ent_nom'], $row['ent_adr'], $row['ent_cp'], $row['ent_ville']);
+            }
+        } else {
+            $result = [null] ;
+        }
+
+        return $result;
     }
 }
