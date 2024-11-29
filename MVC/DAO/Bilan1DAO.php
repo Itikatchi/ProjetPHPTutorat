@@ -4,6 +4,7 @@ namespace DAO;
 
 use BO\Bilan1;
 
+use BO\Etudiant;
 use PDO;
 use PDOException;
 use ProjetPHPTutorat\MVC\DAO\DAO;
@@ -128,4 +129,27 @@ class Bilan1DAO extends DAO
 
         return $result;
     }
+    public function getallBilan1ByEleve(Etudiant $etudiant) : ?array
+    {
+        $query = "SELECT * FROM Bilan1 WHERE etu_id = :etu_id";
+        $stmt = $this->bdd->prepare($query);
+        $stmt->execute([
+            "etu_id" => $etudiant->getIdUti()
+        ]);
+        if ($stmt){
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            foreach ($stmt as $row) {
+                if (isset($row['etu_id'])) {
+                    $etudiantmodel = new EtduiantDAO($this->bdd);
+                    $etudiant = $etudiantmodel->find($row['etu_id']);
+                }
+                $result[] = new Bilan1($row['bil1_note_entreprise'], new DateTime($row['bil1_date_visite_ent']),$row['bil1_id'],$row['bil1_remarques'],$row['bil1_note_dossier'],$row['bil1_note_oral'],$etudiant);
+            }
+        } else {
+            $result = [null] ;
+        }
+
+        return $result;
+    }
+
 }

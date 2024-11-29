@@ -57,14 +57,22 @@ echo '------------------------------------ Entreprise --------------------------
 $bdd = initialiseConnexionBDD();
 $entDao = new EntrepriseDAO($bdd);
 var_dump($entDao);
-//$spec = new Entreprise(5, "SDF",);
+
 $spec1 = $entDao->find(1);
-//$entDao->update($spec);
+
 if ($spec1 != null) {
     echo $spec1->getNomEnt();
 }
 var_dump($entDao->getAll());
-
+$Entrepise1 = new Entreprise(6,"Youtube","19 Avenue du 8 Mai 1945","69960","Corbas");
+$test = $entDao->create($Entrepise1);
+var_dump($test);
+$Entrepise2 = new Entreprise(6,"YannCorp","19 Avenue du 8 Mai 1945","69960","Corbas");
+$test2 = $entDao->update($Entrepise2);
+var_dump($test2);
+$test3 = $entDao->delete($Entrepise2);
+var_dump($test3);
+/*
 echo '------------------------------------ Tuteur -------------------------------';
 $bdd = initialiseConnexionBDD();
 $tuteurDao = new TuteurDAO($bdd);
@@ -125,16 +133,23 @@ echo '------------------------------------ Bilan1 ------------------------------
 $bdd = initialiseConnexionBDD();
 $Bilan1DAo = new Bilan1DAO($bdd);
 var_dump($Bilan1DAo);
+$etudiantdao = new EtduiantDAO($bdd);
+$etudiant = $etudiantdao->find(1);
 //$spec = new Entreprise(5, "SDF",);
 $spec1 = $Bilan1DAo->find(1);
-var_dump($Bilan1DAo->getAll());
+var_dump($Bilan1DAo->getallBilan1ByEleve($etudiant));
+
 echo '------------------------------------ Bilan2 -------------------------------';
 $bdd = initialiseConnexionBDD();
 $Bilan2DAo = new Bilan2DAO($bdd);
 var_dump($Bilan2DAo);
+
+$etudiantdao = new EtduiantDAO($bdd);
+$etudiant = $etudiantdao->find(4);
 //$spec = new Entreprise(5, "SDF",);
 $spec1 = $Bilan2DAo->find(1);
-var_dump($Bilan2DAo->getAll());
+var_dump($Bilan2DAo->getallBilan2ByEleve($etudiant));
+
 echo '------------------------------------ Etudiant -------------------------------';
 $bdd = initialiseConnexionBDD();
 $EtudiantDAO = new EtduiantDAO($bdd);
@@ -142,3 +157,4 @@ var_dump($EtudiantDAO);
 //$spec = new Entreprise(5, "SDF",);
 $spec1 = $EtudiantDAO->find(1);
 var_dump($EtudiantDAO->getAll());
+*/
