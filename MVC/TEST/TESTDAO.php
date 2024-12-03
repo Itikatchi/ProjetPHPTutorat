@@ -53,49 +53,56 @@ require_once "../BO/Tuteur.php";
 require_once "../BO/Classe.php";
 
 echo '------------------------------------ Entreprise -------------------------------';
-
+/*
 $bdd = initialiseConnexionBDD();
 $entDao = new EntrepriseDAO($bdd);
 var_dump($entDao);
 
-$spec1 = $entDao->find(1);
-
-if ($spec1 != null) {
-    echo $spec1->getNomEnt();
-}
+var_dump($entDao->find(1));
 var_dump($entDao->getAll());
-$Entrepise1 = new Entreprise(6,"Youtube","19 Avenue du 8 Mai 1945","69960","Corbas");
+$Entrepise1 = new Entreprise(0,"Youtube","19 Avenue du 8 Mai 1945","69960","Corbas");
 $test = $entDao->create($Entrepise1);
 var_dump($test);
-$Entrepise2 = new Entreprise(6,"YannCorp","19 Avenue du 8 Mai 1945","69960","Corbas");
+$Entrepise2 = new Entreprise(0,"YannCorp","19 Avenue du 8 Mai 1945","69960","Corbas");
 $test2 = $entDao->update($Entrepise2);
 var_dump($test2);
 $test3 = $entDao->delete($Entrepise2);
 var_dump($test3);
+*/
 /*
 echo '------------------------------------ Tuteur -------------------------------';
 $bdd = initialiseConnexionBDD();
 $tuteurDao = new TuteurDAO($bdd);
 var_dump($tuteurDao);
-//$spec = new Entreprise(5, "SDF",);
-$spec1 = $tuteurDao->find(1);
-//$tuteurDao->update($spec);
-if ($spec1 != null) {
-    echo $spec1->getNomUti();
-}
-var_dump($tuteurDao->getAll());
-echo '------------------------------------ Specialité -------------------------------';
+var_dump($tuteurDao->find(1));
 
+var_dump($tuteurDao->getAll());
+$tuteur1 = new Tuteur("0768751233",1,0,"Patoche","Maximax","Maximax@gmail.com","root");
+$test = $tuteurDao->create($tuteur1);
+var_dump($test);
+$tuteur2 = new Tuteur("0768751233",3,10,"Roux","Maximax","Maximax@gmail.com","root");
+$test2 = $tuteurDao->update($tuteur2);
+var_dump($test2);
+$test3 = $tuteurDao->delete($tuteur2);
+var_dump($test3);
+echo '------------------------------------ Specialité -------------------------------';
+*/
+/*
 $bdd = initialiseConnexionBDD();
 $specialDao = new SpecialiteDAO($bdd);
 var_dump($specialDao);
-//$spec = new Entreprise(5, "SDF",);
-$spec1 = $specialDao->find(1);
-//$specialDao->update($spec);
-if ($spec1 != null) {
-    echo $spec1->getNomSpec();
-}
+var_dump($specialDao->find(1));
 var_dump($specialDao->getAll());
+$tuteur1 = new Specialite(0,"Maths");
+$test = $specialDao->create($tuteur1);
+var_dump($test);
+$tuteur2 = new Specialite(5,"Mathematique");
+$test2 = $specialDao->update($tuteur2);
+var_dump($test2);
+$test3 = $specialDao->delete($tuteur2);
+var_dump($test3);
+*/
+/*
 echo '------------------------------------ MaitreApprentissage -------------------------------';
 $bdd = initialiseConnexionBDD();
 $maitreApprDao = new MaitreApprentissageDAO($bdd);

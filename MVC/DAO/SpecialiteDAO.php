@@ -58,7 +58,7 @@ class SpecialiteDAO extends DAO
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "spe_nom" => $obj->getNomSpec(),
-
+                        "spe_id" => $obj->getIdSpec()
                     ]);
                     if ($r !== false) {
                         $result = true;

@@ -16,14 +16,14 @@ class TuteurDAO extends DAO {
     {
         $result = false;
         if ($obj instanceof Tuteur) {
-            $query = "INSERT INTO Tuteur(tut_pre,tut_nom,tut_mdp,tut_tel,tut_email,tut_nb_etu_actu) VALUES(:tut_pre, :tut_nom, :tut_mdp, :tut_tel, :tut_email, :tut_nb_etu_actu))";
+            $query = "INSERT INTO Tuteur(tut_pre,tut_nom,tut_mdp,tut_tel,tut_email,tut_nb_etu_actu) VALUES(:tut_pre, :tut_nom, :tut_mdp, :tut_tel, :tut_email, :tut_nb_etu_actu)";
             $stmt = $this->bdd->prepare($query);
             $r = $stmt->execute([
-                "tut_pre " => $obj->getNomUti(),
-                "tut_nom " => $obj->getPrenomUti(),
-                "tut_mdp " => $obj->getMdpUti(),
+                "tut_pre" => $obj->getPrenomUti(),
+                "tut_nom" => $obj->getNomUti(),
+                "tut_mdp" => $obj->getMdpUti(),
                 "tut_tel"  => $obj->getTutTel(),
-                "tut_email " => $obj->getEmailUti(),
+                "tut_email" => $obj->getEmailUti(),
                 "tut_nb_etu_actu" => $obj->getTutNbEtu()
             ]);
             if ($r !== false) {
@@ -63,11 +63,11 @@ class TuteurDAO extends DAO {
                     $query = "UPDATE Tuteur SET tut_pre = :tut_pre, tut_nom = :tut_nom,tut_mdp = :tut_mdp, tut_tel = :tut_tel, tut_email = :tut_email, tut_nb_etu_actu = :tut_nb_etu_actu WHERE tut_id = :tut_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
-                        "tut_pre " => $obj->getNomUti(),
-                        "tut_nom " => $obj->getPrenomUti(),
-                        "tut_mdp " => $obj->getMdpUti(),
+                        "tut_pre" => $obj->getNomUti(),
+                        "tut_nom" => $obj->getPrenomUti(),
+                        "tut_mdp" => $obj->getMdpUti(),
                         "tut_tel"  => $obj->getTutTel(),
-                        "tut_email " => $obj->getEmailUti(),
+                        "tut_email" => $obj->getEmailUti(),
                         "tut_nb_etu_actu" => $obj->getTutNbEtu(),
                         "tut_id" => $obj->getIdUti()
                     ]);

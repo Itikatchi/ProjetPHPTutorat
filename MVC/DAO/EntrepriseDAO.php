@@ -26,7 +26,6 @@ class EntrepriseDAO extends DAO
                 "ent_cp" => $obj->getCpEnt(),
                 "ent_ville" => $obj->getVilEnt(),
 
-
             ]);
             if ($r !== false) {
                 $result = true;
