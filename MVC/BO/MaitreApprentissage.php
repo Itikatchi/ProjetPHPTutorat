@@ -9,7 +9,7 @@ class MaitreApprentissage
     private string $preMaiAppr;
     private string $telMaiAppr;
     private string $mailMaiAppr;
-    private Entreprise $entreprise;
+    private ?Entreprise $entreprise;
 
     /**
      * @param int $idMaiAppr

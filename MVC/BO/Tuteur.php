@@ -1,8 +1,8 @@
 <?php
 
 namespace BO;
-
-
+use BO\Utilisateur;
+require_once 'Utilisateur.php';
 class Tuteur extends Utilisateur
 {
     private string $tut_tel;

@@ -1,8 +1,8 @@
 <?php
 
 namespace BO;
-
-
+use BO\Bilan;
+require_once 'Bilan.php';
 use DateTime;
 
 class Bilan1 extends Bilan
@@ -13,9 +13,9 @@ class Bilan1 extends Bilan
     private DateTime $datVisEnt;
 
 
-    public function __construct(float $notEnt, DateTime $datVisEnt, int $idBil, string $remBil, float $notDosBil, float $notOraBil,  Etudiant $monEtu)
+    public function __construct(float $notEnt, DateTime $datVisEnt, int $idBil, string $remBil, float $notDosBil, float $notOraBil,Etudiant $monEtu)
     {
-        parent::__construct($idBil, $remBil, $notDosBil, $notOraBil,$dateBil, $monEtu);
+        parent::__construct($idBil, $remBil, $notDosBil, $notOraBil, $monEtu);
 
         $this->notEnt = $notEnt;
         $this->datVisEnt = $datVisEnt;

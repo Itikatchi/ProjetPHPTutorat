@@ -4,7 +4,7 @@ namespace ProjetPHPTutorat\MVC\DAO;
 use PDO;
 
 abstract class DAO {
-protected PDO $connect;
+protected PDO $bdd;
 
 public function __construct(PDO $connect) {
 // Remplacez ConnexionPGSQL::getInstance() par la méthode de connexion désirée
@@ -38,7 +38,7 @@ public abstract function update($obj): bool;
 Méthode de recherche des informations
 @param int $id
 @return mixed*/
-public abstract function find(int $id): array;
+public abstract function find(int $id): object;
 
 /**
 
