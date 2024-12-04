@@ -92,12 +92,9 @@ class MaitreApprentissageDAO extends DAO
                 $entreprise = null;
                 if (isset($row['ent_id'])) {
                     $entrepriseModel = new EntrepriseDAO($this->bdd);
-
                     $entreprise = $entrepriseModel->find($row['ent_id']);
                 }
-
                 $result = new MaitreApprentissage($row['maitre_appr_id'],$row['maitre_appr_pre'], $row['maitre_appr_nom'],$row['maitre_appr_tel'],$row['maitre_appr_email'],$entreprise);
-
             }
         }
         return $result;

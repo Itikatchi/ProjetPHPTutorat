@@ -46,7 +46,26 @@ class EtduiantDAO extends DAO
 
     public function delete($obj): bool
     {
-        // TODO: Implement delete() method.
+        $result = false;
+        if ($obj instanceof Etudiant) {
+            $bil1 = new Bilan1DAO($this->bdd);
+            $bil2 = new Bilan2DAO($this->bdd);
+
+                $tmp = $this->find($obj->getIdUti());
+                if ($tmp) {
+                    if ($obj->getIdUti() == $tmp->getIdUti()) {
+                        $query = "DELETE FROM Etudiant WHERE etu_id = :etu_id";
+                        $stmt = $this->bdd->prepare($query);
+                        $r = $stmt->execute([
+                            "etu_id"=> $obj->getIdUti()
+                        ]);
+                        if ($r !== false) {
+                         $result = true;
+                        }
+                    }
+                }
+        }
+        return $result;
     }
 
     public function update($obj): bool

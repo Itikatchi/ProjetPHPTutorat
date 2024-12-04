@@ -151,5 +151,27 @@ class Bilan1DAO extends DAO
 
         return $result;
     }
+    public function findBli1ByEtudiant(Etudiant $etudiante): array
+    {
+        $result = null;
+        $etu = $etudiante->getIdUti();
+        $query = "SELECT * FROM Bilan1 WHERE etu_id = :etu_id";
+        $stmt = $this->bdd->prepare($query);
+        $r = $stmt->execute([
+            "etu_id" => $etu
+        ]);
+        if ($r !== false) {
+            $row = ($tmp = $stmt->fetch(PDO::FETCH_ASSOC)) ? $tmp : null;
+            if (!is_null($row)) {
+                $etudiant = null;
+                if (isset($row['etu_id'])) {
+                    $etudiantmodel = new EtduiantDAO($this->bdd);
+                    $etudiant = $etudiantmodel->find($row['etu_id']);
+                }
+                $result[] = new Bilan1($row['bil1_note_entreprise'], new DateTime($row['bil1_date_visite_ent']),$row['bil1_id'],$row['bil1_remarques'],$row['bil1_note_dossier'],$row['bil1_note_oral'],$etudiant);
+            }
+        }
+        return $result;
+    }
 
 }
