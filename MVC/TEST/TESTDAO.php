@@ -4,6 +4,7 @@ namespace TEST;
 
 
 
+use BO\Etudiant;
 use DAO\Bilan1DAO;
 use DAO\Bilan2DAO;
 use DAO\EntrepriseDAO;
@@ -22,8 +23,7 @@ use BO\Classe;
 use BO\Administrateur;
 use BO\Bilan1;
 use BO\Bilan2;
-
-
+use DateTime;
 
 
 //use ProjetPHPTutorat\MVC\DAO\AdministrateurDAO;
@@ -52,14 +52,16 @@ require_once "../BO/Administrateur.php";
 require_once "../BO/Tuteur.php";
 require_once "../BO/Classe.php";
 
-echo '------------------------------------ Entreprise -------------------------------';
 /*
+echo '------------------------------------ Entreprise -------------------------------';
+
 $bdd = initialiseConnexionBDD();
 $entDao = new EntrepriseDAO($bdd);
 var_dump($entDao);
 
 var_dump($entDao->find(1));
 var_dump($entDao->getAll());
+
 $Entrepise1 = new Entreprise(0,"Youtube","19 Avenue du 8 Mai 1945","69960","Corbas");
 $test = $entDao->create($Entrepise1);
 var_dump($test);
@@ -68,7 +70,7 @@ $test2 = $entDao->update($Entrepise2);
 var_dump($test2);
 $test3 = $entDao->delete($Entrepise2);
 var_dump($test3);
-*/
+
 /*
 echo '------------------------------------ Tuteur -------------------------------';
 $bdd = initialiseConnexionBDD();
@@ -104,64 +106,121 @@ var_dump($test3);
 */
 /*
 echo '------------------------------------ MaitreApprentissage -------------------------------';
+
 $bdd = initialiseConnexionBDD();
 $maitreApprDao = new MaitreApprentissageDAO($bdd);
 var_dump($maitreApprDao);
-//$spec = new Entreprise(5, "SDF",);
-$spec1 = $maitreApprDao->find(1);
-//$maitreApprDao->update($spec);
-if ($spec1 != null) {
-    echo $spec1->getNomMaiAppr();
-}
+
+var_dump($maitreApprDao->find(1));
 var_dump($maitreApprDao->getAll());
+$entDao = new EntrepriseDAO($bdd);
+$entreprise = ($entDao->find(1));
+$Maitreapp1 = new MaitreApprentissage(0,"Alp","Fred","0664092320","diegofred@gmail.com",$entreprise);
+$test = $maitreApprDao->create($Maitreapp1);
+var_dump($test);
+$Maitreapp2 = new MaitreApprentissage(10,"Alp","Charle","0664092320","diegofred@gmail.com",$entreprise);
+$test2 = $maitreApprDao->update($Maitreapp2);
+var_dump($test2);
+$test3 = $maitreApprDao->delete($Maitreapp2);
+var_dump($test3);
+*/
+/*
 echo '------------------------------------ Classe -------------------------------';
 $bdd = initialiseConnexionBDD();
 $ClasseDAO = new ClasseDAO($bdd);
 var_dump($ClasseDAO);
-//$spec = new Entreprise(5, "SDF",);
-$spec1 = $ClasseDAO->find(1);
-//$ClasseDAO->update($spec);
-if ($spec1 != null) {
-    echo $spec1->getNomCla();
-}
+$cla1 = ($ClasseDAO->find(1));
 var_dump($ClasseDAO->getAll());
+
+$test4 = $ClasseDAO->delete($cla1);
+var_dump($test4);
+/*
+$classe1 = new Classe(0,"Alp");
+$test = $ClasseDAO->create($classe1);
+var_dump($test);
+$classe2 = new Classe(4,"chevale");
+$test2 = $ClasseDAO->update($classe2);
+var_dump($test2);
+$test3 = $ClasseDAO->delete($classe2);
+var_dump($test3);
+*/
+/*
 echo '------------------------------------ Admin -------------------------------';
 $bdd = initialiseConnexionBDD();
 $AdminDAO = new AdministrateurDAO($bdd);
 var_dump($AdminDAO);
-//$spec = new Entreprise(5, "SDF",);
-$spec1 = $AdminDAO->find(1);
-//$AdminDAO->update($spec);
-if ($spec1 != null) {
-    var_dump($spec1->getNomUti());
-}
+$cla1 = ($AdminDAO->find(2));
+var_dump($cla1);
 var_dump($AdminDAO->getAll());
+
+
+$classe1 = new Administrateur(0,"Monsieur2","Admin3","Admin@gmail.com","adminoo");
+$test = $AdminDAO->create($classe1);
+var_dump($test);
+
+$classe2 = new Administrateur(3,"chevale","Admin3","Admin@gmail.com","adminoo");
+$test2 = $AdminDAO->update($classe2);
+var_dump($test2);
+$test3 = $AdminDAO->delete($cla1);
+var_dump($test3);*/
+/*
 echo '------------------------------------ Bilan1 -------------------------------';
 $bdd = initialiseConnexionBDD();
-$Bilan1DAo = new Bilan1DAO($bdd);
-var_dump($Bilan1DAo);
-$etudiantdao = new EtduiantDAO($bdd);
-$etudiant = $etudiantdao->find(1);
-//$spec = new Entreprise(5, "SDF",);
-$spec1 = $Bilan1DAo->find(1);
-var_dump($Bilan1DAo->getallBilan1ByEleve($etudiant));
+$Bilan1Dao = new Bilan1DAO($bdd);
+var_dump($Bilan1Dao);
+$etudiant = new EtduiantDAO($bdd);
+$etu = $etudiant->find(2);
+$bilan1 = $Bilan1Dao->getallBilan1ByEleve($etu);
+var_dump($bilan1);
+$bilan2 = $Bilan1Dao->getAll();
+var_dump($bilan2);
+var_dump("--------------");
+/*
+$date = new DateTime('now');
+$bil1 = new Bilan1(17,$date,0,"Une vrai remarque", 2, 20, $etu);
+$bilan3 = $Bilan1Dao->create($bil1);
+var_dump($bilan3);
+
+//$bil1 = $Bilan1Dao->find(6);
+$date = new DateTime('now');
+$bil2 = new Bilan1(17,$date,8,"Une vrai remar", 2, 20, $etu);
+$bilan3 = $Bilan1Dao->update($bil2);
+var_dump($bilan3);
+
+
+
 
 echo '------------------------------------ Bilan2 -------------------------------';
 $bdd = initialiseConnexionBDD();
 $Bilan2DAo = new Bilan2DAO($bdd);
 var_dump($Bilan2DAo);
+$bilan1 = $Bilan2DAo->find(5);
+$bil = $Bilan2DAo->delete($bilan1);
+var_dump($bil);
+/*
 
-$etudiantdao = new EtduiantDAO($bdd);
-$etudiant = $etudiantdao->find(4);
-//$spec = new Entreprise(5, "SDF",);
-$spec1 = $Bilan2DAo->find(1);
-var_dump($Bilan2DAo->getallBilan2ByEleve($etudiant));
+$bilan1 = $Bilan2DAo->getallBilan2ByEleve($etu);
+var_dump($bilan1);
 
+$etudiant = new EtduiantDAO($bdd);
+$etu = $etudiant->find(5);
+
+$date = new DateTime('now');
+$bil1 = new Bilan2("Les chauves ",$date,0,"Une vrai remarque", 2, 20, $etu);
+$bilan3 = $Bilan2DAo->create($bil1);
+var_dump($bilan3);
+$bil2 = new Bilan2("Maxime homo sapiens ou homo herectus",$date,4,"Une vrai remar", 2, 20, $etu);
+$bilan3 = $Bilan2DAo->update($bil2);
+var_dump($bilan3);
+*/
+/*
 echo '------------------------------------ Etudiant -------------------------------';
 $bdd = initialiseConnexionBDD();
 $EtudiantDAO = new EtduiantDAO($bdd);
 var_dump($EtudiantDAO);
-//$spec = new Entreprise(5, "SDF",);
+
 $spec1 = $EtudiantDAO->find(1);
-var_dump($EtudiantDAO->getAll());
-*/
+//var_dump($EtudiantDAO->getAll());
+$test1 = $EtudiantDAO->delete($spec1);
+$student = new Etudiant();
+var_dump($test1);

@@ -46,7 +46,66 @@ class EtduiantDAO extends DAO
 
     public function delete($obj): bool
     {
-        // TODO: Implement delete() method.
+        $result = false;
+        if ($obj instanceof Etudiant) {
+            $bil1 = new Bilan1DAO($this->bdd);
+            $bil2 = new Bilan2DAO($this->bdd);
+            if($bil2->getallBilan2ByEleve($obj) == null && $bil1->getallBilan1ByEleve($obj) == null) {
+                var_dump("ça supp l'etudiant");
+                $tmp = $this->find($obj->getIdUti());
+                if ($tmp) {
+                    if ($obj->getIdUti() == $tmp->getIdUti()) {
+                        $query = "DELETE FROM Etudiant WHERE etu_id = :etu_id";
+                        $stmt = $this->bdd->prepare($query);
+                        $r = $stmt->execute([
+                            "etu_id" => $obj->getIdUti()
+                        ]);
+                        if ($r !== false) {
+                            $result = true;
+                        }
+                    }
+                }
+            }
+            else{
+                var_dump("ça suppr les bilan");
+                $r1 = false;
+                $r2 = false;
+                $query = "DELETE FROM Bilan2 WHERE etu_id = :etu_id";
+                $stmt = $this->bdd->prepare($query);
+                $rbil1 = $stmt->execute([
+                    "etu_id" => $obj->getIdUti()
+                ]);
+                if ($rbil1 !== false) {
+                    $r1 = true;
+                }
+                $query = "DELETE FROM Bilan1 WHERE etu_id = :etu_id";
+                $stmt = $this->bdd->prepare($query);
+                $rbil2 = $stmt->execute([
+                    "etu_id" => $obj->getIdUti()
+                ]);
+                if ($rbil2 !== false) {
+                    $r2 = true;
+                }
+                if ($r1 !== false && $r2 !== false) {
+                    $tmp = $this->find($obj->getIdUti());
+                    if ($tmp) {
+                        if ($obj->getIdUti() == $tmp->getIdUti()) {
+                            $query = "DELETE FROM Etudiant WHERE etu_id = :etu_id";
+                            $stmt = $this->bdd->prepare($query);
+                            $r = $stmt->execute([
+                                "etu_id" => $obj->getIdUti()
+                            ]);
+                            if ($r !== false) {
+                                $result = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+        }
+        return $result;
     }
 
     public function update($obj): bool

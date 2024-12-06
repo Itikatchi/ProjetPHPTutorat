@@ -22,17 +22,22 @@ class Bilan1DAO extends DAO
     {
         $result = false;
         if ($obj instanceof Bilan1) {
-            $query = "INSERT INTO Bilan1(bil1_date_visite_ent,bil1_note_entreprise,bil1_note_dossier,bil1_note_oral,bil1_remarques,etu_id) VALUES(:bil1_date_visite_ent,:bil1_note_entreprise,:bil1_note_dossier,:bil1_note_oral,:bil1_remarques,:etu_id))";
+            $query = "INSERT INTO Bilan1(bil1_date_visite_ent,bil1_note_entreprise,bil1_note_dossier,bil1_note_oral,bil1_remarques,etu_id) VALUES(:bil1_date_visite_ent,:bil1_note_entreprise,:bil1_note_dossier,:bil1_note_oral,:bil1_remarques,:etu_id)";
             $stmt = $this->bdd->prepare($query);
+
+            $dateVisite = $obj->getDatVisEnt();
+            $dateString = ($dateVisite instanceof DateTime) ? $dateVisite->format('Y-m-d H:i:s') : $dateVisite;
+
             $r = $stmt->execute([
-                "bil1_date_visite_ent"=> $obj->getDatVisEnt(),
+                "bil1_date_visite_ent"=> $dateString,
                 "bil1_note_entreprise"=> $obj->getNotEnt(),
-                "bil1_note_dossier"=> $obj->getNotBil(),
-                "bil1_note_oral"=> $obj->getNotOra(),
+                "bil1_note_dossier"=> $obj->getNotDosBil(),
+                "bil1_note_oral"=> $obj->getNotOraBil(),
                 "bil1_remarques"=> $obj->getRemBil(),
                 "etu_id"=> $obj->getMonEtu()->getIdUti()
 
             ]);
+
             if ($r !== false) {
                 $result = true;
             }
@@ -70,11 +75,13 @@ class Bilan1DAO extends DAO
                 if ($obj->getIdBil() == $tmp->getIdBil()) {
                     $query = "UPDATE Bilan1 SET bil1_date_visite_ent = :bil1_date_visite_ent,bil1_note_entreprise =:bil1_note_entreprise, bil1_note_dossier = :bil1_note_dossier,bil1_note_oral = :bil1_note_oral, bil1_remarques = :bil1_remarques, etu_id = :etu_id WHERE bil1_id = :bil1_id";
                     $stmt = $this->bdd->prepare($query);
+                    $dateVisite = $obj->getDatVisEnt();
+                    $dateString = ($dateVisite instanceof DateTime) ? $dateVisite->format('Y-m-d H:i:s') : $dateVisite;
                     $r = $stmt->execute([
-                        "bil1_date_visite_ent"=> $obj->getDatVisEnt(),
+                        "bil1_date_visite_ent"=> $dateString,
                         "bil1_note_entreprise"=> $obj->getNotEnt(),
-                        "bil1_note_dossier"=> $obj->getNotBil(),
-                        "bil1_note_oral"=> $obj->getNotOra(),
+                        "bil1_note_dossier"=> $obj->getNotDosBil(),
+                        "bil1_note_oral"=> $obj->getNotOraBil(),
                         "bil1_remarques"=> $obj->getRemBil(),
                         "etu_id"=> $obj->getMonEtu()->getIdUti(),
                         "bil1_id" => $obj->getIdBil()
