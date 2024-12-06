@@ -41,35 +41,36 @@ abstract class Bilan
         $this->remBil = $remBil;
     }
 
-    public function getNotBil(): float
+    public function getNotDosBil(): float
     {
-        return $this->notBil;
+        return $this->notDosBil;
     }
 
-    public function setNotBil(float $notBil): void
+    public function setNotDosBil(float $notDosBil): void
     {
-        $this->notBil = $notBil;
+        $this->notDosBil = $notDosBil;
     }
 
-    public function getNotOra(): float
+    public function getNotOraBil(): float
     {
-        return $this->notOra;
+        return $this->notOraBil;
     }
 
-    public function setNotOra(float $notOra): void
+    public function setNotOraBil(float $notOraBil): void
     {
-        $this->notOra = $notOra;
+        $this->notOraBil = $notOraBil;
     }
 
-    public function getMonEtu(): Etudiant
+    public function getMonEtu(): ?Etudiant
     {
         return $this->monEtu;
     }
 
-    public function setMonEtu(Etudiant $monEtu): void
+    public function setMonEtu(?Etudiant $monEtu): void
     {
         $this->monEtu = $monEtu;
     }
+
 
 
 }
