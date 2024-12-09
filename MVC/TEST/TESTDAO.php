@@ -213,14 +213,17 @@ $bil2 = new Bilan2("Maxime homo sapiens ou homo herectus",$date,4,"Une vrai rema
 $bilan3 = $Bilan2DAo->update($bil2);
 var_dump($bilan3);
 */
-/*
+
 echo '------------------------------------ Etudiant -------------------------------';
 $bdd = initialiseConnexionBDD();
 $EtudiantDAO = new EtduiantDAO($bdd);
 var_dump($EtudiantDAO);
-
+$stud = $EtudiantDAO->authentification("julie.martin@example.com","julie2023");
+var_dump($stud);
+/*
 $spec1 = $EtudiantDAO->find(1);
 //var_dump($EtudiantDAO->getAll());
 $test1 = $EtudiantDAO->delete($spec1);
 $student = new Etudiant();
 var_dump($test1);
+*/
