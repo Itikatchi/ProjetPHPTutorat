@@ -5,6 +5,7 @@ use BO\Alerte;
 
 use BO\Tuteur;
 use DAO\EtduiantDAO;
+
 use PDO;
 use PDOException;
 use ProjetPHPTutorat\MVC\DAO\DAO;
@@ -45,7 +46,7 @@ class AlerteDAO extends DAO
         if ($r !== false) {
             $row = ($tmp = $stmt->fetch(PDO::FETCH_ASSOC)) ? $tmp : null;
             if (!is_null($row)) {
-                $result = new Alerte($row['alerte_id'],new DateTime($row['alerte_date_visite_entreprise']) ,new DateTime($row['alerte_date_note_bilan1']) , new DateTime($row['alerte_date_sujet_memoire']) , new DateTime($row['alerte_date_note_bilan2']) );
+                $result = new Alerte($row['alerte_id'],new DateTime($row['alerte_date_visite_entreprise'])  , new DateTime($row['alerte_date_sujet_memoire']) , new DateTime($row['alerte_date_note_bilan2']) );
             }
         }
         return $result;
@@ -72,5 +73,88 @@ class AlerteDAO extends DAO
             }
         }
         return $result;
+    }
+    public function getAllAl2ByTut(Tuteur $tut): ?array {
+        $result = [];
+        $al1 = $this->find(1);
+        $dateOjd = new DateTime();
+        if ($al1->getDateVisiteEnt() < $dateOjd) {
+            $etuDAO = new EtduiantDAO($this->bdd);
+            $mesEtu = $etuDAO->getAllEtuByTut($tut);
+            foreach ($mesEtu as $et) {
+                $bilan = $et->getMesBilan2();
+                foreach ($bilan as $bil) {
+                    if (is_null($bil->getRemBil())) {
+                        $result[] = $et;
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+    public function getAllAl3ByTut(Tuteur $tut): ?array {
+        $result = [];
+        $al1 = $this->find(1);
+        $dateOjd = new DateTime();
+        if ($al1->getDateVisiteEnt() < $dateOjd) {
+            $etuDAO = new EtduiantDAO($this->bdd);
+            $mesEtu = $etuDAO->getAllEtuByTut($tut);
+            foreach ($mesEtu as $et) {
+                $bilan = $et->getMesBilan2();
+                foreach ($bilan as $bil) {
+                    if ($bil->getRemBil()) {
+                        if(is_null($bil->getSujBil())){
+                            $result[] = $et;
+                        }
+                    }
+                }
+            }
+        }
+        return $result;
+    }
+
+    public function getAllall1(): ?array {
+        $result = [];
+        $tutDAO = new TuteurDAO($this->bdd);
+        $tuts = $tutDAO->getAll();
+        if ($tuts) {
+            foreach ($tuts as $tut) {
+                $mesEtu = $this->getAllAl1ByTut($tut);
+                foreach ($mesEtu as $et) {
+                    $result[] = $et;
+                }
+            }
+        }
+        return $result;
+    }
+    public function getAllall2(): ?array {
+        $result = [];
+        $tutDAO = new TuteurDAO($this->bdd);
+        $tuts = $tutDAO->getAll();
+        if ($tuts) {
+            foreach ($tuts as $tut) {
+                $mesEtu = $this->getAllAl2ByTut($tut);
+                foreach ($mesEtu as $et) {
+                    $result[] = $et;
+                }
+            }
+        }
+        return $result;
+
+    }
+    public function getAllall3(): ?array {
+        $result = [];
+        $tutDAO = new TuteurDAO($this->bdd);
+        $tuts = $tutDAO->getAll();
+        if ($tuts) {
+            foreach ($tuts as $tut) {
+                $mesEtu = $this->getAllAl3ByTut($tut);
+                foreach ($mesEtu as $et) {
+                    $result[] = $et;
+                }
+            }
+        }
+        return $result;
+
     }
 }

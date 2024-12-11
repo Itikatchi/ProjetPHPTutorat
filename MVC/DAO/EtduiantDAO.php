@@ -328,6 +328,7 @@ class EtduiantDAO extends DAO
         return $result;
     }
     public function getAllEtuByTut(Tuteur $tut) : ?array {
+        $result = [];
         $bil1DAO = new Bilan1DAO($this->bdd);
         $bil2DAO = new Bilan2DAO($this->bdd);
         $query = "SELECT * FROM Etudiant WHERE tut_id = :tut_id";

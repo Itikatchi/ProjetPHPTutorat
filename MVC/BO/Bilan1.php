@@ -8,12 +8,12 @@ use DateTime;
 class Bilan1 extends Bilan
 {
 
-    private float $notEnt;
+    private ?float $notEnt;
 
     private ?DateTime $datVisEnt;
 
 
-    public function __construct(float $notEnt, DateTime $datVisEnt, int $idBil, string $remBil, float $notDosBil, float $notOraBil,Etudiant $monEtu)
+    public function __construct(?float $notEnt, ?DateTime $datVisEnt, int $idBil, ?string $remBil, ?float $notDosBil, ?float $notOraBil,Etudiant $monEtu)
     {
         parent::__construct($idBil, $remBil, $notDosBil, $notOraBil, $monEtu);
 
