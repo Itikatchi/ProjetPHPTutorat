@@ -20,7 +20,7 @@
     <div class="Description">
         <p>
             Bienvenue dans votre application de gestion de tutorat.
-            En temps que tuteur vous pouvez consulté vos élèves et certaine alerte pouvant être liée
+            En temps que tuteur vous pouvez consulté vos élèves et certaine alertes pouvant être liées.
         </p>
         <img src="./MVC/Image/FSI_logo.png">
     </div>
@@ -29,7 +29,3 @@
 
 </body>
 </html>
-
-
-
-
