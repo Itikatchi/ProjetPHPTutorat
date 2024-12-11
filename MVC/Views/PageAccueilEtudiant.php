@@ -19,7 +19,7 @@
     </div>
     <div class="Description">
         <p>
-            Bienvenue dans votre espace étudiant.
+            Bienvenue dans votre application de gestion de tutorat ici vous pourrez consulter vos Bilan
         </p>
         <img src="../Image/FSI_logo.png" alt="Logo">
     </div>

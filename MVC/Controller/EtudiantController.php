@@ -11,8 +11,8 @@ class EtudiantController
         try {
             $this->ensureLoggedInAs('etudiant');
 
-            $prenom = htmlspecialchars($_SESSION['Prenom'] ?? "", ENT_QUOTES, 'UTF-8');
-            $nom = htmlspecialchars($_SESSION['Nom'] ?? "", ENT_QUOTES, 'UTF-8');
+            $prenom = ($_SESSION['Prenom'] ?? "");
+            $nom = ($_SESSION['Nom'] ?? "");
 
             include "../Views/Nav/NavEtudiant.php";
             include "../Views/PageAccueilEtudiant.php";
