@@ -66,10 +66,10 @@ CREATE TABLE Etudiant (
 
 CREATE TABLE Bilan1 (
     bil1_id INT AUTO_INCREMENT,
-    bil1_date_visite_ent DATE NOT NULL,
-    bil1_note_entreprise FLOAT NOT NULL,
-    bil1_note_dossier FLOAT NOT NULL,
-    bil1_note_oral FLOAT NOT NULL,
+    bil1_date_visite_ent DATE,
+    bil1_note_entreprise FLOAT,
+    bil1_note_dossier FLOAT,
+    bil1_note_oral FLOAT,
     bil1_remarques VARCHAR(1000),
     etu_id INT NOT NULL,
     FOREIGN KEY (etu_id) REFERENCES Etudiant(etu_id),
@@ -78,9 +78,9 @@ CREATE TABLE Bilan1 (
 
 CREATE TABLE Bilan2 (
     bil2_id INT AUTO_INCREMENT,
-    bil2_date DATE NOT NULL,
-    bil2_note_dossier FLOAT NOT NULL,
-    bil2_note_oral FLOAT NOT NULL,
+    bil2_date DATE,
+    bil2_note_dossier FLOAT,
+    bil2_note_oral FLOAT,
     bil2_remarques VARCHAR(1000),
     bil2_sujet_memoire VARCHAR(1000),
     etu_id INT NOT NULL,

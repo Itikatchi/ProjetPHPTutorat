@@ -106,7 +106,7 @@ class LoginController
 
     private function redirectWithError($message)
     {
-        // Redirection avec le message d'erreur
+
         header("Location: ../../index.php?error=" . urlencode($message));
         exit;
     }
