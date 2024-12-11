@@ -109,6 +109,27 @@ class TuteurController
         }
 
     }
+
+    public function listeetudiants()
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $logtut = $_SESSION['id'];
+
+            $bdd = initialiseConnexionBDD();
+            $tut = new TuteurDAO($bdd);
+            $tuteur = $tut->find($logtut);
+
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiants = $etudiantsDAO->getAllEtuByTut($tuteur);
+
+
+            include "../Views/Nav/NavTuteur.php";
+            include "../Views/PageListeEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -121,6 +142,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             case 'alerte':
                 $controller->alerte();
+                break;
+
+            case 'listeetudiants':
+                $controller->listeetudiants();
                 break;
 
             default:

@@ -42,6 +42,7 @@ nav {
     box-shadow: 0 10px 40px -20px #00000091;
     flex-direction: column;
     overflow: hidden;
+    gap: 1%;
 
 }
 .MainContainer .MainTitle{

@@ -12,12 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-<style>
 
-</style>
 <div class="MainContainer">
     <div class="Subtitle">
-        <h2>List des alertes</h2>
+        <h2>Liste des alertes</h2>
     </div>
     <div class="TablePage">
         <table>

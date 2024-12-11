@@ -22,7 +22,7 @@
         </a>
 
         </a>
-        <a href="../Controller/AdministrateurAlerteController.php?action=alerte"">
+        <a href="../Controller/AdministrateurController.php?action=alerte"">
             <img src="../Image/cloche.svg" alt="Alerte">
         </a>
         <a href="#">

@@ -17,7 +17,7 @@
         <a href="#">
             <img src="../Image/reception.svg" alt="">
         </a>
-        <a href="#">
+        <a href="../Controller/TuteurController.php?action=listeetudiants">
             <img src="../Image/utilisateurs-alt.svg" alt="">
         </a>
         <a href="../Controller/TuteurController.php?action=alerte">

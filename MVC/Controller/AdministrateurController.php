@@ -2,28 +2,53 @@
 namespace Controller;
 
 
-use DAO\AlerteDAO;
+
+
+use BO\Etudiant;
+use DAO\Bilan1DAO;
+use DAO\Bilan2DAO;
+use DAO\EntrepriseDAO;
 use DAO\EtduiantDAO;
+use DAO\MaitreApprentissageDAO;
+use DAO\SpecialiteDAO;
 use DAO\TuteurDAO;
+use DAO\ClasseDAO;
 use DAO\AdministrateurDAO;
+use DAO\AlerteDAO;
 
-require_once "../DAO/EtduiantDAO.php";
+use BO\Tuteur;
+use BO\Specialite;
+use BO\Entreprise;
+use BO\MaitreApprentissage;
+use BO\Classe;
+use BO\Administrateur;
+use BO\Bilan1;
+use BO\Bilan2;
+use DateTime;
+
+use BO\Alerte;
 require_once "../BDDManager.php";
-require_once "../DAO/TuteurDAO.php";
-require_once "../BO/Tuteur.php";
-require_once "../DAO/EntrepriseDAO.php";
-require_once "../BO/Entreprise.php";
-require_once "../BO/Specialite.php";
+
+require_once "../DAO/Bilan2DAO.php";
+require_once "../DAO/Bilan1DAO.php";
 require_once "../DAO/SpecialiteDAO.php";
-require_once "../BO/Classe.php";
-require_once "../DAO/ClasseDAO.php";
-require_once "../BO/MaitreApprentissage.php";
 require_once "../DAO/MaitreApprentissageDAO.php";
+require_once "../DAO/EntrepriseDAO.php";
 require_once "../DAO/AdministrateurDAO.php";
+require_once "../DAO/TuteurDAO.php";
+require_once "../DAO/ClasseDAO.php";
+require_once "../DAO/AlerteDAO.php";
+
+
+require_once "../BO/Bilan2.php";
+require_once "../BO/Bilan1.php";
+require_once "../BO/Specialite.php";
+require_once "../BO/MaitreApprentissage.php";
+require_once "../BO/Entreprise.php";
 require_once "../BO/Administrateur.php";
-
-require_once "../Controller/AdministrateurController.php";
-
+require_once "../BO/Tuteur.php";
+require_once "../BO/Classe.php";
+require_once "../BO/Alerte.php";
 class AdministrateurController
 {
     public function dashboard()
@@ -44,7 +69,7 @@ class AdministrateurController
     public function alerte()
     {
     try {
-        $this->ensureLoggedInAs('tuteur');
+        $this->ensureLoggedInAs('administrateur');
         $logtut = $_SESSION['id'];
 
         $bdd = initialiseConnexionBDD();
@@ -60,8 +85,8 @@ class AdministrateurController
 
 
 
-        include "../Views/Nav/NavTuteur.php";
-        include "../Views/PageListeAlerteTuteur.php";
+        include "../Views/Nav/NavAdmin.php";
+        include "../Views/PageListeAlerteAdmin.php";
     } catch (\Exception $e) {
         $this->redirectWithError($e->getMessage());
     }
@@ -78,7 +103,7 @@ class AdministrateurController
 
 
             include "../Views/Nav/NavAdmin.php";
-            include "../Views/PageListeEtudiant.php";
+            include "../Views/PageListeEtudiantAdmin.php";
         } catch (\Exception $e) {
             $this->redirectWithError($e->getMessage());
         }
@@ -117,6 +142,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             case 'listeetudiants':
                 $controller->listeEtudiants();
+                break;
+            case 'alerte':
+                $controller->alerte();
                 break;
 
             default:
