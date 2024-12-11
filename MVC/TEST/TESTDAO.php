@@ -239,6 +239,6 @@ $bdd = initialiseConnexionBDD();
 $AlertDAO = new AlerteDAO($bdd);
 var_dump($AlertDAO);
 $tut = new TuteurDAO($bdd);
-$tuteur = $tut->find(2);
+$tuteur = $tut->find(1);
 $stud = $AlertDAO->getAllAl1ByTut($tuteur);
 var_dump($stud);

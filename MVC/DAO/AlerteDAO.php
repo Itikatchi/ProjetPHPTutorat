@@ -65,7 +65,7 @@ class AlerteDAO extends DAO
             foreach ($mesEtu as $et) {
                 $bilan = $et->getMesBilan1();
                 foreach ($bilan as $bil) {
-                    if (is_null($bil->getIdBil())) {
+                    if (is_null($bil->getRemBil())) {
                         $result[] = $et;
                     }
                 }
