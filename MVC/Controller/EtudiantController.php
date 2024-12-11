@@ -1,6 +1,9 @@
 <?php
 namespace Controller;
 
+use DAO\AlerteDAO;
+use DAO\TuteurDAO;
+
 class EtudiantController
 {
     public function dashboard()
@@ -37,6 +40,23 @@ class EtudiantController
         header("Location: ../../index.php?error=" . urlencode($message));
         exit;
     }
+
+    public function mesinfo()
+    {
+        try {
+            $this->ensureLoggedInAs('etudiant');
+            $logtut = $_SESSION['id'];
+
+
+
+            include "../Views/Nav/NavEtudiant.php";
+            include "../Views/MesInformationsEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+
+    }
+
 }
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new EtudiantController();
@@ -46,6 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $controller->dashboard();
                 break;
 
+            case 'mesinfo':
+                $controller->mesinfo();
+                break;
 
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));

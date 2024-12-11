@@ -244,8 +244,9 @@ nav {
     padding: 20px;
     border-radius: 8px;
     text-align: left;
-    font-size: 48px;
+    font-size: 35px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 2%;
 }
 
 .DescriptionEtudiant {
@@ -254,21 +255,22 @@ nav {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.DescriptionEtudiant h2 {
+    h2 {
     font-family: Inter;
-    font-size: 20px;
+    font-size: 15px;
     margin-bottom: 15px;
     padding-bottom: 5px;
+    }
+
+    p {
+        font-family: Inter;
+        font-size: 15px;
+        line-height: 1.8;
+        margin-bottom: 20px;
+    }
+
 }
 
-.DescriptionEtudiant p {
-    font-family: Arial;
-    font-size: 16px;
-    line-height: 1.8;
-    margin-bottom: 20px;
-}
 
 .boutonModifMDP {
     padding: 10px 20px;
@@ -280,6 +282,7 @@ nav {
     border: none;
     cursor: pointer;
     align-self: flex-end;
+    font-family: Inter;
 }
 
 .boutonModifMDP:hover {
@@ -289,14 +292,15 @@ nav {
 .InfosEntreprise {
     background-color: var(--theme-2);
     border: 1px solid var(--theme-2);
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
 }
 
 .InfosEntreprise h2 {
     font-family: Inter;
-    font-size: 20px;
+    font-size: 15px;
     padding-bottom: 5px;
 }
 
@@ -307,11 +311,11 @@ nav {
     display: flex;
     flex-direction: column;
     background-color: var(--theme-1);
-    justify-items: center;
     margin-right: 3%;
     margin-left: 3%;
     height: 100%;
-    gap: 475px;
+    gap: 50%;
+
 }
 
 .rightPage .logo{
@@ -321,8 +325,6 @@ nav {
 
 .rightPage .boutonModifEtudiant{
     text-align: center;
-    bottom: 20px;
-    left: 50%;
     padding: 10px 20px;
     background-color: var(--theme-2);
     border-radius: 5px;
@@ -330,4 +332,6 @@ nav {
     border: 2px solid var(--theme-2);
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
+    font-family: Inter;
+
 }

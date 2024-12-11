@@ -14,7 +14,7 @@
 <body>
 <nav>
     <div class="nav-bar">
-        <a href="#">
+        <a href="../Controller/EtudiantController.php?action=mesinfo">
             <img src="../../MVC/Image/reception.svg" alt="">
         </a>
         <a href="#">
