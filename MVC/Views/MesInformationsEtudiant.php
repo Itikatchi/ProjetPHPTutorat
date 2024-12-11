@@ -23,13 +23,13 @@
         </h2>
 
         <br>
-
+        <?php if (!empty($etudiant) ) : ?>
         <p>
-            Nom et prénom : <br><br>
-            Numéro de téléphone :<br><br>
-            Adresse :<br><br>
-            Classe :<br><br>
-            Mail :<br>
+            Nom et prénom : <?= htmlspecialchars($etudiant->getNomUti())?> <?= htmlspecialchars($etudiant->getPreNomUti()) ?><br><br>
+            Numéro de téléphone : <?= htmlspecialchars($etudiant->getEtuTel())?><br><br>
+            Adresse : <?= htmlspecialchars($etudiant->getEtuAdr())?><br><br>
+            Classe : <?= htmlspecialchars($etudiant->getMaClasse()->getNomCla())?><br><br>
+            Mail : <?= htmlspecialchars($etudiant->getEmailUti())?><br>
         </p>
 
         <button class="boutonModifMDP">Modifier votre mot de passe</button>
@@ -39,10 +39,10 @@
         <h2>Informations entreprise</h2>
         <br>
         <p>
-            Nom de l'entreprise : <br><br>
-            Adresse de l'entreprise :  <br><br>
-            Code postal de l'entreprise :  <br><br>
-            Ville de l'entreprise : <br><br>
+            Nom de l'entreprise : <?= htmlspecialchars($etudiant->getMonEnt()->getNomEnt())?><br><br>
+            Adresse de l'entreprise : <?= htmlspecialchars($etudiant->getMonEnt()->getAdrEnt())?><br><br>
+            Code postal de l'entreprise : <?= htmlspecialchars($etudiant->getMonEnt()->getCpEnt())?><br><br>
+            Ville de l'entreprise : <?= htmlspecialchars($etudiant->getMonEnt()->getVilEnt())?><br><br>
         </p>
     </div>
 
@@ -57,6 +57,6 @@
         <button class="boutonModifierInfos">Modifier vos informations</button>
     </div>
 </div>
-
+        <?php endif; ?>
 </body>
 </html>
