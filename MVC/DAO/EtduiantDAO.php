@@ -5,6 +5,7 @@ namespace DAO;
 
 use BO\Etudiant;
 
+use BO\Tuteur;
 use PDO;
 use PDOException;
 use ProjetPHPTutorat\MVC\DAO\DAO;
@@ -141,9 +142,18 @@ class EtduiantDAO extends DAO
         }
         return $result;
     }
+
     public function find(int $id): object
     {
+        static $cache = []; // Cache local pour éviter les cycles
+
+        // Vérifiez si l'objet est déjà dans le cache
+        if (isset($cache[$id])) {
+            return $cache[$id];
+        }
         $result = null;
+        $bil1DAO = new Bilan1DAO($this->bdd);
+        $bil2DAO = new Bilan2DAO($this->bdd);
         $query = "SELECT * FROM Etudiant WHERE etu_id = :etu_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
@@ -191,17 +201,31 @@ class EtduiantDAO extends DAO
                 else{
                     $maitreappre = null;
                 }
-                $result = new Etudiant($tuteur,$specialite,$classe,$maitreappre,$entreprise,$row['etu_id'],$row['etu_nom'],$row['etu_pre'],$row['etu_email'],$row['etu_mdp'],$row['etu_tel'],$row['etu_adr'],$row['etu_cp'],$row['etu_ville']);
+                $res = new Etudiant($tuteur,$specialite,$classe,$maitreappre,$entreprise,$row['etu_id'],$row['etu_nom'],$row['etu_pre'],$row['etu_email'],$row['etu_mdp'],$row['etu_tel'],$row['etu_adr'],$row['etu_cp'],$row['etu_ville']);
+                $cache[$id] = $res;
+                $bil1 = $bil1DAO->getallBilan1ByEleve($res);
+                if ($bil1 == null){
+                    $bil1 = [];
+                }
+                $res->setMesBilan1($bil1);
 
+
+                $bil2 = $bil2DAO->getallBilan2ByEleve($res);
+                if ($bil2 == null){
+                    $bil2 = [];
+                }
+                $res->setMesBilan2($bil2);
+                $result = $res;
             }
         }
         return $result;
     }
 
+
     public function getAll(): array
     {
         $query = "SELECT * FROM Etudiant";
-        $stmt = $this->bdd->query($query);
+        $stmt = $this->bdd->prepare($query);
         if ($stmt) {
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             foreach ($stmt as $row) {
@@ -307,6 +331,77 @@ class EtduiantDAO extends DAO
 
             }
         }
+        return $result;
+    }
+    public function getAllEtuByTut(Tuteur $tut) : ?array {
+        $bil1DAO = new Bilan1DAO($this->bdd);
+        $bil2DAO = new Bilan2DAO($this->bdd);
+        $query = "SELECT * FROM Etudiant WHERE tut_id = :tut_id";
+        $stmt = $this->bdd->prepare($query);
+        $r = $stmt->execute([
+            "tut_id" => $tut->getIdUti()
+        ]);
+        if ($r) {
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            foreach ($stmt as $row) {
+                $tuteur = null;
+                if (isset($row['tut_id'])) {
+                    $tuteurModel = new TuteurDAO($this->bdd);
+                    $tuteur = $tuteurModel->find($row['tut_id']);
+                }else{
+                    $tuteur = null;
+                }
+                $entreprise = null;
+                if (isset($row['ent_id'])) {
+                    $entrepriseModel = new EntrepriseDAO($this->bdd);
+                    $entreprise = $entrepriseModel->find($row['ent_id']);
+                }
+                else{
+                    $entreprise = null;
+                }
+                $specialite = null;
+                if (isset($row['spe_id'])) {
+                    $specialiteModel = new SpecialiteDAO($this->bdd);
+                    $specialite = $specialiteModel->find($row['spe_id']);
+                }
+                else{
+                    $specialite = null;
+                }
+                $classe = null;
+                if (isset($row['classe_id'])) {
+                    $classeModel = new ClasseDAO($this->bdd);
+                    $classe = $classeModel->find($row['classe_id']);
+                }
+                else{
+                    $classe = null;
+                }
+                $maitreappre = null;
+                if (isset($row['maitre_appr_id'])) {
+                    $maitreappreModel = new MaitreApprentissageDAO($this->bdd);
+                    $maitreappre = $maitreappreModel->find($row['maitre_appr_id']);
+                }
+                else{
+                    $maitreappre = null;
+                }
+                $res = new Etudiant($tuteur,$specialite,$classe,$maitreappre,$entreprise,$row['etu_id'],$row['etu_nom'],$row['etu_pre'],$row['etu_email'],$row['etu_mdp'],$row['etu_tel'],$row['etu_adr'],$row['etu_cp'],$row['etu_ville']);
+                $bil1 = $bil1DAO->getallBilan1ByEleve($res);
+                if ($bil1 == null){
+                    $bil1 = [];
+                }
+                $res->setMesBilan1($bil1);
+
+
+                $bil2 = $bil2DAO->getallBilan2ByEleve($res);
+                if ($bil2 == null){
+                    $bil2 = [];
+                }
+                $res->setMesBilan2($bil2);
+                $result[] = $res;
+            }
+        } else {
+            $result = [null] ;
+        }
+
         return $result;
     }
 }

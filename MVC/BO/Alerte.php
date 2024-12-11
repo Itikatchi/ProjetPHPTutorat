@@ -6,13 +6,13 @@ use DateTime;
 class Alerte
 {
     private int $idAl;
-    private DateTime $dateVisiteEnt;
-    private DateTime $dateSujMemoire;
-    private DateTime $datLimBil1;
-    private DateTime $datLimBil2;
+    private ?DateTime $dateVisiteEnt;
+    private ?DateTime $dateSujMemoire;
+    private ?DateTime $datLimBil1;
+    private ?DateTime $datLimBil2;
 
 
-    public function __construct(int $idAl, DateTime $datLimBil1, DateTime $datLimBil2, DateTime $dateVisiteEnt, DateTime $dateSujMemoire)
+    public function __construct(int $idAl, ?DateTime $datLimBil1, ?DateTime $datLimBil2, ?DateTime $dateVisiteEnt, ?DateTime $dateSujMemoire)
     {
         $this->idAl = $idAl;
         $this->datLimBil1 = $datLimBil1;

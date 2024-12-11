@@ -1,12 +1,23 @@
 <?php
-namespace ProjetPHPTutorat\MVC\DAO;
+namespace DAO;
+
+use BO\Alerte;
+
+use BO\Tuteur;
+use DAO\EtduiantDAO;
+use PDO;
+use PDOException;
+use ProjetPHPTutorat\MVC\DAO\DAO;
+
+use DateTime;
+require_once 'EtduiantDAO.php';
+
+require_once 'DAO.php';
 
 class AlerteDAO extends DAO
 {
 
-    use p2025jeuhasardetudiant\components\BO\Tuteur;
-    use PDO;
-    use PDOException;
+
 
     public function create($obj): bool
     {
@@ -25,11 +36,41 @@ class AlerteDAO extends DAO
 
     public function find(int $id): object
     {
-        // TODO: Implement find() method.
+        $result = null;
+        $query = "SELECT * FROM Alerte WHERE alerte_id = :alerte_id";
+        $stmt = $this->bdd->prepare($query);
+        $r = $stmt->execute([
+            "alerte_id" => $id
+        ]);
+        if ($r !== false) {
+            $row = ($tmp = $stmt->fetch(PDO::FETCH_ASSOC)) ? $tmp : null;
+            if (!is_null($row)) {
+                $result = new Alerte($row['alerte_id'],new DateTime($row['alerte_date_visite_entreprise']) ,new DateTime($row['alerte_date_note_bilan1']) , new DateTime($row['alerte_date_sujet_memoire']) , new DateTime($row['alerte_date_note_bilan2']) );
+            }
+        }
+        return $result;
     }
 
     public function getAll(): array
     {
         // TODO: Implement getAll() method.
+    }
+    public function getAllAl1ByTut(Tuteur $tut): ?array {
+        $result = [];
+        $al1 = $this->find(1);
+        $dateOjd = new DateTime();
+        if ($al1->getDateVisiteEnt() < $dateOjd) {
+            $etuDAO = new EtduiantDAO($this->bdd);
+            $mesEtu = $etuDAO->getAllEtuByTut($tut);
+            foreach ($mesEtu as $et) {
+                $bilan = $et->getMesBilan1();
+                foreach ($bilan as $bil) {
+                    if (is_null($bil->getIdBil())) {
+                        $result[] = $et;
+                    }
+                }
+            }
+        }
+        return $result;
     }
 }
