@@ -39,9 +39,18 @@ class EtudiantController
     }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    $controller = new EtudiantController();
     try {
-        (new EtudiantController())->dashboard();
-    } catch (\Exception $e) {
+        switch ($_GET['action']) {
+            case 'dashboard':
+                $controller->dashboard();
+                break;
+
+
+            default:
+                throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
+        }} catch (\Exception $e) {
+
 
         header("Location: ../../index.php?error=" . urlencode("Erreur inattendue : " . $e->getMessage()));
         exit;

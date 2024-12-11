@@ -2,6 +2,7 @@
 namespace Controller;
 
 
+use DAO\AlerteDAO;
 use DAO\EtduiantDAO;
 use DAO\TuteurDAO;
 use DAO\AdministrateurDAO;
@@ -39,6 +40,32 @@ class AdministrateurController
 
             $this->redirectWithError($e->getMessage());
         }
+    }
+    public function alerte()
+    {
+    try {
+        $this->ensureLoggedInAs('tuteur');
+        $logtut = $_SESSION['id'];
+
+        $bdd = initialiseConnexionBDD();
+        $tut = new TuteurDAO($bdd);
+        $tuteur = $tut->find($logtut);
+        $ale = new AlerteDAO($bdd);
+
+        $alerteDATE = $ale->find(1);
+        $alerte  = $ale->getAllall1();
+        $alerte2 = $ale->getAllall2();
+        $alerte3 = $ale->getAllall3();
+
+
+
+
+        include "../Views/Nav/NavTuteur.php";
+        include "../Views/PageListeAlerteTuteur.php";
+    } catch (\Exception $e) {
+        $this->redirectWithError($e->getMessage());
+    }
+
     }
     public function listeEtudiants()
     {
