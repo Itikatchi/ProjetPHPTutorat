@@ -138,6 +138,7 @@ class Bilan1DAO extends DAO
     }
     public function getallBilan1ByEleve(Etudiant $etudiant) : ?array
     {
+        $result = [];
         $query = "SELECT * FROM Bilan1 WHERE etu_id = :etu_id";
         $stmt = $this->bdd->prepare($query);
         $stmt->execute([
@@ -150,10 +151,14 @@ class Bilan1DAO extends DAO
                     $etudiantmodel = new EtduiantDAO($this->bdd);
                     $etudiant = $etudiantmodel->find($row['etu_id']);
                 }
-                $result[] = new Bilan1($row['bil1_note_entreprise'], new DateTime($row['bil1_date_visite_ent']),$row['bil1_id'],$row['bil1_remarques'],$row['bil1_note_dossier'],$row['bil1_note_oral'],$etudiant);
+                if($row['bil1_date_visite_ent'] != null){
+                    $result[] = new Bilan1($row['bil1_note_entreprise'], new DateTime($row['bil1_date_visite_ent']),$row['bil1_id'],$row['bil1_remarques'],$row['bil1_note_dossier'],$row['bil1_note_oral'],$etudiant);
+                }else
+                {
+                    $result[] = new Bilan1($row['bil1_note_entreprise'], $row['bil1_date_visite_ent'],$row['bil1_id'],$row['bil1_remarques'],$row['bil1_note_dossier'],$row['bil1_note_oral'],$etudiant);
+                }
+
             }
-        } else {
-            $result = [null] ;
         }
 
         return $result;

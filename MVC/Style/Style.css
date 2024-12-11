@@ -81,108 +81,147 @@ nav {
 
 }
 
-/* ////////////////////// */
-/* Page MesInfosEtudiants */
+/*LOGINNNN*/
 
-.MainContainerEtudiant {
-    flex: 3;
+/* Conteneur principal de la page de connexion */
+.login-page .login-container {
+    display: flex;
+    width: 900px;
+    height: 500px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: auto;
+}
+
+/* Partie gauche - Informations principales */
+.login-page .login-left {
+    width: 50%;
+    background-color: #7aa97d;
+    color: #ffffff;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     padding: 20px;
 }
 
-.MainTitleEtudiant {
-    font-family: Inter;
-    background-color: var(--theme-2);
-    border: 1px solid var(--theme-2);
-    padding: 20px;
-    border-radius: 8px;
-    text-align: left;
-    font-size: 48px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.DescriptionEtudiant {
-    background-color: var(--theme-2);
-    border: 1px solid var(--theme-2);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.DescriptionEtudiant h2 {
-    font-family: Inter;
-    font-size: 20px;
-    margin-bottom: 15px;
-    padding-bottom: 5px;
-}
-
-.DescriptionEtudiant p {
-    font-family: Arial;
-    font-size: 16px;
-    line-height: 1.8;
+.login-page .login-left img {
+    width: 120px;
+    height: auto;
     margin-bottom: 20px;
 }
 
-.boutonModifMDP {
-    padding: 10px 20px;
-    background-color: var(--theme-1);
-    color: var(--theme-2);
-    text-align: center;
-    border-radius: 5px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    align-self: flex-end;
+.login-page .login-left h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
 }
 
-.boutonModifMDP:hover {
-    background-color: #6e8e6f;
-}
-
-.InfosEntreprise {
-    background-color: var(--theme-2);
-    border: 1px solid var(--theme-2);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.InfosEntreprise h2 {
-    font-family: Inter;
-    font-size: 20px;
-    padding-bottom: 5px;
-}
-
-.InfosEntreprise p{
-    font-family: Arial;
-}
-.rightPage {
+/* Partie droite - Formulaire de connexion */
+.login-page .login-right {
+    width: 50%;
+    background-color: #fafef5;
     display: flex;
     flex-direction: column;
-    background-color: var(--theme-1);
-    justify-items: center;
-    margin-right: 3%;
-    margin-left: 3%;
-    height: 100%;
-    gap: 475px;
-}
-
-.rightPage .logo{
-    margin-top: 35%;
-    width: 250px;
-}
-
-.rightPage .boutonModifEtudiant{
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
     text-align: center;
-    bottom: 20px;
-    left: 50%;
-    padding: 10px 20px;
-    background-color: var(--theme-2);
-    border-radius: 5px;
-    font-weight: bold;
-    border: 2px solid var(--theme-2);
+}
+
+.login-page .login-right h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.login-page .login-right p {
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Formulaire de connexion */
+.login-page .login-form {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-page .login-form label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    text-align: left;
+}
+
+.login-page .login-form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Bouton de connexion */
+.login-page .login-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #7aa97d;
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.login-page .login-button:hover {
+    background-color: #5a845d;
+}
+
+/* Message d'erreur */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/*TABLE PAGE LIST ALERTE TUTEUR*/
+.Subtitle{
+    margin-top: 5%;
+    margin-left: 5%;
+    font-family: Inter;
+    font-size: 50px;
+}
+.TablePage{
+    width: 150%;
+    margin-left: 5%;
+    margin-bottom: 35%;
+
+    table{
+        width: 50%;
+        border-collapse: collapse;
+        background-color: #6ab06d;
+        color: white;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid white;
+        font-family: Inter ;
+    }
+    th {
+        background-color: #548b54;
+    }
+    tr:nth-child(even) {
+        background-color: #66a866;
+    }
 }

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page Accueil Tuteur</title>
+    <title>Page Accueil Étudiant</title>
     <link rel="stylesheet" href="../Style/Style.css">
     <link rel="stylesheet" href="../Style/reset.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,13 +14,12 @@
 <body>
 <div class="MainContainer">
     <div class="MainTitle">
-        <h1>PARTIE TUTEUR</h1>
+        <h1>PARTIE ÉTUDIANT</h1>
         <h2>Bienvenue : <?= htmlspecialchars($prenom) . " " . htmlspecialchars($nom); ?></h2>
     </div>
     <div class="Description">
         <p>
-            Bienvenue dans votre application de gestion de tutorat.
-            En tant que tuteur, vous pouvez consulter vos élèves et certaines alertes qui peuvent leur être liées.
+            Bienvenue dans votre espace étudiant.
         </p>
         <img src="../Image/FSI_logo.png" alt="Logo">
     </div>

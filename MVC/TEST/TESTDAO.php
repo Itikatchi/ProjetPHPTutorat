@@ -14,6 +14,7 @@ use DAO\SpecialiteDAO;
 use DAO\TuteurDAO;
 use DAO\ClasseDAO;
 use DAO\AdministrateurDAO;
+use DAO\AlerteDAO;
 
 use BO\Tuteur;
 use BO\Specialite;
@@ -24,6 +25,9 @@ use BO\Administrateur;
 use BO\Bilan1;
 use BO\Bilan2;
 use DateTime;
+
+use BO\Alerte;
+
 
 
 //use ProjetPHPTutorat\MVC\DAO\AdministrateurDAO;
@@ -42,6 +46,8 @@ require_once "../DAO/EntrepriseDAO.php";
 require_once "../DAO/AdministrateurDAO.php";
 require_once "../DAO/TuteurDAO.php";
 require_once "../DAO/ClasseDAO.php";
+require_once "../DAO/AlerteDAO.php";
+
 
 require_once "../BO/Bilan2.php";
 require_once "../BO/Bilan1.php";
@@ -51,6 +57,7 @@ require_once "../BO/Entreprise.php";
 require_once "../BO/Administrateur.php";
 require_once "../BO/Tuteur.php";
 require_once "../BO/Classe.php";
+require_once "../BO/Alerte.php";
 
 /*
 echo '------------------------------------ Entreprise -------------------------------';
@@ -218,9 +225,20 @@ echo '------------------------------------ Etudiant ----------------------------
 $bdd = initialiseConnexionBDD();
 $EtudiantDAO = new EtduiantDAO($bdd);
 var_dump($EtudiantDAO);
-
+$stud = $EtudiantDAO->();
+var_dump();
+/*
 $spec1 = $EtudiantDAO->find(1);
 //var_dump($EtudiantDAO->getAll());
 $test1 = $EtudiantDAO->delete($spec1);
 $student = new Etudiant();
 var_dump($test1);
+*/
+echo '-----------------ALERTE--------------------';
+$bdd = initialiseConnexionBDD();
+$AlertDAO = new AlerteDAO($bdd);
+var_dump($AlertDAO);
+$tut = new TuteurDAO($bdd);
+$tuteur = $tut->find(3);
+$stud = $AlertDAO->getAllall2();
+var_dump($stud);

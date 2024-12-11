@@ -7,12 +7,12 @@ use DateTime;
 abstract class Bilan
 {
     protected int $idBil;
-    protected string $remBil;
-    protected float $notDosBil;
-    protected float $notOraBil;
+    protected ?string $remBil;
+    protected ?float $notDosBil;
+    protected ?float $notOraBil;
     protected ?Etudiant $monEtu;
 
-    public function __construct(int $idBil, string $remBil, float $notDosBil, float $notOraBil, Etudiant $monEtu)
+    public function __construct(int $idBil, ?string $remBil, ?float $notDosBil, ?float $notOraBil, Etudiant $monEtu)
     {
         $this->idBil = $idBil;
         $this->remBil = $remBil;
@@ -31,7 +31,7 @@ abstract class Bilan
         $this->idBil = $idBil;
     }
 
-    public function getRemBil(): string
+    public function getRemBil(): ?string
     {
         return $this->remBil;
     }
@@ -41,7 +41,7 @@ abstract class Bilan
         $this->remBil = $remBil;
     }
 
-    public function getNotDosBil(): float
+    public function getNotDosBil(): ?float
     {
         return $this->notDosBil;
     }
@@ -51,7 +51,7 @@ abstract class Bilan
         $this->notDosBil = $notDosBil;
     }
 
-    public function getNotOraBil(): float
+    public function getNotOraBil(): ?float
     {
         return $this->notOraBil;
     }
