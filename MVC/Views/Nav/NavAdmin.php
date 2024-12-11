@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Page Accueil Tuteur</title>
-    <link rel="stylesheet" href="./MVC/Style/Style.css">
+    <link rel="stylesheet" href=".../../Style/Style.css">
     <link rel="stylesheet" href="./MVC/Style/reset.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,17 +15,19 @@
 <nav>
     <div class="nav-bar">
         <a href="#">
-            <img src="./MVC/Image/reception.svg" alt="">
+            <img src="../Image/reception.svg" alt="">
+        </a>
+        <a href="../Controller/AdministrateurController.php?action=listeetudiants">
+            <img src="../Image/utilisateurs-alt.svg" alt="Liste des étudiants">
+        </a>
+
         </a>
         <a href="#">
-            <img src="./MVC/Image/utilisateurs-alt.svg" alt="">
-        </a>
-        <a href="#">
-            <img src="./MVC/Image/cloche.svg" alt="">
+            <img src="../Image/cloche.svg" alt="">
         </a>
         <a href="#">
 
-            <img src="./MVC/Image/parametres-curseurs.svg" alt="">
+            <img src="../Image/parametres-curseurs.svg" alt="">
         </a>
 
     </div>

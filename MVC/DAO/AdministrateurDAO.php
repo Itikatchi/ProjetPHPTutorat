@@ -110,4 +110,32 @@ class AdministrateurDAO extends DAO
 
         return $result;
     }
+    public function authentification($email, $mdp): ?Administrateur
+    {
+        $result = null;
+        $query = "SELECT * FROM Administrateur WHERE adm_email = :email AND adm_mdp = :mdp;";
+        $stmt = $this->bdd->prepare($query);
+        $r = $stmt->execute([
+            'email' => $email,
+            'mdp' => $mdp
+        ]);
+
+        if ($r !== false) {
+            $row = ($tmp = $stmt->fetch(PDO::FETCH_ASSOC)) ? $tmp : null;
+
+            if (!is_null($row)) {
+                $result = new Administrateur(
+                    $row['adm_id'],
+                    $row['adm_pre'],
+                    $row['adm_nom'],
+                    $row['adm_email'],
+                    $row['adm_mdp']
+                );
+            }
+        }
+
+        return $result;
+    }
+
+
 }

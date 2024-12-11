@@ -62,9 +62,9 @@ VALUES
 ('2024-11-24', 16.0, 15.5, 'Sujet solide, recherche approfondie', 'Blockchain et sécurité', 5),
 ('2024-11-25', 14.5, 14.0, 'Bon travail avec des pistes d’amélioration', 'Les architectures serverless', 6);
 
-INSERT INTO Alerte (alerte_date_visite_entreprise, alerte_date_note_bilan1, alerte_date_sujet_memoire, alerte_date_note_bilan2)
+INSERT INTO Alerte (alerte_date_visite_entreprise, alerte_date_sujet_memoire, alerte_date_note_bilan2)
 VALUES 
-('2024-11-10', '2024-11-25', '2024-11-30', '2024-12-15');
+('2024-11-10', '2024-11-30', '2024-12-15');
 
 INSERT INTO Administrateur (adm_pre, adm_nom, adm_email, adm_mdp)
 VALUES 
