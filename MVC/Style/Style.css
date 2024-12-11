@@ -82,25 +82,32 @@ nav {
 
 }
 
-/*LOGINNNN*/
+body.login-page {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #7aa97d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
 
-/* Conteneur principal de la page de connexion */
-.login-page .login-container {
+.login-container {
     display: flex;
     width: 900px;
     height: 500px;
-    background-color: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: #f4f5f5;
+    border-radius: 25px;
     overflow: hidden;
-    margin: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-/* Partie gauche - Informations principales */
-.login-page .login-left {
+.login-left {
     width: 50%;
-    background-color: #7aa97d;
-    color: #ffffff;
+    background-color: #f4f5f5;
+    color: #333;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -109,90 +116,117 @@ nav {
     padding: 20px;
 }
 
-.login-page .login-left img {
-    width: 120px;
+.login-left img {
+    width: 200px;
     height: auto;
     margin-bottom: 20px;
 }
 
-.login-page .login-left h1 {
-    font-size: 28px;
+.login-left h1 {
+    font-size: 32px;
     font-weight: 700;
-    margin: 0;
+    color: #333;
 }
 
-/* Partie droite - Formulaire de connexion */
-.login-page .login-right {
+.login-right {
     width: 50%;
-    background-color: #fafef5;
+    background-color: #7aa97d;
+    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 40px;
-    text-align: center;
+    border-top-left-radius: 150px;
+    border-bottom-left-radius: 150px;
+    position: relative;
 }
 
-.login-page .login-right h2 {
-    font-size: 20px;
+.login-right::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f5f5;
+    border-top-left-radius: 150px;
+    border-bottom-left-radius: 150px;
+    z-index: -1;
+}
+
+.login-right h2 {
+    font-size: 24px;
     font-weight: 700;
     margin-bottom: 10px;
 }
 
-.login-page .login-right p {
+.login-right p {
     font-size: 16px;
     margin-bottom: 20px;
 }
 
-/* Formulaire de connexion */
-.login-page .login-form {
+.login-form {
     width: 100%;
     max-width: 300px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.login-page .login-form label {
+.login-form label {
     font-size: 14px;
     font-weight: 600;
     color: #333;
     text-align: left;
 }
 
-.login-page .login-form input {
-    width: 100%;
-    padding: 10px;
+.login-form input {
+    width: 80%;
+    padding: 8px;
     font-size: 14px;
     border: 1px solid #ccc;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
-
-/* Bouton de connexion */
-.login-page .login-button {
+.login-button {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     font-weight: 700;
     color: #ffffff;
-    background-color: #7aa97d;
+    background-color: #4d774e;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
 }
 
-.login-page .login-button:hover {
-    background-color: #5a845d;
+.login-button:hover {
+    background-color: #3a5c3a;
 }
 
-/* Message d'erreur */
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 10px;
-    text-align: center;
+@media (max-width: 768px) {
+    .login-container {
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+    }
+
+    .login-left, .login-right {
+        width: 100%;
+        border-radius: 0;
+        padding: 20px;
+    }
+
+    .login-right {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
 }
 
 /*TABLE PAGE LIST ALERTE TUTEUR*/
