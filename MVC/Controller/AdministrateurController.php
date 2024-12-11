@@ -76,6 +76,7 @@ class AdministrateurController
         header("Location: ../../index.php?error=" . urlencode($message));
         exit;
     }
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {

@@ -194,3 +194,34 @@ nav {
     text-align: center;
 }
 
+/*TABLE PAGE LIST ALERTE TUTEUR*/
+.Subtitle{
+    margin-top: 5%;
+    margin-left: 5%;
+    font-family: Inter;
+    font-size: 50px;
+}
+.TablePage{
+    width: 150%;
+    margin-left: 5%;
+    margin-bottom: 35%;
+
+    table{
+        width: 50%;
+        border-collapse: collapse;
+        background-color: #6ab06d;
+        color: white;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid white;
+        font-family: Inter ;
+    }
+    th {
+        background-color: #548b54;
+    }
+    tr:nth-child(even) {
+        background-color: #66a866;
+    }
+}

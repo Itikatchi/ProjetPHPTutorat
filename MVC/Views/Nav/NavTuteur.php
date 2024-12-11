@@ -20,7 +20,7 @@
         <a href="#">
             <img src="../Image/utilisateurs-alt.svg" alt="">
         </a>
-        <a href="#">
+        <a href="../Controller/TuteurController.php?action=alerte">
             <img src="../Image/cloche.svg" alt="">
         </a>
         <a href="#">

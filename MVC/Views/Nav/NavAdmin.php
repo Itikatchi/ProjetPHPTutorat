@@ -17,13 +17,13 @@
         <a href="#">
             <img src="../Image/reception.svg" alt="">
         </a>
-        <a href="../Controller/AdministrateurController.php?action=listeetudiants">
+        <a href="../Controller/AdministrateurController.php?action=listeetudiants"">
             <img src="../Image/utilisateurs-alt.svg" alt="Liste des étudiants">
         </a>
 
         </a>
-        <a href="#">
-            <img src="../Image/cloche.svg" alt="">
+        <a href="../Controller/AdministrateurAlerteController.php?action=alerte"">
+            <img src="../Image/cloche.svg" alt="Alerte">
         </a>
         <a href="#">
 
