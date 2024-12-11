@@ -71,11 +71,14 @@ var_dump($test2);
 $test3 = $entDao->delete($Entrepise2);
 var_dump($test3);
 
-/*
+*/
 echo '------------------------------------ Tuteur -------------------------------';
 $bdd = initialiseConnexionBDD();
 $tuteurDao = new TuteurDAO($bdd);
 var_dump($tuteurDao);
+$tut = $tuteurDao->authentification("marie.curie@example.com","password123");
+var_dump($tut);
+/*
 var_dump($tuteurDao->find(1));
 
 var_dump($tuteurDao->getAll());
@@ -148,7 +151,9 @@ var_dump($test3);
 echo '------------------------------------ Admin -------------------------------';
 $bdd = initialiseConnexionBDD();
 $AdminDAO = new AdministrateurDAO($bdd);
-var_dump($AdminDAO);
+$admin = $AdminDAO->authentification("sysadmin@example.com","syssecure");
+var_dump($admin);
+/*var_dump($AdminDAO);
 $cla1 = ($AdminDAO->find(2));
 var_dump($cla1);
 var_dump($AdminDAO->getAll());
@@ -162,7 +167,8 @@ $classe2 = new Administrateur(3,"chevale","Admin3","Admin@gmail.com","adminoo");
 $test2 = $AdminDAO->update($classe2);
 var_dump($test2);
 $test3 = $AdminDAO->delete($cla1);
-var_dump($test3);*/
+var_dump($test3);
+
 /*
 echo '------------------------------------ Bilan1 -------------------------------';
 $bdd = initialiseConnexionBDD();
@@ -212,13 +218,13 @@ var_dump($bilan3);
 $bil2 = new Bilan2("Maxime homo sapiens ou homo herectus",$date,4,"Une vrai remar", 2, 20, $etu);
 $bilan3 = $Bilan2DAo->update($bil2);
 var_dump($bilan3);
-*/
+
 
 echo '------------------------------------ Etudiant -------------------------------';
 $bdd = initialiseConnexionBDD();
 $EtudiantDAO = new EtduiantDAO($bdd);
 var_dump($EtudiantDAO);
-$stud = $EtudiantDAO->authentification("julie.martin@example.com","julie2023");
+$stud = $EtudiantDAO->authentification("a@a","test");
 var_dump($stud);
 /*
 $spec1 = $EtudiantDAO->find(1);

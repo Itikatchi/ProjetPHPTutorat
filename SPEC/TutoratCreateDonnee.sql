@@ -91,7 +91,6 @@ CREATE TABLE Bilan2 (
 CREATE TABLE Alerte (
     alerte_id INT AUTO_INCREMENT,
     alerte_date_visite_entreprise DATE,
-    alerte_date_note_bilan1 DATE,
     alerte_date_sujet_memoire DATE,
     alerte_date_note_bilan2 DATE,
     CONSTRAINT alerte_pk PRIMARY KEY(alerte_id)

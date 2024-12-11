@@ -15,17 +15,17 @@
 <nav>
     <div class="nav-bar">
         <a href="#">
-            <img src="./MVC/Image/reception.svg" alt="">
+            <img src="../Image/reception.svg" alt="">
         </a>
         <a href="#">
-            <img src="./MVC/Image/utilisateurs-alt.svg" alt="">
+            <img src="../Image/utilisateurs-alt.svg" alt="">
         </a>
         <a href="#">
-            <img src="./MVC/Image/cloche.svg" alt="">
+            <img src="../Image/cloche.svg" alt="">
         </a>
         <a href="#">
 
-            <img src="#" alt="">
+            <img src="../Image/parametres-curseurs.svg" alt="">
         </a>
 
     </div>

@@ -112,4 +112,36 @@ class TuteurDAO extends DAO {
         }
         return $result;
     }
+
+    public function authentification($email, $mdp): ?Tuteur
+    {
+        $result = null;
+        $query = "SELECT * FROM Tuteur WHERE tut_email = :email AND tut_mdp = :mdp;";
+        $stmt = $this->bdd->prepare($query);
+        $r = $stmt->execute([
+            'email' => $email,
+            'mdp' => $mdp
+        ]);
+
+        if ($r !== false) {
+            $row = ($tmp = $stmt->fetch(PDO::FETCH_ASSOC)) ? $tmp : null;
+
+            if (!is_null($row)) {
+                $result = new Tuteur(
+                    $row['tut_tel'],
+                    $row['tut_nb_etu_actu'],
+                    $row['tut_id'],
+                    $row['tut_nom'],
+                    $row['tut_pre'],
+                    $row['tut_email'],
+                    $row['tut_mdp']
+                );
+            }
+        }
+
+        return $result;
+    }
+
+
+
 }

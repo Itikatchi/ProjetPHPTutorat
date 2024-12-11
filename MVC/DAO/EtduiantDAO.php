@@ -252,7 +252,7 @@ class EtduiantDAO extends DAO
 
         return $result;
     }
-    public function authentification($email,$mdp): object
+    public function authentification($email, $mdp): ?object
     {
         $result = null;
         $query = "SELECT * FROM Etudiant WHERE etu_email = :email AND etu_mdp = :mdp;";
@@ -261,52 +261,60 @@ class EtduiantDAO extends DAO
             'email' => $email,
             'mdp' => $mdp
         ]);
+
         if ($r !== false) {
-            $row = ($tmp = $stmt->fetch(PDO::FETCH_ASSOC)) ? $tmp : null;
-            if (!is_null($row)) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($row) {
                 $tuteur = null;
-                if (isset($row['tut_id'])) {
+                if (!empty($row['tut_id'])) {
                     $tuteurModel = new TuteurDAO($this->bdd);
                     $tuteur = $tuteurModel->find($row['tut_id']);
-                }else{
-                    $tuteur = null;
                 }
+
                 $entreprise = null;
-                if (isset($row['ent_id'])) {
+                if (!empty($row['ent_id'])) {
                     $entrepriseModel = new EntrepriseDAO($this->bdd);
                     $entreprise = $entrepriseModel->find($row['ent_id']);
                 }
-                else{
-                    $entreprise = null;
-                }
+
                 $specialite = null;
-                if (isset($row['spe_id'])) {
+                if (!empty($row['spe_id'])) {
                     $specialiteModel = new SpecialiteDAO($this->bdd);
                     $specialite = $specialiteModel->find($row['spe_id']);
                 }
-                else{
-                    $specialite = null;
-                }
+
                 $classe = null;
-                if (isset($row['classe_id'])) {
+                if (!empty($row['classe_id'])) {
                     $classeModel = new ClasseDAO($this->bdd);
                     $classe = $classeModel->find($row['classe_id']);
                 }
-                else{
-                    $classe = null;
-                }
+
                 $maitreappre = null;
-                if (isset($row['maitre_appr_id'])) {
+                if (!empty($row['maitre_appr_id'])) {
                     $maitreappreModel = new MaitreApprentissageDAO($this->bdd);
                     $maitreappre = $maitreappreModel->find($row['maitre_appr_id']);
                 }
-                else{
-                    $maitreappre = null;
-                }
-                $result = new Etudiant($tuteur,$specialite,$classe,$maitreappre,$entreprise,$row['etu_id'],$row['etu_nom'],$row['etu_pre'],$row['etu_email'],$row['etu_mdp'],$row['etu_tel'],$row['etu_adr'],$row['etu_cp'],$row['etu_ville']);
 
+                $result = new Etudiant(
+                    $tuteur,
+                    $specialite,
+                    $classe,
+                    $maitreappre,
+                    $entreprise,
+                    $row['etu_id'],
+                    $row['etu_nom'],
+                    $row['etu_pre'],
+                    $row['etu_email'],
+                    $row['etu_mdp'],
+                    $row['etu_tel'],
+                    $row['etu_adr'],
+                    $row['etu_cp'],
+                    $row['etu_ville']
+                );
             }
         }
+
         return $result;
     }
+
 }
