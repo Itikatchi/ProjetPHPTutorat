@@ -19,7 +19,7 @@
     </div>
     <div class="Description">
         <p>
-            Bienvenue dans votre espace administrateur.
+            Cette partie est réserver à l'administration afin de pouvoir Administrer l'application de tutorat
         </p>
         <img src="../Image/FSI_logo.png" alt="Logo">
     </div>
