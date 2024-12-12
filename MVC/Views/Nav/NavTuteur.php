@@ -23,7 +23,8 @@
         <a href="../Controller/TuteurController.php?action=alerte">
             <img src="../Image/cloche.svg" alt="">
         </a>
-        <a href="#">
+
+        <a href="../Controller/TuteurController.php?action=mesinfo">
 
             <img src="../Image/parametres-curseurs.svg" alt="">
         </a>

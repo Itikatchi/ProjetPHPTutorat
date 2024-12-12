@@ -67,6 +67,23 @@ class TuteurController
         }
     }
 
+    public function mesinfo()
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $logtut = $_SESSION['id'];
+
+            $bdd = initialiseConnexionBDD();
+            $tutDAO = new TuteurDAO($bdd);
+            $tuteur = $tutDAO->find($logtut);
+
+            include "../Views/Nav/NavTuteur.php";
+            include "../Views/MesInformationsTuteur.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
     private function ensureLoggedInAs($role)
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -142,6 +159,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             case 'alerte':
                 $controller->alerte();
+                break;
+
+            case 'mesinfo':
+                $controller->mesinfo();
                 break;
 
             case 'listeetudiants':
