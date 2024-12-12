@@ -7,6 +7,7 @@ body{
     display: flex;
     align-items: center;
     background: var(--theme-1);
+    font-family: Inter;
 }
 nav {
     margin-left: 40px;
@@ -331,12 +332,31 @@ body.login-page {
 }
 
 .InfosEntreprise {
+    font-family: Inter;
     background-color: var(--theme-2);
     border: 1px solid var(--theme-2);
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
+}
+.InfoSujetMemoire {
+    font-family: Inter;
+    background-color: var(--theme-2);
+    border: 1px solid var(--theme-2);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    h2{
+        margin-bottom: 1%;
+    }
+
+}
+.Buttondown {
+
+    align-self: flex-end;
+    display: flex;
+    gap: 20px;
 }
 
 .InfosEntreprise h2 {
@@ -376,3 +396,4 @@ body.login-page {
     font-family: Inter;
 
 }
+

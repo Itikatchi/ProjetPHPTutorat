@@ -154,6 +154,8 @@ class EtduiantDAO extends DAO
     }
     public function find(int $id): object
     {
+        $bil1DAO = new Bilan1DAO($this->bdd);
+        $bil2DAO = new Bilan2DAO($this->bdd);
         $result = null;
         $query = "SELECT * FROM Etudiant WHERE etu_id = :etu_id";
         $stmt = $this->bdd->prepare($query);
@@ -202,8 +204,21 @@ class EtduiantDAO extends DAO
                 else{
                     $maitreappre = null;
                 }
-                $result = new Etudiant($tuteur,$specialite,$classe,$maitreappre,$entreprise,$row['etu_id'],$row['etu_nom'],$row['etu_pre'],$row['etu_email'],$row['etu_mdp'],$row['etu_tel'],$row['etu_adr'],$row['etu_cp'],$row['etu_ville']);
+                $res = new Etudiant($tuteur,$specialite,$classe,$maitreappre,$entreprise,$row['etu_id'],$row['etu_nom'],$row['etu_pre'],$row['etu_email'],$row['etu_mdp'],$row['etu_tel'],$row['etu_adr'],$row['etu_ville'],$row['etu_cp']);
 
+                $bil1 = $bil1DAO->getallBilan1ByEleve($res);
+                if ($bil1 == null){
+                    $bil1 = [];
+                }
+                $res->setMesBilan1($bil1);
+
+
+                $bil2 = $bil2DAO->getallBilan2ByEleve($res);
+                if ($bil2 == null){
+                    $bil2 = [];
+                }
+                $res->setMesBilan2($bil2);
+                $result = $res;
             }
         }
         return $result;
@@ -211,6 +226,9 @@ class EtduiantDAO extends DAO
 
     public function getAll(): array
     {
+        $result = [];
+        $bil1DAO = new Bilan1DAO($this->bdd);
+        $bil2DAO = new Bilan2DAO($this->bdd);
         $query = "SELECT * FROM Etudiant";
         $stmt = $this->bdd->query($query);
         if ($stmt) {
@@ -255,7 +273,20 @@ class EtduiantDAO extends DAO
                 else{
                     $maitreappre = null;
                 }
-                $result[] = new Etudiant($tuteur,$specialite,$classe,$maitreappre,$entreprise,$row['etu_id'],$row['etu_nom'],$row['etu_pre'],$row['etu_email'],$row['etu_mdp'],$row['etu_tel'],$row['etu_adr'],$row['etu_cp'],$row['etu_ville']);
+                $res = new Etudiant($tuteur,$specialite,$classe,$maitreappre,$entreprise,$row['etu_id'],$row['etu_nom'],$row['etu_pre'],$row['etu_email'],$row['etu_mdp'],$row['etu_tel'],$row['etu_adr'],$row['etu_ville'],$row['etu_cp']);
+                $bil1 = $bil1DAO->getallBilan1ByEleve($res);
+                if ($bil1 == null){
+                    $bil1 = [];
+                }
+                $res->setMesBilan1($bil1);
+
+
+                $bil2 = $bil2DAO->getallBilan2ByEleve($res);
+                if ($bil2 == null){
+                    $bil2 = [];
+                }
+                $res->setMesBilan2($bil2);
+                $result[] = $res;
             }
         } else {
             $result = [null] ;

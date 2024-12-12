@@ -143,10 +143,6 @@ class Bilan2DAO extends DAO
         if ($stmt){
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             foreach ($stmt as $row) {
-                if (isset($row['etu_id'])) {
-                    $etudiantmodel = new EtduiantDAO($this->bdd);
-                    $etudiant = $etudiantmodel->find($row['etu_id']);
-                }
                 if($row['bil2_date'] != null){
                     $result[] = new Bilan2($row['bil2_sujet_memoire'], new DateTime($row['bil2_date']),$row['bil2_id'],$row['bil2_remarques'],$row['bil2_note_dossier'],$row['bil2_note_oral'],$etudiant);
                 }

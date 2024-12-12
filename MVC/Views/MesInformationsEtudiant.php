@@ -13,8 +13,9 @@
 </head>
 <body>
 <div class="MainContainerEtudiant">
+    <?php if (!empty($etudiant) ) : ?>
     <div class="MainTitleEtudiant">
-        <h1>Elève</h1>
+        <h1><?= htmlspecialchars($etudiant->getNomUti())?> <?= htmlspecialchars($etudiant->getPreNomUti()) ?></h1>
     </div>
 
     <div class="DescriptionEtudiant">
@@ -23,11 +24,11 @@
         </h2>
 
         <br>
-        <?php if (!empty($etudiant) ) : ?>
+
         <p>
             Nom et prénom : <?= htmlspecialchars($etudiant->getNomUti())?> <?= htmlspecialchars($etudiant->getPreNomUti()) ?><br><br>
             Numéro de téléphone : <?= htmlspecialchars($etudiant->getEtuTel())?><br><br>
-            Adresse : <?= htmlspecialchars($etudiant->getEtuAdr())?><br><br>
+            Adresse : <?= htmlspecialchars($etudiant->getEtuAdr()) ?> <?= htmlspecialchars($etudiant->getEtuVille()) ?> <?= htmlspecialchars($etudiant->getEtuCp()) ?><br><br>
             Classe : <?= htmlspecialchars($etudiant->getMaClasse()->getNomCla())?><br><br>
             Mail : <?= htmlspecialchars($etudiant->getEmailUti())?><br>
         </p>

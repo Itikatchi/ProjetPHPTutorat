@@ -25,6 +25,7 @@
             <tr>
                 <th>Motif d’alerte</th>
                 <th>Nom de la personne</th>
+                <th>Nom du Tuteur</th>
                 <th>Date de rendu initiale</th>
             </tr>
             </thead>
@@ -34,6 +35,7 @@
                     <tr>
                         <td>RETARD BILAN 1</td>
                         <td><?= htmlspecialchars($etudiant->getPrenomUti())?> <?= htmlspecialchars($etudiant->getNomUti())?></td>
+                        <td><?= htmlspecialchars($etudiant->getMonTuteur()->getNomUti())?></td>
                         <td><?= ($alerteDATE->getDateVisiteEnt())->format('d/m/Y') ?></td>
                     </tr>
                 <?php endforeach; ?>
@@ -41,6 +43,7 @@
                     <tr>
                         <td>RETARD BILAN 2</td>
                         <td><?= htmlspecialchars($etudiant->getPrenomUti())?> <?= htmlspecialchars($etudiant->getNomUti())?></td>
+                        <td><?= htmlspecialchars($etudiant->getMonTuteur()->getNomUti())?></td>
                         <td><?= ($alerteDATE->getDatLimBil2())->format('d/m/Y')?></td>
                     </tr>
                 <?php endforeach; ?>
@@ -48,8 +51,8 @@
                     <tr>
                         <td>RETARD CHOIX SUJET MEMOIRE</td>
                         <td><?= htmlspecialchars($etudiant->getPrenomUti())?> <?= htmlspecialchars($etudiant->getNomUti())?></td>
+                        <td><?= htmlspecialchars($etudiant->getMonTuteur()->getNomUti())?></td>
                         <td><?= ($alerteDATE->getDateSujMemoire())->format('d/m/Y')?></td>
-
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>

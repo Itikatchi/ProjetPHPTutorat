@@ -20,6 +20,8 @@
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>Email</th>
+                <th>Classe</th>
+
                 <th>Plus de Details</th>
             </tr>
             </thead>
@@ -31,7 +33,8 @@
                         <td><?= htmlspecialchars($etudiant->getNomUti()) ?></td>
                         <td><?= htmlspecialchars($etudiant->getPrenomUti()) ?></td>
                         <td><?= htmlspecialchars($etudiant->getEmailUti()) ?></td>
-                        <td><a href="#">Details</a> </td>
+                        <td><?= htmlspecialchars($etudiant->getMaClasse()->getNomCla()) ?></td>
+                        <td><a href="./AdministrateurController.php?action=detail&id=<?=htmlspecialchars($etudiant->getIduti()) ?>">Details</a> </td>
                     </tr>
                 <?php endforeach; ?>
             <?php else : ?>

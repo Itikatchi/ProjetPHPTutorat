@@ -147,10 +147,6 @@ class Bilan1DAO extends DAO
         if ($stmt){
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             foreach ($stmt as $row) {
-                if (isset($row['etu_id'])) {
-                    $etudiantmodel = new EtduiantDAO($this->bdd);
-                    $etudiant = $etudiantmodel->find($row['etu_id']);
-                }
                 if($row['bil1_date_visite_ent'] != null){
                     $result[] = new Bilan1($row['bil1_note_entreprise'], new DateTime($row['bil1_date_visite_ent']),$row['bil1_id'],$row['bil1_remarques'],$row['bil1_note_dossier'],$row['bil1_note_oral'],$etudiant);
                 }else

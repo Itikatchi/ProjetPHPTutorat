@@ -129,6 +129,26 @@ class AdministrateurController
         exit;
     }
 
+    public function details($id)
+    {
+        if (!$id) {
+            throw new \Exception("Un ID valide est requis pour afficher les détails.");
+        }
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiant = $etudiantsDAO->find($id);
+
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageDetailEtudiant.php";
+        } catch (\Exception $e) {
+
+        }
+    }
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -146,6 +166,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             case 'alerte':
                 $controller->alerte();
                 break;
+            case 'detail':
+                $id = intval($_GET['id']);
+                $controller->details($id);
+                break;
+
+
 
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));

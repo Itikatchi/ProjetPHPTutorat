@@ -196,22 +196,24 @@ var_dump($bilan3);
 
 
 
-
+*/
+/*
 echo '------------------------------------ Bilan2 -------------------------------';
 $bdd = initialiseConnexionBDD();
 $Bilan2DAo = new Bilan2DAO($bdd);
 var_dump($Bilan2DAo);
-$bilan1 = $Bilan2DAo->find(5);
-$bil = $Bilan2DAo->delete($bilan1);
-var_dump($bil);
-/*
 
-$bilan1 = $Bilan2DAo->getallBilan2ByEleve($etu);
-var_dump($bilan1);
+//$bilan1 = $Bilan2DAo->find(5);
+//$bil = $Bilan2DAo->delete($bilan1);
+//var_dump($bil);
+
+
 
 $etudiant = new EtduiantDAO($bdd);
-$etu = $etudiant->find(5);
-
+$etu = $etudiant->find(4);
+$bilan1 = $Bilan2DAo->getallBilan2ByEleve($etu);
+var_dump($bilan1);
+/*
 $date = new DateTime('now');
 $bil1 = new Bilan2("Les chauves ",$date,0,"Une vrai remarque", 2, 20, $etu);
 $bilan3 = $Bilan2DAo->create($bil1);
@@ -220,13 +222,14 @@ $bil2 = new Bilan2("Maxime homo sapiens ou homo herectus",$date,4,"Une vrai rema
 $bilan3 = $Bilan2DAo->update($bil2);
 var_dump($bilan3);
 */
-/*
+
 echo '------------------------------------ Etudiant -------------------------------';
 $bdd = initialiseConnexionBDD();
 $EtudiantDAO = new EtduiantDAO($bdd);
 var_dump($EtudiantDAO);
-$stud = $EtudiantDAO->();
-var_dump();
+$stud = $EtudiantDAO->getAll();
+var_dump($stud[0]);
+
 /*
 $spec1 = $EtudiantDAO->find(1);
 //var_dump($EtudiantDAO->getAll());
@@ -234,6 +237,7 @@ $test1 = $EtudiantDAO->delete($spec1);
 $student = new Etudiant();
 var_dump($test1);
 */
+/*
 echo '-----------------ALERTE--------------------';
 $bdd = initialiseConnexionBDD();
 $AlertDAO = new AlerteDAO($bdd);
@@ -241,4 +245,4 @@ var_dump($AlertDAO);
 $tut = new TuteurDAO($bdd);
 $tuteur = $tut->find(3);
 $stud = $AlertDAO->getAllall2();
-var_dump($stud);
+var_dump($stud);*/
