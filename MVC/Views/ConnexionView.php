@@ -12,17 +12,20 @@
 </head>
 <body class="login-page">
 <div class="login-container">
-    <!-- Partie gauche -->
+
     <div class="login-left">
         <img src="./MVC/Image/FSI_logo.png" alt="Logo FSI">
         <h1>GESTION DU TUTORAT</h1>
     </div>
 
-    <!-- Partie droite -->
+
     <div class="login-right">
         <h2>Bienvenue !</h2>
         <p>Login your account !</p>
         <form method="POST" action="./MVC/Controller/LoginController.php" class="login-form">
+            <?php if (isset($_GET['error'])): ?>
+                <p class="error-message"> <?php echo htmlspecialchars($_GET['error']); ?> </p>
+            <?php endif; ?>
             <label for="email">Login</label>
             <input type="email" id="email" name="email" placeholder="Votre email" required>
 
