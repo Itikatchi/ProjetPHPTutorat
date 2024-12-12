@@ -38,28 +38,28 @@
     <div class="InfoSujetMemoire">
         <h2>Sujet de memoire :</h2>
         <?php
-        $bil = $etudiant->getMesBilan2();
-        foreach ($bil as $bilan) {
-            echo(htmlspecialchars($bilan->getSujBil()));
-        }
+            $bil = $etudiant->getMesBilan2();
+            foreach ($bil as $bilan) {
+                if ($s = $bilan->getSujBil()){
+                    echo(htmlspecialchars($s));
+                }else{
+                    echo("L'etudiant n'a pas encore de sujet !");
+                }
+            }
         ?>
         <br>
-
     </div>
     <div class="boutonModifMDP">
-        <button class="boutonModifBilan">Les Bilans</button>
+        <button class="boutonModifBilan"><a href="">Les Bilans</a></button>
     </div>
     <div class="Buttondown">
         <div class="boutonModifMDP">
-            <button class="boutonBack">Retour</button>
+            <button class="boutonBack"><a href="">Retour</a></button>
         </div>
         <div class="boutonModifMDP">
             <button class="BoutonModifElem"><a href=""> Modifier les elements</a></button>
         </div>
-
     </div>
-
-
 </div>
 
 <?php endif; ?>
