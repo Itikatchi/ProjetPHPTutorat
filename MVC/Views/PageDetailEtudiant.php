@@ -54,7 +54,7 @@
     </div>
     <div class="Buttondown">
         <div class="boutonModifMDP">
-            <button class="boutonBack"><a href="">Retour</a></button>
+            <button class="boutonBack"><a href="./AdministrateurController.php?action=listeetudiants">Retour</a></button>
         </div>
         <div class="boutonModifMDP">
             <button class="BoutonModifElem"><a href=""> Modifier les elements</a></button>

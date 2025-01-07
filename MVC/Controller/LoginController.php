@@ -81,6 +81,7 @@ class LoginController
         }
 
 
+
         $_SESSION['id'] = $user->getIdUti();
         $_SESSION['Prenom'] = $user->getPrenomUti();
         $_SESSION['Nom'] = $user->getNomUti();

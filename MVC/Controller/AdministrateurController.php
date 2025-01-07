@@ -159,7 +159,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             case 'dashboard':
                 $controller->dashboard();
                 break;
-
             case 'listeetudiants':
                 $controller->listeEtudiants();
                 break;
