@@ -1,10 +1,9 @@
 <?php
+
 namespace Controller;
 
 
 
-
-use BO\Etudiant;
 use DAO\Bilan1DAO;
 use DAO\Bilan2DAO;
 use DAO\EntrepriseDAO;
@@ -16,6 +15,7 @@ use DAO\ClasseDAO;
 use DAO\AdministrateurDAO;
 use DAO\AlerteDAO;
 
+use BO\Etudiant;
 use BO\Tuteur;
 use BO\Specialite;
 use BO\Entreprise;
@@ -27,6 +27,7 @@ use BO\Bilan2;
 use DateTime;
 
 use BO\Alerte;
+
 require_once "../BDDManager.php";
 
 require_once "../DAO/Bilan2DAO.php";
@@ -49,6 +50,7 @@ require_once "../BO/Administrateur.php";
 require_once "../BO/Tuteur.php";
 require_once "../BO/Classe.php";
 require_once "../BO/Alerte.php";
+
 class AdministrateurController
 {
     public function dashboard()
@@ -66,32 +68,32 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
+
     public function alerte()
     {
-    try {
-        $this->ensureLoggedInAs('administrateur');
-        $logtut = $_SESSION['id'];
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $logtut = $_SESSION['id'];
 
-        $bdd = initialiseConnexionBDD();
-        $tut = new TuteurDAO($bdd);
-        $tuteur = $tut->find($logtut);
-        $ale = new AlerteDAO($bdd);
+            $bdd = initialiseConnexionBDD();
+            $tut = new TuteurDAO($bdd);
+            $tuteur = $tut->find($logtut);
+            $ale = new AlerteDAO($bdd);
 
-        $alerteDATE = $ale->find(1);
-        $alerte  = $ale->getAllall1();
-        $alerte2 = $ale->getAllall2();
-        $alerte3 = $ale->getAllall3();
-
-
+            $alerteDATE = $ale->find(1);
+            $alerte = $ale->getAllall1();
+            $alerte2 = $ale->getAllall2();
+            $alerte3 = $ale->getAllall3();
 
 
-        include "../Views/Nav/NavAdmin.php";
-        include "../Views/PageListeAlerteAdmin.php";
-    } catch (\Exception $e) {
-        $this->redirectWithError($e->getMessage());
-    }
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageListeAlerteAdmin.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
 
     }
+
     public function listeEtudiants()
     {
         try {
@@ -149,6 +151,28 @@ class AdministrateurController
         }
     }
 
+    public function bilanetud($id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiants = $etudiantsDAO->find($id);
+
+            $Bilan1Dao = new Bilan1DAO($bdd);
+            $bilan1 = $Bilan1Dao->getallBilan1ByEleve($etudiants);
+
+            $Bilan2Dao = new Bilan2DAO($bdd);
+            $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageBilanEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -169,9 +193,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = intval($_GET['id']);
                 $controller->details($id);
                 break;
-
-
-
+            case 'bilanetud':
+                $id = intval($_GET['id']);
+                $controller->bilanetud($id);
+                break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
         }

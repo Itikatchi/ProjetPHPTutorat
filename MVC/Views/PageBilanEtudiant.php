@@ -26,13 +26,21 @@
             </tr>
             </thead>
             <tbody>
-            <?php if (!empty($alerte) || !empty($alerteDATE)) : ?>
-                <?php foreach ($alerte as $etudiant) : ?>
+            <?php if (!empty($etudiants)|| !empty($bilan1)) : ?>
+
                     <tr>
-                        <td><?= htmlspecialchars($etudiant->getPrenomUti())?> <?= htmlspecialchars($etudiant->getNomUti())?></td>
-                        <td><?= $alerteDATE->getDatLimBil2()->format('Y')?></td>
+                        <td><?= htmlspecialchars($etudiants->getPrenomUti())?> <?= htmlspecialchars($etudiants->getNomUti())?></td>
+                        <td><?php
+                            foreach ($bilan1 as $bilan) {
+                                if ($bilan->getDatVisEnt() != null) {
+                                    echo($bilan->getDatVisEnt()->format('Y'));
+                                }else{
+                                    echo("L'etudiant n'a pas de premier bilan.");
+                                }
+                            }
+                            ?></td>
                         <td><a href="./AdministrateurController.php?action=detailBilan&id=<?php
-                            $bil = $etudiant->getMesBilan1();
+                            $bil = $etudiants->getMesBilan1();
                             foreach ($bil as $bilan) {
                                 if ($s = $bilan->getIdBil()){
                                     echo(htmlspecialchars($s));
@@ -42,10 +50,10 @@
                             }
                             ?>">Details</a></td>
                     </tr>
-                <?php endforeach; ?>
+
             <?php else : ?>
                 <tr>
-                    <td colspan="4">Aucune alerte trouvé.</td>
+                    <td colspan="4">Aucune Bilan trouvé.</td>
                 </tr>
             <?php endif; ?>
             </tbody>
@@ -61,13 +69,21 @@
             </tr>
             </thead>
             <tbody>
-            <?php if (!empty($alerte) || !empty($alerteDATE)) : ?>
-                <?php foreach ($alerte as $etudiant) : ?>
+            <?php if (!empty($etudiants) || !empty($bilan2)) : ?>
+
                     <tr>
-                        <td><?= htmlspecialchars($etudiant->getPrenomUti())?> <?= htmlspecialchars($etudiant->getNomUti())?></td>
-                        <td><?= $alerteDATE->getDatLimBil2()->format('Y')?></td>
+                        <td><?= htmlspecialchars($etudiants->getPrenomUti())?> <?= htmlspecialchars($etudiants->getNomUti())?></td>
+                        <td><?php
+                            foreach ($bilan2 as $bilan) {
+                                if ($bilan->getDatBil2() != null) {
+                                    echo($bilan->getDatBil2()->format('Y'));
+                                } else {
+                                    echo("L'etudiant n'a pas de second bilan.");
+                                }
+                            }
+                            ?></td>
                         <td><a href="./AdministrateurController.php?action=detailBilan&id=<?php
-                            $bil = $etudiant->getMesBilan2();
+                            $bil = $etudiants->getMesBilan2();
                             foreach ($bil as $bilan) {
                                 if ($s = $bilan->getIdBil()){
                                     echo(htmlspecialchars($s));
@@ -77,10 +93,10 @@
                             }
                             ?>">Details</a></td>
                     </tr>
-                <?php endforeach; ?>
+
             <?php else : ?>
                 <tr>
-                    <td colspan="4">Aucune alerte trouvé.</td>
+                    <td colspan="4">Aucune Bilan trouvé.</td>
                 </tr>
             <?php endif; ?>
             </tbody>

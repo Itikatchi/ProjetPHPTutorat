@@ -31,7 +31,7 @@ class Bilan1 extends Bilan
         $this->notEnt = $notEnt;
     }
 
-    public function getDatVisEnt(): DateTime
+    public function getDatVisEnt(): ?DateTime
     {
         return $this->datVisEnt;
     }

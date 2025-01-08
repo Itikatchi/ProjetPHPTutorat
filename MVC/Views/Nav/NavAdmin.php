@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="./MVC/Style/reset.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet"
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 <nav>
@@ -18,12 +19,12 @@
             <img src="../Image/reception.svg" alt="">
         </a>
         <a href="../Controller/AdministrateurController.php?action=listeetudiants"">
-            <img src="../Image/utilisateurs-alt.svg" alt="Liste des étudiants">
+        <img src="../Image/utilisateurs-alt.svg" alt="Liste des étudiants">
         </a>
 
         </a>
         <a href="../Controller/AdministrateurController.php?action=alerte"">
-            <img src="../Image/cloche.svg" alt="Alerte">
+        <img src="../Image/cloche.svg" alt="Alerte">
         </a>
         <a href="#">
 

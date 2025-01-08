@@ -397,3 +397,31 @@ body.login-page {
 
 }
 
+/* PAGE BILAN ETUDIANT */
+.BilanPageConsultation  {
+    width: 150%;
+    margin-left: 5%;
+    margin-bottom: 35%;
+
+
+    table{
+        width: 50%;
+        border-collapse: collapse;
+        background-color: #6ab06d;
+        color: white;
+        table-layout: fixed;
+    }
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid white;
+        font-family: Inter ;
+        text-overflow: ellipsis;
+    }
+    th {
+        background-color: #548b54;
+    }
+    tr:nth-child(even) {
+        background-color: #66a866;
+    }
+}
