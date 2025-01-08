@@ -1,6 +1,8 @@
 <?php
 namespace Controller;
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 use BO\Etudiant;
@@ -147,6 +149,72 @@ class TuteurController
             $this->redirectWithError($e->getMessage());
         }
     }
+    public function modifierInfos()
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $logtut = $_SESSION['id'];
+
+            $bdd = initialiseConnexionBDD();
+            $tutDAO = new TuteurDAO($bdd);
+            $tuteur = $tutDAO->find($logtut);
+
+            if (!$tuteur) {
+                throw new \Exception("Tuteur non trouvé.");
+            }
+
+            include "../Views/ModifierInformationsTuteur.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveInfos()
+    {
+        echo "Méthode saveInfos appelée";
+
+
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $logtut = $_SESSION['id'];
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $nom = htmlspecialchars($_POST['nom']);
+                $prenom = htmlspecialchars($_POST['prenom']);
+                $telephone = htmlspecialchars($_POST['telephone']);
+                $email = htmlspecialchars($_POST['email']);
+
+                $bdd = initialiseConnexionBDD();
+                $tutDAO = new TuteurDAO($bdd);
+                $tuteur = $tutDAO->find($logtut);
+
+                if (!$tuteur) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                $tuteur->setNomUti($nom);
+                $tuteur->setPrenomUti($prenom);
+                $tuteur->setTutTel($telephone);
+                $tuteur->setEmailUti($email);
+
+                $success = $tutDAO->update($tuteur);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour des informations a échoué.");
+                }
+                var_dump($success);
+                header("Location: ?action=mesinfo");
+                exit;
+            } else {
+                throw new \Exception("Méthode HTTP invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+
+
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -168,6 +236,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             case 'listeetudiants':
                 $controller->listeetudiants();
                 break;
+
+            case 'modifierinfos':
+                $controller->modifierInfos();
+                break;
+
+            case 'saveinfo':
+                $controller->saveInfos();
+                break;
+
 
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));

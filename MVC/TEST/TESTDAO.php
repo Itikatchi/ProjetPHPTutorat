@@ -78,7 +78,7 @@ var_dump($test2);
 $test3 = $entDao->delete($Entrepise2);
 var_dump($test3);
 
-/*
+*/
 echo '------------------------------------ Tuteur -------------------------------';
 $bdd = initialiseConnexionBDD();
 $tuteurDao = new TuteurDAO($bdd);
@@ -95,7 +95,7 @@ var_dump($test2);
 $test3 = $tuteurDao->delete($tuteur2);
 var_dump($test3);
 echo '------------------------------------ Specialité -------------------------------';
-*/
+
 /*
 $bdd = initialiseConnexionBDD();
 $specialDao = new SpecialiteDAO($bdd);
@@ -222,7 +222,7 @@ $bil2 = new Bilan2("Maxime homo sapiens ou homo herectus",$date,4,"Une vrai rema
 $bilan3 = $Bilan2DAo->update($bil2);
 var_dump($bilan3);
 */
-
+/*
 echo '------------------------------------ Etudiant -------------------------------';
 $bdd = initialiseConnexionBDD();
 $EtudiantDAO = new EtduiantDAO($bdd);
