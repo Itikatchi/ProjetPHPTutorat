@@ -162,6 +162,7 @@ class TuteurController
             if (!$tuteur) {
                 throw new \Exception("Tuteur non trouvé.");
             }
+            include "../Views/Nav/NavTuteur.php";
 
             include "../Views/ModifierInformationsTuteur.php";
         } catch (\Exception $e) {
@@ -176,7 +177,11 @@ class TuteurController
 
         try {
             $this->ensureLoggedInAs('tuteur');
-            $logtut = $_SESSION['id'];
+            if (isset($_POST['cancel']) && $_POST['cancel'] === 'true') {
+                header("Location: ?action=mesinfo");
+                exit;
+            }
+                $logtut = $_SESSION['id'];
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $nom = htmlspecialchars($_POST['nom']);
@@ -206,7 +211,7 @@ class TuteurController
                 header("Location: ?action=mesinfo");
                 exit;
             } else {
-                throw new \Exception("Méthode HTTP invalide.");
+                throw new \Exception("Méthode invalide.");
             }
         } catch (\Exception $e) {
             echo "Erreur : " . $e->getMessage();
@@ -241,11 +246,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $controller->modifierInfos();
                 break;
 
-            case 'saveinfo':
-                $controller->saveInfos();
-                break;
-
-
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
         }} catch (\Exception $e) {
@@ -255,4 +255,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfo') {
+    $controller = new TuteurController();
+    $controller->saveInfos();
 }

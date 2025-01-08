@@ -10,24 +10,30 @@
 <body>
 <div class="MainContainerEtudiant">
     <div class="MainTitleEtudiant">
-        <h1>Modifier mes informations</h1>
+        <h1>Modification :</h1>
     </div>
 
     <div class="FormContainer">
+        <h2 class="form-title">Modifier mes informations</h2>
         <form method="POST" action="?action=saveinfo">
-            <label for="nom">Nom :</label>
-            <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($tuteur->getNomUti()) ?>" required><br><br>
+            <div class="form-group">
+                <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($tuteur->getNomUti()) ?>" placeholder="Nom" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="prenom" name="prenom" value="<?= htmlspecialchars($tuteur->getPrenomUti()) ?>" placeholder="Prénom" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="telephone" name="telephone" value="<?= htmlspecialchars($tuteur->getTutTel()) ?>" placeholder="Numéro de téléphone" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" name="email" value="<?= htmlspecialchars($tuteur->getEmailUti()) ?>" placeholder="Email" required>
+            </div>
 
-            <label for="prenom">Prénom :</label>
-            <input type="text" id="prenom" name="prenom" value="<?= htmlspecialchars($tuteur->getPrenomUti()) ?>" required><br><br>
 
-            <label for="telephone">Numéro de téléphone :</label>
-            <input type="text" id="telephone" name="telephone" value="<?= htmlspecialchars($tuteur->getTutTel()) ?>" required><br><br>
-
-            <label for="email">Mail :</label>
-            <input type="email" id="email" name="email" value="<?= htmlspecialchars($tuteur->getEmailUti()) ?>" required><br><br>
-
-            <button type="submit" class="boutonSauvegarder">Sauvegarder</button>
+            <div class="Buttondown">
+                <a href="?action=mesinfo" class="boutonAnnuler">Annuler</a>
+                <button type="submit" class="boutonValider">Valider les modifications</button>
+            </div>
         </form>
     </div>
 </div>

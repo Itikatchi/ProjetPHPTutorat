@@ -396,4 +396,102 @@ body.login-page {
     font-family: Inter;
 
 }
+/* Container principal */
+.MainContainerEtudiant {
+    background-color: var(--theme-2);
+    margin: 2% auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    width: 70%;
+}
+
+/* Titre principal */
+.MainTitleEtudiant {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.MainTitleEtudiant h1 {
+    font-family: Inter;
+    font-size: 28px;
+    color: var(--theme-1);
+    margin: 0;
+    padding: 10px;
+}
+
+/* Conteneur de formulaire */
+.FormContainer {
+    padding: 20px;
+    background-color: var(--theme-2);
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.FormContainer .form-title {
+    text-align: left;
+    font-size: 20px;
+    font-family: Inter;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Groupes de champs */
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+input.input-field, .textarea-field {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 100%;
+}
+
+/* Textarea */
+.textarea-field {
+    min-height: 80px;
+    resize: none;
+}
+
+/* Section des boutons */
+.Buttondown {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.boutonAnnuler, .boutonValider {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.boutonAnnuler {
+    background-color: #d9534f;
+    color: #fff;
+}
+
+.boutonAnnuler:hover {
+    background-color: #c9302c;
+}
+
+.boutonValider {
+    background-color: var(--theme-1);
+    color: var(--theme-2);
+}
+
+.boutonValider:hover {
+    background-color: #5d9461;
+}
 
