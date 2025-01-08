@@ -1,9 +1,10 @@
 <?php
-
 namespace Controller;
 
 
 
+
+use BO\Etudiant;
 use DAO\Bilan1DAO;
 use DAO\Bilan2DAO;
 use DAO\EntrepriseDAO;
@@ -15,7 +16,6 @@ use DAO\ClasseDAO;
 use DAO\AdministrateurDAO;
 use DAO\AlerteDAO;
 
-use BO\Etudiant;
 use BO\Tuteur;
 use BO\Specialite;
 use BO\Entreprise;
@@ -27,7 +27,6 @@ use BO\Bilan2;
 use DateTime;
 
 use BO\Alerte;
-
 require_once "../BDDManager.php";
 
 require_once "../DAO/Bilan2DAO.php";
@@ -50,7 +49,6 @@ require_once "../BO/Administrateur.php";
 require_once "../BO/Tuteur.php";
 require_once "../BO/Classe.php";
 require_once "../BO/Alerte.php";
-
 class AdministrateurController
 {
     public function dashboard()
@@ -151,30 +149,23 @@ class AdministrateurController
         }
     }
 
-    public function bilanetud($id)
+
+    public function logout()
     {
-        try {
-            $this->ensureLoggedInAs('administrateur');
-
-            $bdd = initialiseConnexionBDD();
-            $etudiantsDAO = new EtduiantDAO($bdd);
-            $etudiants = $etudiantsDAO->find($id);
-
-            $Bilan1Dao = new Bilan1DAO($bdd);
-            $bilan1 = $Bilan1Dao->getallBilan1ByEleve($etudiants);
-
-            $Bilan2Dao = new Bilan2DAO($bdd);
-            $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
-
-            include "../Views/Nav/NavAdmin.php";
-            include "../Views/PageBilanEtudiant.php";
-        } catch (\Exception $e) {
-            $this->redirectWithError($e->getMessage());
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
+
+
+        session_unset();
+        session_destroy();
+
+
+        header("Location: ../../index.php");
+        exit;
     }
 
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new AdministrateurController();
 
@@ -193,9 +184,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = intval($_GET['id']);
                 $controller->details($id);
                 break;
-            case 'bilanetud':
-                $id = intval($_GET['id']);
-                $controller->bilanetud($id);
+            case 'logout':
+                $controller->logout();
                 break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
@@ -205,4 +195,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 }
+
 

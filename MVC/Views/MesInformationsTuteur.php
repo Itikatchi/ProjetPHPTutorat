@@ -39,8 +39,9 @@
     </div>
 
     <div class="boutonModifEtudiant">
-        <button class="boutonModifierInfos">Modifier vos informations</button>
+        <a href="?action=modifierinfos" class="boutonModifierInfos">Modifier vos informations</a>
     </div>
+
 </div>
 </body>
 </html>

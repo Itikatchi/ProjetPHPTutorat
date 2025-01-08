@@ -1,6 +1,8 @@
 <?php
 namespace Controller;
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 
 use BO\Etudiant;
@@ -147,6 +149,88 @@ class TuteurController
             $this->redirectWithError($e->getMessage());
         }
     }
+    public function modifierInfos()
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $logtut = $_SESSION['id'];
+
+            $bdd = initialiseConnexionBDD();
+            $tutDAO = new TuteurDAO($bdd);
+            $tuteur = $tutDAO->find($logtut);
+
+            if (!$tuteur) {
+                throw new \Exception("Tuteur non trouvé.");
+            }
+            include "../Views/Nav/NavTuteur.php";
+
+            include "../Views/ModifierInformationsTuteur.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveInfos()
+    {
+        echo "Méthode saveInfos appelée";
+
+
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            if (isset($_POST['cancel']) && $_POST['cancel'] === 'true') {
+                header("Location: ?action=mesinfo");
+                exit;
+            }
+                $logtut = $_SESSION['id'];
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $nom = htmlspecialchars($_POST['nom']);
+                $prenom = htmlspecialchars($_POST['prenom']);
+                $telephone = htmlspecialchars($_POST['telephone']);
+                $email = htmlspecialchars($_POST['email']);
+
+                $bdd = initialiseConnexionBDD();
+                $tutDAO = new TuteurDAO($bdd);
+                $tuteur = $tutDAO->find($logtut);
+
+                if (!$tuteur) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                $tuteur->setNomUti($nom);
+                $tuteur->setPrenomUti($prenom);
+                $tuteur->setTutTel($telephone);
+                $tuteur->setEmailUti($email);
+
+                $success = $tutDAO->update($tuteur);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour des informations a échoué.");
+                }
+                var_dump($success);
+                header("Location: ?action=mesinfo");
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+
+    public function logout()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        session_unset();
+        session_destroy();
+
+        header("Location: ../../index.php");
+        exit;
+    }
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -169,6 +253,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $controller->listeetudiants();
                 break;
 
+            case 'modifierinfos':
+                $controller->modifierInfos();
+                break;
+
+            case 'logout':
+                $controller->logout();
+                break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
         }} catch (\Exception $e) {
@@ -178,4 +269,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfo') {
+    $controller = new TuteurController();
+    $controller->saveInfos();
 }

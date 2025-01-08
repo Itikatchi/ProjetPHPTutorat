@@ -101,7 +101,18 @@ class EtudiantController
         }
 
     }
+    public function logout()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
+        session_unset();
+        session_destroy();
+
+        header("Location: ../../index.php");
+        exit;
+    }
 }
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new EtudiantController();
@@ -113,6 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             case 'mesinfo':
                 $controller->mesinfo();
+                break;
+            case 'logout':
+                $controller->logout();
                 break;
 
             default:
