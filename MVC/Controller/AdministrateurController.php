@@ -148,7 +148,27 @@ class AdministrateurController
 
         }
     }
+    public function bilanetud($id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
 
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiants = $etudiantsDAO->find($id);
+
+            $Bilan1Dao = new Bilan1DAO($bdd);
+            $bilan1 = $Bilan1Dao->getallBilan1ByEleve($etudiants);
+
+            $Bilan2Dao = new Bilan2DAO($bdd);
+            $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageBilanEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
 
     public function logout()
     {
@@ -186,6 +206,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 break;
             case 'logout':
                 $controller->logout();
+                break;
+            case 'bilanetud':
+                $id = intval($_GET['id']);
+                $controller->bilanetud($id);
                 break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
