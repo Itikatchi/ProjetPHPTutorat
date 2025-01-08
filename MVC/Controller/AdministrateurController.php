@@ -66,32 +66,32 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
+
     public function alerte()
     {
-    try {
-        $this->ensureLoggedInAs('administrateur');
-        $logtut = $_SESSION['id'];
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $logtut = $_SESSION['id'];
 
-        $bdd = initialiseConnexionBDD();
-        $tut = new TuteurDAO($bdd);
-        $tuteur = $tut->find($logtut);
-        $ale = new AlerteDAO($bdd);
+            $bdd = initialiseConnexionBDD();
+            $tut = new TuteurDAO($bdd);
+            $tuteur = $tut->find($logtut);
+            $ale = new AlerteDAO($bdd);
 
-        $alerteDATE = $ale->find(1);
-        $alerte  = $ale->getAllall1();
-        $alerte2 = $ale->getAllall2();
-        $alerte3 = $ale->getAllall3();
-
-
+            $alerteDATE = $ale->find(1);
+            $alerte = $ale->getAllall1();
+            $alerte2 = $ale->getAllall2();
+            $alerte3 = $ale->getAllall3();
 
 
-        include "../Views/Nav/NavAdmin.php";
-        include "../Views/PageListeAlerteAdmin.php";
-    } catch (\Exception $e) {
-        $this->redirectWithError($e->getMessage());
-    }
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageListeAlerteAdmin.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
 
     }
+
     public function listeEtudiants()
     {
         try {
@@ -149,8 +149,23 @@ class AdministrateurController
         }
     }
 
-}
 
+    public function logout()
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+
+        session_unset();
+        session_destroy();
+
+
+        header("Location: ../../index.php");
+        exit;
+    }
+
+}
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new AdministrateurController();
 
@@ -169,9 +184,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = intval($_GET['id']);
                 $controller->details($id);
                 break;
-
-
-
+            case 'logout':
+                $controller->logout();
+                break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
         }
@@ -180,4 +195,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 }
+
 

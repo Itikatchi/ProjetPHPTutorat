@@ -30,6 +30,9 @@
             <img src="../Image/parametres-curseurs.svg" alt="">
         </a>
 
+        <a href="../Controller/AdministrateurController.php?action=logout" class="">
+            <img src="../Image/deco.svg" alt="Déconnexion">
+        </a>
     </div>
 
 </nav>

@@ -14,16 +14,19 @@
 <body>
 <nav>
     <div class="nav-bar">
-        <a href="../Controller/EtudiantController.php?action=mesinfo">
+        <a href="../Controller/EtudiantController.php?action=dashboard">
             <img src="../../MVC/Image/reception.svg" alt="">
         </a>
-        <a href="#">
+        <a href="../Controller/EtudiantController.php?action=mesinfo">
             <img src="../../MVC/Image/utilisateur-du-presse-papiers.svg" alt="">
         </a>
         <a href="#">
         </a>
         <a href="#">
 
+        </a>
+        <a href="../Controller/EtudiantController.php?action=logout" class="">
+            <img src="../Image/deco.png" alt="Déconnexion">
         </a>
 
     </div>
