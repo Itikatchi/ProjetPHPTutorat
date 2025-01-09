@@ -137,7 +137,7 @@ class EtduiantDAO extends DAO
                         "etu_adr"=> $obj->getEtuAdr(),
                         "etu_cp"=> $obj->getEtuCp(),
                         "etu_ville"=> $obj->getEtuVille(),
-                        "spe_id"=> $obj->getMaSpec()->setIdSpec(),
+                        "spe_id"=> $obj->getMaSpec()->getIdSpec(),
                         "classe_id"=> $obj->getMaClasse()->getIdCla(),
                         "tut_id"=> $obj->getMonTuteur()->getIdUti(),
                         "ent_id"=> $obj->getMonEnt()->getIdEnt(),

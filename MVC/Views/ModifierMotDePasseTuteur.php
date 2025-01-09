@@ -32,7 +32,7 @@
 
                 <div class="modiftuteur-buttons">
                     <a href="?action=mesinfo" class="modiftuteur-button modiftuteur-cancel">Annuler</a>
-                    <button type="submit" class="modiftuteur-button modiftuteur-submit">Modifier</button>
+                    <button style="cursor: pointer;" type="submit" class="modiftuteur-button modiftuteur-submit">Modifier</button>
                 </div>
             </form>
         </div>
