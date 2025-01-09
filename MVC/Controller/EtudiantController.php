@@ -91,7 +91,7 @@ class EtudiantController
             $logetu = $_SESSION['id'];
 
             $bdd = initialiseConnexionBDD();
-            $etu = New EtduiantDAO($bdd);
+            $etu = new EtduiantDAO($bdd);
             $etudiant = $etu->find($logetu);
 
             include "../Views/Nav/NavEtudiant.php";
@@ -101,6 +101,7 @@ class EtudiantController
         }
 
     }
+
     public function logout()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -113,6 +114,24 @@ class EtudiantController
         header("Location: ../../index.php");
         exit;
     }
+
+    public function bilans()
+    {
+        try {
+            $this->ensureLoggedInAs('etudiant');
+            $logetu = $_SESSION['id'];
+
+            $bdd = initialiseConnexionBDD();
+            $etuDAO = new EtduiantDAO($bdd);
+            $etudiant = $etuDAO->find($logetu);
+
+            include "../Views/Nav/NavEtudiant.php";
+            include "../Views/PageBilanPourEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
 }
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new EtudiantController();
@@ -127,6 +146,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 break;
             case 'logout':
                 $controller->logout();
+                break;
+            case 'bilan':
+                $controller->bilans();
                 break;
 
             default:

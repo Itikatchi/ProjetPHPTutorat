@@ -26,7 +26,7 @@
                 Numéro de téléphone : <?= htmlspecialchars($tuteur->getTutTel()) ?><br><br>
                 Mail : <?= htmlspecialchars($tuteur->getEmailUti()) ?><br>
             </p>
-            <button class="boutonModifMDP">Modifier votre mot de passe</button>
+            <a href="?action=modifiermdp" class="boutonModifMDP">Modifier votre mot de passe</a>
         <?php endif; ?>
     </div>
 

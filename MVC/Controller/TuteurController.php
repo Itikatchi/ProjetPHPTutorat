@@ -177,10 +177,7 @@ class TuteurController
 
         try {
             $this->ensureLoggedInAs('tuteur');
-            if (isset($_POST['cancel']) && $_POST['cancel'] === 'true') {
-                header("Location: ?action=mesinfo");
-                exit;
-            }
+
                 $logtut = $_SESSION['id'];
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -217,7 +214,55 @@ class TuteurController
             echo "Erreur : " . $e->getMessage();
         }
     }
+    public function modifierMdp()
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            include "../Views/Nav/NavTuteur.php";
+            include "../Views/ModifierMotDePasseTuteur.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
 
+    public function saveMdp()
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $logtut = $_SESSION['id'];
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $ancienMdp = htmlspecialchars($_POST['old_password']);
+                $nouveauMdp = htmlspecialchars($_POST['new_password']);
+
+                $bdd = initialiseConnexionBDD();
+                $tutDAO = new TuteurDAO($bdd);
+                $tuteur = $tutDAO->find($logtut);
+
+                if (!$tuteur) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                if ($tuteur->getMdpUti() !== $ancienMdp) {
+                    throw new \Exception("L'ancien mot de passe est incorrect.");
+                }
+
+                $tuteur->setMdpUti($nouveauMdp);
+                $success = $tutDAO->update($tuteur);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour du mot de passe a échoué.");
+                }
+
+                header("Location: ?action=mesinfo");
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
     public function logout()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -257,6 +302,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $controller->modifierInfos();
                 break;
 
+            case 'modifiermdp':
+                $controller->modifierMdp();
+                break;
+
             case 'logout':
                 $controller->logout();
                 break;
@@ -274,4 +323,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfo') {
     $controller = new TuteurController();
     $controller->saveInfos();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'savemdp') {
+    $controller = new TuteurController();
+    $controller->saveMdp();
 }
