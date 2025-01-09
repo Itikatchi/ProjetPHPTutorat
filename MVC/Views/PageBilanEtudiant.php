@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="../Style/reset.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+          rel="stylesheet">
 </head>
 <body>
 
@@ -17,11 +18,16 @@
 <div class="MainContainer">
     <div class="BilanPageConsultation">
         <div class="BilanConsultation">
-            <?php if (!empty($etudiants)|| !empty($bilan1)) : ?>
-            <div class="PannelBilan">
-                Bilan 1
-            </div>
-            <button class="boutonBack"><a href="./AdministrateurController.php?action=detail&id=<?=htmlspecialchars($etudiants->getIduti()) ?>"">Retour</a></button>
+            <?php if (!empty($etudiants) || !empty($bilan1)) : ?>
+                <div class="PannelBilan">
+                    Bilan 1
+                </div>
+                <?php if ($_SESSION['role'] != "etudiant") : ?>
+                    <button class="boutonBack"><a
+                            href="./AdministrateurController.php?action=detail&id=<?= htmlspecialchars($etudiants->getIduti()) ?>"">Retour</a>
+                    </button>
+                <?php endif; ?>
+
             <?php endif; ?>
         </div>
 
@@ -34,29 +40,53 @@
             </tr>
             </thead>
             <tbody>
-            <?php if ($bil1truefalse && !empty($etudiants) && !empty($bilan2) ) : ?>
-                    <tr>
-                        <td><?= htmlspecialchars($etudiants->getPrenomUti())?> <?= htmlspecialchars($etudiants->getNomUti())?></td>
-                        <td><?php
-                            foreach ($bilan1 as $bilan) {
-                                if ($bilan->getDatVisEnt() != null) {
-                                    echo($bilan->getDatVisEnt()->format('Y'));
-                                }else{
-                                    echo("L'etudiant n'a pas de premier bilan.");
-                                }
+            <?php if ($bil1truefalse && !empty($etudiants) && !empty($bilan2)) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($etudiants->getPrenomUti()) ?> <?= htmlspecialchars($etudiants->getNomUti()) ?></td>
+                    <td><?php
+                        foreach ($bilan1 as $bilan) {
+                            if ($bilan->getDatVisEnt() != null) {
+                                echo($bilan->getDatVisEnt()->format('Y'));
+                            } else {
+                                echo("L'etudiant n'a pas de premier bilan.");
                             }
-                            ?></td>
+                        }
+                        ?></td>
+                    <?php if ($_SESSION['role'] == "administrateur") : ?>
                         <td><a href="./AdministrateurController.php?action=detailBilan1&id=<?php
                             $bil = $etudiants->getMesBilan1();
                             foreach ($bil as $bilan) {
-                                if ($s = $bilan->getIdBil()){
+                                if ($s = $bilan->getIdBil()) {
                                     echo(htmlspecialchars($s));
-                                }else{
+                                } else {
                                     echo("L'etudiant n'a pas encore de sujet !");
                                 }
                             }
                             ?>">Details</a></td>
-                    </tr>
+                    <?php elseif ($_SESSION['role'] == "etudiant") : ?>
+                        <td><a href="./EtudiantController.php?action=detailBilan1&id=<?php
+                            $bil = $etudiants->getMesBilan1();
+                            foreach ($bil as $bilan) {
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
+                            }
+                            ?>">Details</a></td>
+                    <?php elseif ($_SESSION['role'] == "tuteur") : ?>
+                        <td><a href="./TuteurController.php?action=detailBilan1&id=<?php
+                            $bil = $etudiants->getMesBilan1();
+                            foreach ($bil as $bilan) {
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
+                            }
+                            ?>">Details</a></td>
+                    <?php endif; ?>
+                </tr>
 
             <?php else : ?>
                 <tr>
@@ -77,31 +107,54 @@
             </tr>
             </thead>
             <tbody>
-            <?php  if ($bil2truefalse && !empty($etudiants) && !empty($bilan2) ) :?>
-                    <tr>
-                        <td><?= htmlspecialchars($etudiants->getPrenomUti())?> <?= htmlspecialchars($etudiants->getNomUti())?></td>
-                        <td><?php
-                            foreach ($bilan2 as $bilan) {
-                                if ($bilan->getDatBil2() != null) {
-                                    echo($bilan->getDatBil2()->format('Y'));
-                                } else {
-                                    echo("L'etudiant n'a pas de second bilan.");
-                                }
+            <?php if ($bil2truefalse && !empty($etudiants) && !empty($bilan2)) : ?>
+                <tr>
+                    <td><?= htmlspecialchars($etudiants->getPrenomUti()) ?> <?= htmlspecialchars($etudiants->getNomUti()) ?></td>
+                    <td><?php
+                        foreach ($bilan2 as $bilan) {
+                            if ($bilan->getDatBil2() != null) {
+                                echo($bilan->getDatBil2()->format('Y'));
+                            } else {
+                                echo("L'etudiant n'a pas de second bilan.");
                             }
-                            ?>
-                        </td>
+                        }
+                        ?>
+                    </td>
+                    <?php if ($_SESSION['role'] == "administrateur") : ?>
                         <td><a href="./AdministrateurController.php?action=detailBilan2&id=<?php
-                            $bil = $etudiants->getMesBilan2();
+                            $bil = $etudiants->getMesBilan1();
                             foreach ($bil as $bilan) {
-                                if ($s = $bilan->getIdBil()){
+                                if ($s = $bilan->getIdBil()) {
                                     echo(htmlspecialchars($s));
-                                }else{
+                                } else {
                                     echo("L'etudiant n'a pas encore de sujet !");
                                 }
                             }
-                            ?>">Details</a>
-                        </td>
-                    </tr>
+                            ?>">Details</a></td>
+                    <?php elseif ($_SESSION['role'] == "etudiant") : ?>
+                        <td><a href="./EtudiantController.php?action=detailBilan2&id=<?php
+                            $bil = $etudiants->getMesBilan1();
+                            foreach ($bil as $bilan) {
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
+                            }
+                            ?>">Details</a></td>
+                    <?php elseif ($_SESSION['role'] == "tuteur") : ?>
+                        <td><a href="./TuteurController.php?action=detailBilan2&id=<?php
+                            $bil = $etudiants->getMesBilan1();
+                            foreach ($bil as $bilan) {
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
+                            }
+                            ?>">Details</a></td>
+                    <?php endif; ?>
+                </tr>
 
             <?php else : ?>
                 <tr>

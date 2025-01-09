@@ -14,10 +14,10 @@
 <body>
 <nav>
     <div class="nav-bar">
-        <a href="../Controller/EtudiantController.php?action=bilan">
+        <a href="../Controller/EtudiantController.php?action=mesinfo">
             <img src="../../MVC/Image/reception.svg" alt="">
         </a>
-        <a href="../Controller/EtudiantController.php?action=mesinfo">
+        <a href="../Controller/EtudiantController.php?action=bilan">
             <img src="../../MVC/Image/utilisateur-du-presse-papiers.svg" alt="">
         </a>
         <a href="#">

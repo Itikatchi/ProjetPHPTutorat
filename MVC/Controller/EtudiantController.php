@@ -114,19 +114,71 @@ class EtudiantController
         header("Location: ../../index.php");
         exit;
     }
+    public function bilan()
+    {
 
-    public function bilans()
+        try {
+            $this->ensureLoggedInAs('etudiant');
+            $logetu = $_SESSION['id'];
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiants = $etudiantsDAO->find($logetu);
+
+            $Bilan1Dao = new Bilan1DAO($bdd);
+            $bilan1 = $Bilan1Dao->getallBilan1ByEleve($etudiants);
+            foreach ($bilan1 as $bilan) {
+                if ($bilan->getDatVisEnt() != null) {
+                    $bil1truefalse = true;
+                }else{
+                    $bil1truefalse = false;
+                }
+            }
+            $Bilan2Dao = new Bilan2DAO($bdd);
+            $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
+            foreach ($bilan2 as $bilan) {
+                if ($bilan->getDatBil2() != null) {
+                    $bil2truefalse = true;
+                    break;
+                }else{
+                    $bil2truefalse = false;
+                }
+            }
+            include "../Views/Nav/NavEtudiant.php";
+            include "../Views/PageBilanEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function detailBilan2()
     {
         try {
             $this->ensureLoggedInAs('etudiant');
             $logetu = $_SESSION['id'];
 
             $bdd = initialiseConnexionBDD();
-            $etuDAO = new EtduiantDAO($bdd);
-            $etudiant = $etuDAO->find($logetu);
+
+            $Bilan2Dao = new Bilan2DAO($bdd);
+            $bilan2 = $Bilan2Dao->find($logetu);
 
             include "../Views/Nav/NavEtudiant.php";
-            include "../Views/PageBilanPourEtudiant.php";
+            include "../Views/PageBilan2.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function detailBilan1()
+    {
+        try {
+            $this->ensureLoggedInAs('etudiant');
+            $logetu = $_SESSION['id'];
+
+            $bdd = initialiseConnexionBDD();
+
+            $Bilan1Dao = new Bilan1DAO($bdd);
+            $bilan1 = $Bilan1Dao->find($logetu);
+
+            include "../Views/Nav/NavEtudiant.php";
+            include "../Views/PageBilan1.php";
         } catch (\Exception $e) {
             $this->redirectWithError($e->getMessage());
         }
@@ -147,10 +199,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             case 'logout':
                 $controller->logout();
                 break;
-            case 'bilan':
-                $controller->bilans();
+            case 'detailBilan2':
+                $controller->detailBilan2();
                 break;
-
+            case 'detailBilan1':
+                $controller->detailBilan1();
+                break;
+            case 'bilan':
+                $controller->bilan();
+                break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
         }} catch (\Exception $e) {

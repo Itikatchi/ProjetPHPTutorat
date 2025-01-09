@@ -14,7 +14,7 @@
 <body>
 <nav>
     <div class="nav-bar">
-        <a href="../Controller/TuteurController.php?action=dashboard">
+        <a href="../Controller/TuteurController.php?action=mesinfo">
             <img src="../Image/reception.svg" alt="">
         </a>
         <a href="../Controller/TuteurController.php?action=listeetudiants">
@@ -24,7 +24,7 @@
             <img src="../Image/cloche.svg" alt="">
         </a>
 
-        <a href="../Controller/TuteurController.php?action=mesinfo">
+        <a href="../Controller/TuteurController.php">
 
             <img src="../Image/parametres-curseurs.svg" alt="">
         </a>

@@ -21,7 +21,19 @@
                 <div class="PannelBilan">
                     Bilan 2
                 </div>
-                <button class="boutonBack"><a href="./AdministrateurController.php?action=bilanetud&id=<?=htmlspecialchars($bilan2->getMonEtu()->getIduti())?>"">Retour</a></button>
+            <?php if ($_SESSION['role'] == "administrateur") : ?>
+            <button class="boutonBack"><a
+                        href="./AdministrateurController.php?action=bilanetud&id=<?= htmlspecialchars($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
+            </button>
+            <?php elseif ($_SESSION['role'] == "etudiant") : ?>
+            <button class="boutonBack"><a
+                        href="./EtudiantController.php?action=bilan&id=<?= htmlspecialchars($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
+            </button>
+            <?php elseif ($_SESSION['role'] == "tuteur") : ?>
+            <button class="boutonBack"><a
+                        href="./AdministrateurController.php?action=bilanetud&id=<?= htmlspecialchars($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
+            </button>
+            <?php endif; ?>
 
             <?php endif; ?>
 
