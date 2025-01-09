@@ -304,6 +304,84 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
+
+    public function ajoutEtudiant()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $specialiteDAO = new SpecialiteDAO($bdd);
+            $classeDAO = new ClasseDAO($bdd);
+
+            $specialites = $specialiteDAO->getAll();
+            $classes = $classeDAO->getAll();
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageAjoutEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+
+    public function addEtudiant()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $bdd = initialiseConnexionBDD();
+                $etudiantDAO = new EtduiantDAO($bdd);
+
+                $nom = htmlspecialchars($_POST['nom']);
+                $prenom = htmlspecialchars($_POST['prenom']);
+                $email = htmlspecialchars($_POST['email']);
+                $mdp = password_hash($_POST['mdp'], PASSWORD_BCRYPT);
+                $tel = htmlspecialchars($_POST['tel']);
+                $specialiteId = intval($_POST['specialite']);
+                $classeId = intval($_POST['classe']);
+
+                $specialiteDAO = new SpecialiteDAO($bdd);
+                $classeDAO = new ClasseDAO($bdd);
+
+                $specialite = $specialiteDAO->find($specialiteId);
+                $classe = $classeDAO->find($classeId);
+
+                if (!$specialite || !$classe) {
+                    throw new \Exception("Spécialité ou classe introuvable.");
+                }
+
+                $etudiant = new Etudiant(
+                    null,
+                    $specialite,
+                    $classe,
+                    null,
+                    null,
+                    null,
+                    $nom,
+                    $prenom,
+                    $email,
+                    $mdp,
+                    $tel,
+                    "",
+                    "",
+                    ""
+                );
+
+                $success = $etudiantDAO->create($etudiant);
+
+                if ($success) {
+                    header("Location: ?action=listeetudiants&success=1");
+                    exit;
+                } else {
+                    throw new \Exception("Erreur lors de l'enregistrement.");
+                }
+            }
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
 }
 
 
@@ -341,6 +419,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $controller->detailBilan2($id);
                 break;
 
+            case 'ajoutEtudiant':
+                $controller->ajoutEtudiant();
+                break;
             case 'parametrage':
                 $controller->parametrage();
                 break;
@@ -358,6 +439,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveAffectationTuteurClasse') {
     $controller = new AdministrateurController();
     $controller->saveAffectationTuteurClasse();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] === 'addEtudiant') {
+    $controller = new AdministrateurController();
+    $controller->addEtudiant();
 }
 
 
