@@ -641,6 +641,90 @@ body.login-page {
 }
 
 
+.ajout-etudiant-container {
+    background-color: #F7FAF5;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    width: 420px;
+    text-align: center;
+}
+
+.ajout-etudiant-container h1 {
+    margin-bottom: 25px;
+    font-size: 26px;
+    color: #3C6E47;
+    font-weight: bold;
+}
+
+.ajout-etudiant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ajout-etudiant-form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.ajout-etudiant-form-group label {
+    font-size: 15px;
+    margin-bottom: 5px;
+    color: #3C6E47;
+}
+
+.ajout-etudiant-form-group input,
+.ajout-etudiant-form-group select {
+    padding: 12px;
+    border: 1px solid #D9E4DD;
+    border-radius: 6px;
+    background-color: #EFF5F1;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.ajout-etudiant-form-group input:focus,
+.ajout-etudiant-form-group select:focus {
+    border-color: #6C8A64;
+}
+
+.ajout-etudiant-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.ajout-etudiant-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #FFF;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.ajout-etudiant-btn-ajouter {
+    background-color: #88A47C;
+}
+
+.ajout-etudiant-btn-ajouter:hover {
+    background-color: #6C8A64;
+}
+
+.ajout-etudiant-btn-annuler {
+    background-color: #D9534F;
+}
+
+.ajout-etudiant-btn-annuler:hover {
+    background-color: #C9302C;
+}
+
+
 
 .parametrage-container {
     background-color: #F5F5F5; /* Fond blanc cassé */
