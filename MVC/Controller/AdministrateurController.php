@@ -182,34 +182,17 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
+
     public function detailBilan1($id)
     {
         try {
             $this->ensureLoggedInAs('administrateur');
 
             $bdd = initialiseConnexionBDD();
-            $etudiantsDAO = new EtduiantDAO($bdd);
-            $etudiants = $etudiantsDAO->find($id);
 
             $Bilan1Dao = new Bilan1DAO($bdd);
-            $bilan1 = $Bilan1Dao->getallBilan1ByEleve($etudiants);
-            foreach ($bilan1 as $bilan) {
-                if ($bilan->getDatVisEnt() != null) {
-                    $bil1truefalse = true;
-                }else{
-                    $bil1truefalse = false;
-                }
-            }
-            $Bilan2Dao = new Bilan2DAO($bdd);
-            $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
-            foreach ($bilan2 as $bilan) {
-                if ($bilan->getDatBil2() != null) {
-                    $bil2truefalse = true;
-                    break;
-                }else{
-                    $bil2truefalse = false;
-                }
-            }
+            $bilan1 = $Bilan1Dao->find($id);
+
             include "../Views/Nav/NavAdmin.php";
             include "../Views/PageBilan1.php";
         } catch (\Exception $e) {
@@ -222,28 +205,11 @@ class AdministrateurController
             $this->ensureLoggedInAs('administrateur');
 
             $bdd = initialiseConnexionBDD();
-            $etudiantsDAO = new EtduiantDAO($bdd);
-            $etudiants = $etudiantsDAO->find($id);
 
-            $Bilan1Dao = new Bilan1DAO($bdd);
-            $bilan1 = $Bilan1Dao->getallBilan1ByEleve($etudiants);
-            foreach ($bilan1 as $bilan) {
-                if ($bilan->getDatVisEnt() != null) {
-                    $bil1truefalse = true;
-                }else{
-                    $bil1truefalse = false;
-                }
-            }
             $Bilan2Dao = new Bilan2DAO($bdd);
-            $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
-            foreach ($bilan2 as $bilan) {
-                if ($bilan->getDatBil2() != null) {
-                    $bil2truefalse = true;
-                    break;
-                }else{
-                    $bil2truefalse = false;
-                }
-            }
+            $bilan2 = $Bilan2Dao->find($id);
+
+
             include "../Views/Nav/NavAdmin.php";
             include "../Views/PageBilan2.php";
         } catch (\Exception $e) {
