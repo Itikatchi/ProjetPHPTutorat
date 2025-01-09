@@ -24,10 +24,7 @@
             <img src="../Image/cloche.svg" alt="">
         </a>
 
-        <a href="../Controller/TuteurController.php">
 
-            <img src="../Image/parametres-curseurs.svg" alt="">
-        </a>
         <a href="../Controller/TuteurController.php?action=logout" class="">
             <img src="../Image/deco.png" alt="Déconnexion">
         </a>
