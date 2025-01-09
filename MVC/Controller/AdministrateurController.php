@@ -2,8 +2,8 @@
 namespace Controller;
 
 
-
-
+use DAO\AffectationTuteurClasseDAO;
+use BO\AffectationTuteurClasse;
 use BO\Etudiant;
 use DAO\Bilan1DAO;
 use DAO\Bilan2DAO;
@@ -27,7 +27,9 @@ use BO\Bilan2;
 use DateTime;
 
 use BO\Alerte;
+
 require_once "../BDDManager.php";
+require_once "../DAO/AffectationTuteurClasseDAO.php";
 
 require_once "../DAO/Bilan2DAO.php";
 require_once "../DAO/Bilan1DAO.php";
@@ -39,7 +41,7 @@ require_once "../DAO/TuteurDAO.php";
 require_once "../DAO/ClasseDAO.php";
 require_once "../DAO/AlerteDAO.php";
 
-
+require_once "../BO/AffectationTuteurClasse.php";
 require_once "../BO/Bilan2.php";
 require_once "../BO/Bilan1.php";
 require_once "../BO/Specialite.php";
@@ -148,6 +150,7 @@ class AdministrateurController
 
         }
     }
+
     public function bilanetud($id)
     {
         try {
@@ -162,7 +165,7 @@ class AdministrateurController
             foreach ($bilan1 as $bilan) {
                 if ($bilan->getDatVisEnt() != null) {
                     $bil1truefalse = true;
-                }else{
+                } else {
                     $bil1truefalse = false;
                 }
             }
@@ -172,7 +175,7 @@ class AdministrateurController
                 if ($bilan->getDatBil2() != null) {
                     $bil2truefalse = true;
                     break;
-                }else{
+                } else {
                     $bil2truefalse = false;
                 }
             }
@@ -199,6 +202,7 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
+
     public function detailBilan2($id)
     {
         try {
@@ -232,7 +236,77 @@ class AdministrateurController
         exit;
     }
 
+    public function parametrage()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            include "../Views/Nav/NavAdmin.php";
+
+            include "../Views/PageParametreAdmin.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function affectationTuteurClasse()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $tuteurDAO = new TuteurDAO($bdd);
+            $classeDAO = new ClasseDAO($bdd);
+
+            $tuteurs = $tuteurDAO->getAll(); // Récupère tous les tuteurs
+            $classes = $classeDAO->getAll(); // Récupère toutes les classes
+            include "../Views/Nav/NavAdmin.php";
+
+            include "../Views/PageAffectationClasse.php"; // Vue du formulaire
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+
+    public function saveAffectationTuteurClasse()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $bdd = initialiseConnexionBDD();
+                $tuteurDAO = new TuteurDAO($bdd);
+                $classeDAO = new ClasseDAO($bdd);
+                $affectationDAO = new AffectationTuteurClasseDAO($bdd);
+
+                $tuteurId = intval($_POST['tuteur_id']);
+                $classeId = intval($_POST['classe_id']);
+                $nbMaxEtu = intval($_POST['nb_max_etu']); // Optionnel
+
+                $tuteur = $tuteurDAO->find($tuteurId);
+                $classe = $classeDAO->find($classeId);
+
+                if ($tuteur && $classe) {
+                    $affectation = new AffectationTuteurClasse($tuteur, $classe, $nbMaxEtu);
+                    $success = $affectationDAO->create($affectation);
+
+                    if ($success) {
+                        header("Location: ?action=affectationTuteurClasse&success=1");
+                        exit;
+                    } else {
+                        throw new \Exception("Erreur lors de l'enregistrement.");
+                    }
+                } else {
+                    throw new \Exception("Tuteur ou classe introuvable.");
+                }
+            }
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
 }
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new AdministrateurController();
 
@@ -266,6 +340,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = intval($_GET['id']);
                 $controller->detailBilan2($id);
                 break;
+
+            case 'parametrage':
+                $controller->parametrage();
+                break;
+            case 'affectationTuteurClasse':
+                $controller->affectationTuteurClasse();
+                break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
         }
@@ -274,5 +355,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         exit;
     }
 }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveAffectationTuteurClasse') {
+    $controller = new AdministrateurController();
+    $controller->saveAffectationTuteurClasse();
+}
+
 
 
