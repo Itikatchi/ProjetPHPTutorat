@@ -505,6 +505,116 @@ body.login-page {
     max-width: 600px;
 }
 
+/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* Page modification informations étudiant */
+
+/* Conteneur principal */
+.modifetudiant-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--modiftuteur-bg);
+}
+
+.modifetudiant-main {
+    width: 60%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+}
+
+.modifetudiant-title h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: var(--modiftuteur-dark);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Formulaire */
+.modifetudiant-form-container {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.modifetudiant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modifetudiant-header {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--modiftuteur-dark);
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.modifetudiant-form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.modifetudiant-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: var(--theme-1);
+}
+
+/* Boutons */
+.modifetudiant-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.modifetudiant-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    width: 150px;
+    text-align: center;
+}
+
+.modifetudiant-cancel {
+    background-color: #5d9461;
+
+    color: black;
+    border: none;
+}
+
+.modifetudiant-submit {
+    background-color: #5d9461;
+
+    color: black;
+    border: none;
+}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  */
+/* Page bilan étudiant */
+
+/* Conteneur principal */
+.bilan-container {
+    background-color: var(--theme-2); /* Fond blanc */
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 100px;
+    padding: 20px 40px;
+    width: 80%;
+    max-width: 600px;
+
 /* Titre principal */
 .bilan-title {
     font-size: 32px;
@@ -575,9 +685,6 @@ body.login-page {
         line-height: 2.5;
         font-size: 20px;
     }
-
-
-
     .BilanConsultation {
         display: flex;
         align-items: center;
@@ -638,4 +745,113 @@ body.login-page {
     tr:nth-child(even) {
         background-color: #66a866;
     }
+}
+}
+
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* Page ajout d'une entreprise */
+
+/* Contenu principal */
+#content {
+    background-color: #dce4d4;
+    width: 85%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Titre principal */
+#page-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Formulaire */
+#form-ajout-entreprise {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+/* Section entreprise */
+#section-entreprise label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+#section-entreprise input {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Section maître d'apprentissage */
+#section-maitre {
+    margin-top: 20px;
+}
+
+#section-title {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#section-maitre label {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+#section-maitre input {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Boutons */
+#form-buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+#btn-ajouter {
+    background-color: #bed2b4;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#btn-ajouter:hover {
+    background-color: #9caf95;
+}
+
+#btn-annuler {
+    background-color: #d49f9f;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    color: #333;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#btn-annuler:hover {
+    background-color: #c98787;
 }

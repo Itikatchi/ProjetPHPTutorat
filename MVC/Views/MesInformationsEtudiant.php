@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="utf-8">
@@ -34,7 +34,7 @@
             Mail : <?= htmlspecialchars($etudiant->getEmailUti())?><br>
         </p>
 
-        <button class="boutonModifMDP">Modifier votre mot de passe</button>
+        <a href="?action=modifiermdpEtu" class="boutonModifMDP">Modifier votre mot de passe</a>
     </div>
 
     <div class="InfosEntreprise">
@@ -56,7 +56,7 @@
     </div>
 
     <div class="boutonModifEtudiant">
-        <button class="boutonModifierInfos">Modifier vos informations</button>
+        <a href="?action=modifierInfosEtu" class="boutonModifierInfos">Modifier vos informations</a>
     </div>
 </div>
         <?php endif; ?>
