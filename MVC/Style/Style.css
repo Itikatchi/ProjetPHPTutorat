@@ -246,13 +246,17 @@ body.login-page {
 .TablePage{
     width: 150%;
     margin-left: 5%;
-    margin-bottom: 35%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow-y: scroll;
+    height: 900px !important;
 
     table{
         width: 50%;
         border-collapse: collapse;
         background-color: #6ab06d;
         color: white;
+
     }
     th, td {
         padding: 12px;
