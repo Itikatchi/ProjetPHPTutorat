@@ -102,6 +102,131 @@ class EtudiantController
 
     }
 
+    public function modifierInfosEtu()
+    {
+        try {
+            $this->ensureLoggedInAs('etudiant');
+            $logetu = $_SESSION['id'];
+
+            $bdd = initialiseConnexionBDD();
+            $etuDAO = new EtduiantDAO($bdd);
+            $etudiant = $etuDAO->find($logetu);
+
+            if (!$etudiant) {
+                throw new \Exception("Etudiant non trouvé.");
+            }
+            include "../Views/Nav/NavEtudiant.php";
+
+            include "../Views/ModifierInformationsEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveInfosEtu()
+    {
+        echo "Méthode saveInfos appelée";
+
+        try {
+            $this->ensureLoggedInAs('etudiant');
+
+            $logetu = $_SESSION['id'];
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $nom = htmlspecialchars($_POST['nom']);
+                $prenom = htmlspecialchars($_POST['prenom']);
+                $telephone = htmlspecialchars($_POST['telephone']);
+                $email = htmlspecialchars($_POST['email']);
+                $adresse = htmlspecialchars($_POST['adresse']);
+                $cp = htmlspecialchars($_POST['cp']);
+                $ville = htmlspecialchars($_POST['ville']);
+
+                $bdd = initialiseConnexionBDD();
+                $etuDAO = new EtduiantDAO($bdd);
+                $etudiant = $etuDAO->find($logetu);
+
+                if (!$etudiant) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                $etudiant->setNomUti($nom);
+                $etudiant->setPrenomUti($prenom);
+                $etudiant->setEtuTel($telephone);
+                $etudiant->setEmailUti($email);
+                $etudiant->setEtuAdr($adresse);
+                $etudiant->setEtuCp($cp);
+                $etudiant->setEtuVille($ville);
+
+                $success = $etuDAO->update($etudiant);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour des informations a échoué.");
+                }
+                var_dump($success);
+                header("Location: ?action=mesinfo");
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+    public function modifiermdpEtu()
+    {
+        try {
+            $this->ensureLoggedInAs('etudiant');
+            include "../Views/Nav/NavEtudiant.php";
+            include "../Views/ModifierMotDePasseEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveMdpEtu()
+    {
+        var_dump($_POST['old_password']);
+        var_dump($_POST['new_password']);
+        try {
+            $this->ensureLoggedInAs('etudiant');
+            $logetu = $_SESSION['id'];
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $ancienMdp = htmlspecialchars($_POST['old_password']);
+                $nouveauMdp = htmlspecialchars($_POST['new_password']);
+
+                $bdd = initialiseConnexionBDD();
+                $etuDAO = new EtduiantDAO($bdd);
+                $etudiant = $etuDAO->find($logetu);
+
+                if (!$etudiant) {
+                    throw new \Exception("Etudiant non trouvé.");
+                    var_dump($etudiant);
+                }
+
+                if ($etudiant->getMdpUti() !== $ancienMdp) {
+                    throw new \Exception("L'ancien mot de passe est incorrect.");
+                    var_dump($etudiant);
+                }
+
+                $etudiant->setMdpUti($nouveauMdp);
+                $success = $etuDAO->update($etudiant);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour du mot de passe a échoué.");
+                    var_dump($etudiant);
+                }
+
+                header("Location: ?action=mesinfo");
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+
     public function logout()
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -192,12 +317,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             case 'dashboard':
                 $controller->dashboard();
                 break;
-
             case 'mesinfo':
                 $controller->mesinfo();
                 break;
             case 'logout':
                 $controller->logout();
+                break;
+            case 'modifierInfosEtu';
+                $controller->modifierInfosEtu();
+                break;
+            case 'modifiermdpEtu';
+                $controller->modifiermdpEtu();
                 break;
             case 'detailBilan2':
                 $controller->detailBilan2();
@@ -218,4 +348,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfoEtu') {
+    $controller = new EtudiantController();
+    $controller->saveInfosEtu();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'savemdpetu') {
+    $controller = new EtudiantController();
+    $controller->saveMdpEtu();
 }
