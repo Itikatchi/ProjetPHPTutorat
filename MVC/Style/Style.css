@@ -403,6 +403,45 @@ body.login-page {
     margin-left: 5%;
     margin-bottom: 35%;
 
+    .BilanConsultation {
+        display: flex;
+        align-items: center;
+        gap: 45%;
+
+    }
+    .boutonBack {
+        padding: 10px 20px;
+        background-color: var(--theme-1);
+        color: var(--theme-2);
+        border-radius: 5px;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        text-align: center;
+        align-self: center;
+        font-family: Inter;
+    }
+
+    .boutonBack:hover {
+        background-color: #6e8e6f;
+    }
+    .PannelBilan {
+        justify-content: center;
+        display: flex;
+        width: 200px;
+        height: 100px;
+        background-color: #6ab06d;
+        color: black;
+        font-family: 'Inter', sans-serif;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 100px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
 
     table{
         width: 50%;

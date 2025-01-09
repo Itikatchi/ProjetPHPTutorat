@@ -32,7 +32,7 @@
         </a>
 
         <a href="../Controller/AdministrateurController.php?action=logout" class="">
-            <img src="../Image/deco.svg" alt="Déconnexion">
+            <img src="../Image/deco.png" alt="Déconnexion">
         </a>
     </div>
 

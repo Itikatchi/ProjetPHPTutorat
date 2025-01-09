@@ -159,12 +159,93 @@ class AdministrateurController
 
             $Bilan1Dao = new Bilan1DAO($bdd);
             $bilan1 = $Bilan1Dao->getallBilan1ByEleve($etudiants);
-
+            foreach ($bilan1 as $bilan) {
+                if ($bilan->getDatVisEnt() != null) {
+                    $bil1truefalse = true;
+                }else{
+                    $bil1truefalse = false;
+                }
+            }
             $Bilan2Dao = new Bilan2DAO($bdd);
             $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
-
+            foreach ($bilan2 as $bilan) {
+                if ($bilan->getDatBil2() != null) {
+                    $bil2truefalse = true;
+                    break;
+                }else{
+                    $bil2truefalse = false;
+                }
+            }
             include "../Views/Nav/NavAdmin.php";
             include "../Views/PageBilanEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function detailBilan1($id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiants = $etudiantsDAO->find($id);
+
+            $Bilan1Dao = new Bilan1DAO($bdd);
+            $bilan1 = $Bilan1Dao->getallBilan1ByEleve($etudiants);
+            foreach ($bilan1 as $bilan) {
+                if ($bilan->getDatVisEnt() != null) {
+                    $bil1truefalse = true;
+                }else{
+                    $bil1truefalse = false;
+                }
+            }
+            $Bilan2Dao = new Bilan2DAO($bdd);
+            $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
+            foreach ($bilan2 as $bilan) {
+                if ($bilan->getDatBil2() != null) {
+                    $bil2truefalse = true;
+                    break;
+                }else{
+                    $bil2truefalse = false;
+                }
+            }
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageBilan1.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function detailBilan2($id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiants = $etudiantsDAO->find($id);
+
+            $Bilan1Dao = new Bilan1DAO($bdd);
+            $bilan1 = $Bilan1Dao->getallBilan1ByEleve($etudiants);
+            foreach ($bilan1 as $bilan) {
+                if ($bilan->getDatVisEnt() != null) {
+                    $bil1truefalse = true;
+                }else{
+                    $bil1truefalse = false;
+                }
+            }
+            $Bilan2Dao = new Bilan2DAO($bdd);
+            $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
+            foreach ($bilan2 as $bilan) {
+                if ($bilan->getDatBil2() != null) {
+                    $bil2truefalse = true;
+                    break;
+                }else{
+                    $bil2truefalse = false;
+                }
+            }
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageBilan2.php";
         } catch (\Exception $e) {
             $this->redirectWithError($e->getMessage());
         }
@@ -210,6 +291,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             case 'bilanetud':
                 $id = intval($_GET['id']);
                 $controller->bilanetud($id);
+                break;
+            case 'detailBilan1':
+                $id = intval($_GET['id']);
+                $controller->detailBilan1($id);
+                break;
+            case 'detailBilan2':
+                $id = intval($_GET['id']);
+                $controller->detailBilan2($id);
                 break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));

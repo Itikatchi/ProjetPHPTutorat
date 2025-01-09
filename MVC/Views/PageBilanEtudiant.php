@@ -13,10 +13,18 @@
 </head>
 <body>
 
+
 <div class="MainContainer">
     <div class="BilanPageConsultation">
-        <div class="PannelBilan">
+        <div class="BilanConsultation">
+            <?php if (!empty($etudiants)|| !empty($bilan1)) : ?>
+            <div class="PannelBilan">
+                Bilan 1
+            </div>
+            <button class="boutonBack"><a href="./AdministrateurController.php?action=detail&id=<?=htmlspecialchars($etudiants->getIduti()) ?>"">Retour</a></button>
+            <?php endif; ?>
         </div>
+
         <table>
             <thead>
             <tr>
@@ -26,8 +34,7 @@
             </tr>
             </thead>
             <tbody>
-            <?php if (!empty($etudiants)|| !empty($bilan1)) : ?>
-
+            <?php if ($bil1truefalse && !empty($etudiants) && !empty($bilan2) ) : ?>
                     <tr>
                         <td><?= htmlspecialchars($etudiants->getPrenomUti())?> <?= htmlspecialchars($etudiants->getNomUti())?></td>
                         <td><?php
@@ -39,7 +46,7 @@
                                 }
                             }
                             ?></td>
-                        <td><a href="./AdministrateurController.php?action=detailBilan&id=<?php
+                        <td><a href="./AdministrateurController.php?action=detailBilan1&id=<?php
                             $bil = $etudiants->getMesBilan1();
                             foreach ($bil as $bilan) {
                                 if ($s = $bilan->getIdBil()){
@@ -53,12 +60,13 @@
 
             <?php else : ?>
                 <tr>
-                    <td colspan="4">Aucune Bilan trouvé.</td>
+                    <td colspan="3">Aucune Bilan trouvé.</td>
                 </tr>
             <?php endif; ?>
             </tbody>
         </table>
         <div class="PannelBilan">
+            Bilan 2
         </div>
         <table>
             <thead>
@@ -69,8 +77,7 @@
             </tr>
             </thead>
             <tbody>
-            <?php if (!empty($etudiants) || !empty($bilan2)) : ?>
-
+            <?php  if ($bil2truefalse && !empty($etudiants) && !empty($bilan2) ) :?>
                     <tr>
                         <td><?= htmlspecialchars($etudiants->getPrenomUti())?> <?= htmlspecialchars($etudiants->getNomUti())?></td>
                         <td><?php
@@ -81,8 +88,9 @@
                                     echo("L'etudiant n'a pas de second bilan.");
                                 }
                             }
-                            ?></td>
-                        <td><a href="./AdministrateurController.php?action=detailBilan&id=<?php
+                            ?>
+                        </td>
+                        <td><a href="./AdministrateurController.php?action=detailBilan2&id=<?php
                             $bil = $etudiants->getMesBilan2();
                             foreach ($bil as $bilan) {
                                 if ($s = $bilan->getIdBil()){
@@ -91,17 +99,20 @@
                                     echo("L'etudiant n'a pas encore de sujet !");
                                 }
                             }
-                            ?>">Details</a></td>
+                            ?>">Details</a>
+                        </td>
                     </tr>
 
             <?php else : ?>
                 <tr>
-                    <td colspan="4">Aucune Bilan trouvé.</td>
+                    <td colspan="3">Aucune Bilan trouvé.</td>
                 </tr>
             <?php endif; ?>
             </tbody>
         </table>
+
     </div>
+
 </div>
 </body>
 </html>
