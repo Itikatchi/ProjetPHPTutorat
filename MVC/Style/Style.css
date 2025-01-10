@@ -46,6 +46,21 @@ nav {
     gap: 1%;
 
 }
+.MainContainerflex{
+    justify-content: center;
+    background: var(--theme-2);
+    display: flex;
+    padding: 20px 20px 20px 20px;
+    border-radius: 10px;
+    position: relative;
+    height: 85%;
+    width: 80%;
+    margin-left: 3%;
+    box-shadow: 0 10px 40px -20px #00000091;
+    overflow: hidden;
+    gap: 4%;
+
+}
 .MainContainer .MainTitle{
     margin-left: 7%;
     margin-top: 5%;
@@ -244,15 +259,15 @@ body.login-page {
     font-size: 50px;
 }
 .TablePage{
-    width: 150%;
+    width: 80%;
     margin-left: 5%;
     margin-top: 20px;
     margin-bottom: 20px;
     overflow-y: scroll;
     height: 900px !important;
-
+    overflow-x: hidden;
     table{
-        width: 50%;
+        width: 100%;
         border-collapse: collapse;
         background-color: #6ab06d;
         color: white;
@@ -270,7 +285,9 @@ body.login-page {
     tr:nth-child(even) {
         background-color: #66a866;
     }
+
 }
+
 
 /* //////////// */
 /* Page MesInformationsEtudiant */
@@ -686,15 +703,21 @@ body.login-page {
 
 
 .parametrage-container {
+    align-self: center;
     background-color: #F5F5F5; /* Fond blanc cassé */
     border-radius: 8px;
     padding: 40px;
-    width: 50%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 60%;
+    height: 60%;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
+    justify-content: center;
 }
 
 .parametrage-title {
+    margin-top: 10%;
     font-size: 32px;
     font-weight: bold;
     margin-bottom: 30px;
@@ -731,12 +754,17 @@ body.login-page {
     background-color: #5B7552;
 }
 .ajout-etudiant-container {
+    align-self: center;
     background-color: #F7FAF5;
     border-radius: 12px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
     padding: 40px;
     width: 420px;
+    height: 85%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
 }
 
 .ajout-etudiant-container h1 {
