@@ -144,7 +144,7 @@ class TuteurController
 
 
             include "../Views/Nav/NavTuteur.php";
-            include "../Views/PageListeEtudiant.php";
+            include "../Views/PageListeEtudiantAdmin.php";
         } catch (\Exception $e) {
             $this->redirectWithError($e->getMessage());
         }
@@ -276,6 +276,95 @@ class TuteurController
         exit;
     }
 
+    public function details($id)
+    {
+        if (!$id) {
+            throw new \Exception("Un ID valide est requis pour afficher les détails.");
+        }
+        try {
+            $this->ensureLoggedInAs('tuteur');
+
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiant = $etudiantsDAO->find($id);
+
+
+            include "../Views/Nav/NavTuteur.php";
+            include "../Views/PageDetailEtudiant.php";
+        } catch (\Exception $e) {
+
+        }
+    }
+    public function bilanetud($id)
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiants = $etudiantsDAO->find($id);
+
+            $Bilan1Dao = new Bilan1DAO($bdd);
+            $bilan1 = $Bilan1Dao->getallBilan1ByEleve($etudiants);
+            foreach ($bilan1 as $bilan) {
+                if ($bilan->getDatVisEnt() != null) {
+                    $bil1truefalse = true;
+                } else {
+                    $bil1truefalse = false;
+                }
+            }
+            $Bilan2Dao = new Bilan2DAO($bdd);
+            $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
+            foreach ($bilan2 as $bilan) {
+                if ($bilan->getDatBil2() != null) {
+                    $bil2truefalse = true;
+                    break;
+                } else {
+                    $bil2truefalse = false;
+                }
+            }
+            include "../Views/Nav/NavTuteur.php";
+            include "../Views/PageBilanEtudiant.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function detailBilan1($id)
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+
+            $bdd = initialiseConnexionBDD();
+
+            $Bilan1Dao = new Bilan1DAO($bdd);
+            $bilan1 = $Bilan1Dao->find($id);
+
+            include "../Views/Nav/NavTuteur.php";
+            include "../Views/PageBilan1.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function detailBilan2($id)
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+
+            $bdd = initialiseConnexionBDD();
+
+            $Bilan2Dao = new Bilan2DAO($bdd);
+            $bilan2 = $Bilan2Dao->find($id);
+
+
+            include "../Views/Nav/NavTuteur.php";
+            include "../Views/PageBilan2.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -308,6 +397,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
             case 'logout':
                 $controller->logout();
+                break;
+            case 'detail':
+                $id = intval($_GET['id']);
+                $controller->details($id);
+                break;
+            case 'bilanetud':
+                $id = intval($_GET['id']);
+                $controller->bilanetud($id);
+                break;
+            case 'detailBilan1':
+                $id = intval($_GET['id']);
+                $controller->detailBilan1($id);
+                break;
+            case 'detailBilan2':
+                $id = intval($_GET['id']);
+                $controller->detailBilan2($id);
                 break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));

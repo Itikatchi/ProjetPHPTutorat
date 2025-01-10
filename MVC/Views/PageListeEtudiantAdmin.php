@@ -8,11 +8,11 @@
     <title>Liste des Étudiants</title>
 </head>
 <body>
-    <div class="MainContainer">
-        <div class="Subtitle">
-            <h2>Liste des Étudiants</h2>
-        </div>
-        <div class="TablePage">
+<div class="MainContainer">
+    <div class="Subtitle">
+        <h2>Liste des Étudiants</h2>
+    </div>
+    <div class="TablePage">
         <table border="1">
             <thead>
             <tr>
@@ -27,15 +27,26 @@
             </thead>
             <tbody>
             <?php if (!empty($etudiants)) : ?>
-                <?php foreach ($etudiants as $etudiant) : ?>
+                <?php foreach ($etudiants
+
+                               as $etudiant) : ?>
                     <tr>
-                        <td><?= htmlspecialchars($etudiant->getIduti()) ?></td>
-                        <td><?= htmlspecialchars($etudiant->getNomUti()) ?></td>
-                        <td><?= htmlspecialchars($etudiant->getPrenomUti()) ?></td>
-                        <td><?= htmlspecialchars($etudiant->getEmailUti()) ?></td>
-                        <td><?= htmlspecialchars($etudiant->getMaClasse()->getNomCla()) ?></td>
-                        <td><a href="./AdministrateurController.php?action=detail&id=<?=htmlspecialchars($etudiant->getIduti()) ?>">Details</a> </td>
-                    </tr>
+                    <td><?= htmlspecialchars($etudiant->getIduti()) ?></td>
+                    <td><?= htmlspecialchars($etudiant->getNomUti()) ?></td>
+                    <td><?= htmlspecialchars($etudiant->getPrenomUti()) ?></td>
+                    <td><?= htmlspecialchars($etudiant->getEmailUti()) ?></td>
+                    <td><?= htmlspecialchars($etudiant->getMaClasse()->getNomCla()) ?></td>
+                    <?php if ($_SESSION['role'] == "administrateur") : ?>
+                        <td>
+                            <a href="./AdministrateurController.php?action=detail&id=<?= htmlspecialchars($etudiant->getIduti()) ?>">Details</a>
+                        </td>
+                        </tr>
+                    <?php else : ?>
+                        <td>
+                            <a href="./TuteurController.php?action=detail&id=<?= htmlspecialchars($etudiant->getIduti()) ?>">Details</a>
+                        </td>
+                        </tr>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             <?php else : ?>
                 <tr>
@@ -44,7 +55,7 @@
             <?php endif; ?>
             </tbody>
         </table>
-        </div>
     </div>
+</div>
 </body>
 </html>

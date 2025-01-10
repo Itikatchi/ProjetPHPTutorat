@@ -22,15 +22,19 @@
                 <div class="PannelBilan">
                     Bilan 1
                 </div>
-                <?php if ($_SESSION['role'] != "etudiant") : ?>
+                <?php if ($_SESSION['role'] == "administrateur") : ?>
                     <button class="boutonBack"><a
-                            href="./AdministrateurController.php?action=detail&id=<?= htmlspecialchars($etudiants->getIduti()) ?>"">Retour</a>
+                                href="./AdministrateurController.php?action=detail&id=<?= htmlspecialchars($etudiants->getIduti()) ?>"">Retour</a>
+                    </button>
+                <?php endif; ?>
+                <?php if ($_SESSION['role'] == "tuteur") : ?>
+                    <button class="boutonBack"><a
+                                href="./TuteurController.php?action=detail&id=<?= htmlspecialchars($etudiants->getIduti()) ?>"">Retour</a>
                     </button>
                 <?php endif; ?>
 
             <?php endif; ?>
         </div>
-
         <table>
             <thead>
             <tr>

@@ -43,7 +43,7 @@
         <div class="ajout-etudiant-buttons">
             <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Affecter</button>
             <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
-                    onclick="window.location.href='?action=dashboard'">Annuler
+                    onclick="window.location.href='?action=parametrage'">Annuler
             </button>
         </div>
     </form>

@@ -53,18 +53,34 @@
         ?>
         <br>
     </div>
-    <div class="boutonModifMDP">
-        <button class="boutonModifBilan"><a href="./AdministrateurController.php?action=bilanetud&id=<?=htmlspecialchars($etudiant->getIduti())?>">Les Bilans</a></button>
-    </div>
-    <div class="Buttondown">
+    <?php if ($_SESSION['role'] == "administrateur") : ?>
         <div class="boutonModifMDP">
-            <button class="boutonBack"><a href="./AdministrateurController.php?action=listeetudiants">Retour</a>
-            </button>
+            <button class="boutonModifBilan"><a href="./AdministrateurController.php?action=bilanetud&id=<?=htmlspecialchars($etudiant->getIduti())?>">Les Bilans</a></button>
         </div>
+        <div class="Buttondown">
+            <div class="boutonModifMDP">
+                <button class="boutonBack"><a href="./AdministrateurController.php?action=listeetudiants">Retour</a>
+                </button>
+            </div>
+            <div class="boutonModifMDP">
+                <button class="BoutonModifElem"><a href=""> Modifier les elements</a></button>
+            </div>
+        </div>
+    <?php else : ?>
         <div class="boutonModifMDP">
-            <button class="BoutonModifElem"><a href=""> Modifier les elements</a></button>
+            <button class="boutonModifBilan"><a href="./TuteurController.php?action=bilanetud&id=<?=htmlspecialchars($etudiant->getIduti())?>">Les Bilans</a></button>
         </div>
-    </div>
+        <div class="Buttondown">
+            <div class="boutonModifMDP">
+                <button class="boutonBack"><a href="./TuteurController.php?action=listeetudiants">Retour</a>
+                </button>
+            </div>
+            <div class="boutonModifMDP">
+                <button class="BoutonModifElem"><a href=""> Modifier les elements</a></button>
+            </div>
+        </div>
+    <?php endif; ?>
+
 </div>
 
 <?php endif; ?>
