@@ -382,6 +382,25 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
+
+    public function ajoutEntrperise()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $specialiteDAO = new SpecialiteDAO($bdd);
+            $classeDAO = new ClasseDAO($bdd);
+
+            $specialites = $specialiteDAO->getAll();
+            $classes = $classeDAO->getAll();
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageAjoutEntreprise.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
 }
 
 
@@ -418,7 +437,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = intval($_GET['id']);
                 $controller->detailBilan2($id);
                 break;
-
             case 'ajoutEtudiant':
                 $controller->ajoutEtudiant();
                 break;
@@ -427,6 +445,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 break;
             case 'affectationTuteurClasse':
                 $controller->affectationTuteurClasse();
+                break;
+            case 'ajoutEntreprise':
+                $controller->ajoutEntrperise();
                 break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));

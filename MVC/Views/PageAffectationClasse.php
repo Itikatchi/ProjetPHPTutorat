@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="MainContainer">
-<div class="ajout-etudiant-container">
+<div class="ajout-container">
     <h1>Affectation Tuteur/Classe</h1>
     <form method="POST" action="?action=saveAffectationTuteurClasse" class="ajout-etudiant-form">
         <div class="ajout-etudiant-form-group">

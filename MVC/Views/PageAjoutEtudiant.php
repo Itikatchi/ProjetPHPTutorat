@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="MainContainerflex">
-    <div class="ajout-etudiant-container">
+    <div class="ajout-container">
         <h1>Ajout étudiant</h1>
         <form method="POST" action="?action=addEtudiant" class="ajout-etudiant-form">
             <div class="ajout-etudiant-form-group">
@@ -32,7 +32,7 @@
                 <input type="tel" id="tel" name="tel" required>
             </div>
     </div>
-    <div class="ajout-etudiant-container">
+    <div class="ajout-container">
         <div class="ajout-etudiant-form-group">
             <label for="adresse">Adresse :</label>
             <input type="text" id="adresse" name="adresse" required>

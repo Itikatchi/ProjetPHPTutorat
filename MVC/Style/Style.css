@@ -753,7 +753,7 @@ body.login-page {
     transform: scale(1);
     background-color: #5B7552;
 }
-.ajout-etudiant-container {
+.ajout-container {
     align-self: center;
     background-color: #F7FAF5;
     border-radius: 12px;
