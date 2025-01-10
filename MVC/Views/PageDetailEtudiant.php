@@ -69,7 +69,7 @@
                 </button>
             </div>
             <div class="boutonModifMDP">
-                <button class="BoutonModifElem"><a href=""> Modifier les elements</a></button>
+                <button class="BoutonModifElem"><a href="./AdministrateurController.php?action=modifierInfosEtu"> Modifier les elements</a></button>
             </div>
         </div>
     <?php else : ?>
