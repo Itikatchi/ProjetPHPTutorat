@@ -79,7 +79,7 @@
                             }
                             ?>">Details</a></td>
                     <?php elseif ($_SESSION['role'] == "tuteur") : ?>
-                        <td><a href="./TuteurController.php?action=modifierBilan&id=<?php
+                        <td><a href="./TuteurController.php?action=detailBilan1&id=<?php
                             $bil = $etudiants->getMesBilan1();
                             foreach ($bil as $bilan) {
                                 if ($s = $bilan->getIdBil()) {
@@ -94,17 +94,34 @@
 
             <?php else : ?>
                 <tr>
-                    <td colspan="2">Aucune Bilan trouvé.</td>
-                    <td><a href="./AdministrateurController.php?action=modifierBilan&id=<?php
-                        $bil = $etudiants->getMesBilan1();
-                        foreach ($bil as $bilan) {
-                            if ($s = $bilan->getIdBil()) {
-                                echo(htmlspecialchars($s));
-                            } else {
-                                echo("L'etudiant n'a pas encore de sujet !");
+                    <?php if ($_SESSION['role'] == "administrateur") : ?>
+                        <td colspan="2">Aucune Bilan trouvé.</td>
+                        <td><a href="./AdministrateurController.php?action=modifierBilan1&id=<?php
+                            $bil = $etudiants->getMesBilan1();
+                            foreach ($bil as $bilan) {
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
                             }
-                        }
-                        ?>">Cree le nouveau bilan </a></td>
+                            ?>">Cree le nouveau bilan </a></td>
+                    <?php elseif ($_SESSION['role'] == "tuteur") : ?>
+                        <td colspan="2">Aucune Bilan trouvé.</td>
+
+                        <td><a href="./TuteurController.php?action=modifierBilan1&id=<?php
+                            $bil = $etudiants->getMesBilan1();
+                            foreach ($bil as $bilan) {
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
+                            }
+                            ?>">Cree le nouveau bilan </a></td>
+                    <?php else : ?>
+                        <td colspan="3">Aucune Bilan trouvé.</td>
+                    <?php endif;?>
                 </tr>
             <?php endif; ?>
             </tbody>
@@ -174,8 +191,8 @@
                 <tr>
                     <?php if ($_SESSION['role'] == "administrateur") : ?>
                     <td colspan="2">Aucune Bilan trouvé.</td>
-                    <td><a href="./AdministrateurController.php?action=modifierBilan&id=<?php
-                        $bil = $etudiants->getMesBilan1();
+                    <td><a href="./AdministrateurController.php?action=modifierBilan2&id=<?php
+                        $bil = $etudiants->getMesBilan2();
                         foreach ($bil as $bilan) {
                             if ($s = $bilan->getIdBil()) {
                                 echo(htmlspecialchars($s));
@@ -187,8 +204,8 @@
                     <?php elseif ($_SESSION['role'] == "tuteur") : ?>
                         <td colspan="2">Aucune Bilan trouvé.</td>
 
-                        <td><a href="./TuteurController.php?action=modifierBilan&id=<?php
-                            $bil = $etudiants->getMesBilan1();
+                        <td><a href="./TuteurController.php?action=modifierBilan2&id=<?php
+                            $bil = $etudiants->getMesBilan2();
                             foreach ($bil as $bilan) {
                                 if ($s = $bilan->getIdBil()) {
                                     echo(htmlspecialchars($s));

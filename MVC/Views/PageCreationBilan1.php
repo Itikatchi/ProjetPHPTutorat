@@ -9,93 +9,36 @@
 <body>
 <div class="MainContainerflex">
     <div class="ajout-container">
-        <h1>Ajout étudiant</h1>
-        <form method="POST" action="?action=add" class="ajout-etudiant-form">
+        <h1>Creation du Bilan</h1>
+        <form method="POST" action="?action=CreatBilan1&id=<?php echo($bilan1->getIdBil());?>" class="ajout-etudiant-form">
             <div class="ajout-etudiant-form-group">
-                <label for="nom">Nom :</label>
-                <input type="text" id="nom" name="nom" required>
+                <label for="dateVisEnt">Date de Visite en Entreprise :</label>
+                <input type="date" id="dateVisEnt" name="dateVisEnt" value="<?php echo($bilan1->getDatVisEnt()->format("Y-m-d")) ?>" required>
             </div>
             <div class="ajout-etudiant-form-group">
-                <label for="prenom">Prenom :</label>
-                <input type="text" id="prenom" name="prenom" required>
+                <label for="noteEnt">Note d'entreprise :</label>
+                <input type="number" min="0" max="20" id="noteEnt" name="noteEnt" value="<?= htmlspecialchars($bilan1->getNotEnt()) ?>" >
             </div>
             <div class="ajout-etudiant-form-group">
-                <label for="email">Email :</label>
-                <input type="email" id="email" name="email" required>
+                <label for="noteDos">Note de Dossier :</label>
+                <input type="number"  min="0" max="20"  step="0.0001" id="noteDos" name="noteDos" value="<?= htmlspecialchars($bilan1->getNotDosBil()) ?>" >
             </div>
             <div class="ajout-etudiant-form-group">
-                <label for="mdp">Mot de passe de base :</label>
-                <input type="password" id="mdp" name="mdp" required>
+                <label for="noteOra">Note de l'Oral :</label>
+                <input type="number" min="0" max="20" id="noteOra" name="noteOra" value="<?= htmlspecialchars($bilan1->getNotOraBil()) ?>" >
             </div>
             <div class="ajout-etudiant-form-group">
-                <label for="tel">Tel :</label>
-                <input type="tel" id="tel" name="tel" required>
+                <label for="remarque">Remarque :</label>
+                <textarea style="resize: none; height: 150px"  id="remarque" name="remarque" ><?= htmlspecialchars($bilan1->getRemBil()) ?></textarea>
             </div>
-    </div>
-    <div class="ajout-container">
-        <div class="ajout-etudiant-form-group">
-            <label for="adresse">Adresse :</label>
-            <input type="text" id="adresse" name="adresse" required>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="code_postal">Code Postal :</label>
-            <input type="text" id="code_postal" name="code_postal" required>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="ville">Ville :</label>
-            <input type="text" id="ville" name="ville" required>
-        </div>
 
-        <div class="ajout-etudiant-form-group">
-            <label for="specialite">Spécialité :</label>
-            <select id="specialite" name="specialite" required>
-                <option value="">--Choisir--</option>
-                <?php foreach ($specialites as $specialite): ?>
-                    <option value="<?= htmlspecialchars($specialite->getIdSpec()) ?>">
-                        <?= htmlspecialchars($specialite->getNomSpec()) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="classe">Classe :</label>
-            <select id="classe" name="classe" required>
-                <option value="">--Choisir--</option>
-                <?php foreach ($classes as $classe): ?>
-                    <option value="<?= htmlspecialchars($classe->getIdCla()) ?>">
-                        <?= htmlspecialchars($classe->getNomCla()) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="tuteur">Tuteur :</label>
-            <select id="tuteur" name="tuteur">
-                <option value="">--Choisir--</option>
-                <?php foreach ($tuteurs as $tuteur): ?>
-                    <option value="<?= htmlspecialchars($tuteur->getIdUti()) ?>">
-                        <?= htmlspecialchars($tuteur->getNomUti() . " " . $tuteur->getPrenomUti()) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="entreprise">Entreprise :</label>
-            <select id="entreprise" name="entreprise">
-                <option value="">--Choisir--</option>
-                <?php foreach ($entreprises as $entreprise): ?>
-                    <option value="<?= htmlspecialchars($entreprise->getIdEnt()) ?>">
-                        <?= htmlspecialchars($entreprise->getNomEnt()) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="ajout-etudiant-buttons">
-            <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Ajouter</button>
-            <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
-                    onclick="window.location.href='?action=parametrage'">Annuler
-            </button>
-        </div>
+
+            <div class="ajout-etudiant-buttons">
+                <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Ajouter</button>
+                <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
+                        onclick="window.location.href='?action=detail&id=<?php echo($bilan1->getMonEtu()->getIdUti())?>'">Annuler
+                </button>
+            </div>
         </form>
     </div>
 </div>

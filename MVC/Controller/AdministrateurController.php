@@ -68,6 +68,12 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
+    private function redirectWithError($message)
+    {
+
+        header("Location: ../../index.php?error=" . urlencode($message));
+        exit;
+    }
     public function mesinfo()
     {
         try {
@@ -104,13 +110,13 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
-
-    public function modifierBilan($id)
+///////////////////////////////////////////MODIFIER LES BILAN 1////////////////////////////////////
+    public function modifierBilan1($id)
     {
         try {
             $this->ensureLoggedInAs('administrateur');
             $bdd = initialiseConnexionBDD();
-            $bilan1dao = new TuteurDAO($bdd);
+            $bilan1dao = new Bilan1DAO($bdd);
             $bilan1 = $bilan1dao->find($id);
             if (!$bilan1) {
                 throw new \Exception("Tuteur non trouvé.");
@@ -122,41 +128,42 @@ class AdministrateurController
         }
     }
 
-    public function saveModifBilan()
+    public function saveModifBilan1($id)
     {
         echo "Méthode saveInfos appelée";
-
         try {
             $this->ensureLoggedInAs('administrateur');
 
 
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $nom = htmlspecialchars($_POST['nom']);
-                $prenom = htmlspecialchars($_POST['prenom']);
-                $telephone = htmlspecialchars($_POST['telephone']);
-                $email = htmlspecialchars($_POST['email']);
+                $dateVisEnt = htmlspecialchars($_POST['dateVisEnt']);
+                $noteEnt = floatval($_POST['noteEnt']);
+                $noteDos = floatval($_POST['noteDos']);
+                $noteOra = floatval($_POST['noteOra']);
+                $remarque = htmlspecialchars($_POST['remarque']);
 
                 $bdd = initialiseConnexionBDD();
-                $tutDAO = new TuteurDAO($bdd);
-                $tuteur = $tutDAO->find($logtut);
+                $bilan1dao = new Bilan1DAO($bdd);
+                $bilan1 = $bilan1dao->find($id);
 
-                if (!$tuteur) {
+                if (!$bilan1) {
                     throw new \Exception("Tuteur non trouvé.");
                 }
 
-                $tuteur->setNomUti($nom);
-                $tuteur->setPrenomUti($prenom);
-                $tuteur->setTutTel($telephone);
-                $tuteur->setEmailUti($email);
+                $bilan1->setNotEnt($noteEnt);
+                $bilan1->setNotOraBil($noteOra);
+                $bilan1->setNotDosBil($noteDos);
+                $bilan1->setRemBil($remarque);
+                $bilan1->setDatVisEnt(new DateTime($dateVisEnt));
 
-                $success = $tutDAO->update($tuteur);
+                $success = $bilan1dao->update($bilan1);
 
                 if (!$success) {
                     throw new \Exception("La mise à jour des informations a échoué.");
                 }
                 var_dump($success);
-                header("Location: ?action=mesinfo");
+                header("Location: ?action=detailBilan1&id=" . $id);
                 exit;
             } else {
                 throw new \Exception("Méthode invalide.");
@@ -312,12 +319,7 @@ class AdministrateurController
         }
     }
 
-    private function redirectWithError($message)
-    {
 
-        header("Location: ../../index.php?error=" . urlencode($message));
-        exit;
-    }
 
     public function details($id)
     {
@@ -672,9 +674,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     try {
         switch ($_GET['action']) {
-            case 'modifierBilan':
+            case 'modifierBilan1':
                 $id = intval($_GET['id']);
-                $controller->modifierBilan($id);
+                $controller->modifierBilan1($id);
                 break;
             case 'modifiermdp':
                 $controller->modifierMdp();
@@ -735,6 +737,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         header("Location: ../../index.php?error=" . urlencode("Erreur inattendue : " . $e->getMessage()));
         exit;
     }
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'CreatBilan1' && isset($_GET['id'])) {
+    $controller = new AdministrateurController();
+    $controller->saveModifBilan1($_GET['id']);
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveAffectationTuteurClasse') {
     $controller = new AdministrateurController();
