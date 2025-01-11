@@ -42,7 +42,7 @@
             <?= "Note Oral : " . htmlspecialchars($bilan1->getNotDosBil()) ?><br>
             <?= "Note Dossier : " . htmlspecialchars($bilan1->getNotOraBil()) ?><br>
             <?= "Note Entreprise : " . htmlspecialchars($bilan1->getNotEnt()) ?><br>
-            <?= "Date de visite en entreprise : " . htmlspecialchars($bilan1->getDatVisEnt()->format('d/m/Y')) ?><br>
+            <?= "Date de visite en entreprise : " . ($bilan1->getDatVisEnt()->format('d/m/Y')) ?><br>
             <p>REMARQUE :</p>
             <?= htmlspecialchars($bilan1->getRemBil()) ?>
         </div>

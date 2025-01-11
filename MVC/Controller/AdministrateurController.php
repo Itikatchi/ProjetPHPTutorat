@@ -99,13 +99,72 @@ class AdministrateurController
                 throw new \Exception("Admin non trouvé.");
             }
             include "../Views/Nav/NavAdmin.php";
-
             include "../Views/ModifierInformationsAdmin.php";
         } catch (\Exception $e) {
             $this->redirectWithError($e->getMessage());
         }
     }
 
+    public function modifierBilan($id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $bdd = initialiseConnexionBDD();
+            $bilan1dao = new TuteurDAO($bdd);
+            $bilan1 = $bilan1dao->find($id);
+            if (!$bilan1) {
+                throw new \Exception("Tuteur non trouvé.");
+            }
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageCreationBilan1.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveModifBilan()
+    {
+        echo "Méthode saveInfos appelée";
+
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $nom = htmlspecialchars($_POST['nom']);
+                $prenom = htmlspecialchars($_POST['prenom']);
+                $telephone = htmlspecialchars($_POST['telephone']);
+                $email = htmlspecialchars($_POST['email']);
+
+                $bdd = initialiseConnexionBDD();
+                $tutDAO = new TuteurDAO($bdd);
+                $tuteur = $tutDAO->find($logtut);
+
+                if (!$tuteur) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                $tuteur->setNomUti($nom);
+                $tuteur->setPrenomUti($prenom);
+                $tuteur->setTutTel($telephone);
+                $tuteur->setEmailUti($email);
+
+                $success = $tutDAO->update($tuteur);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour des informations a échoué.");
+                }
+                var_dump($success);
+                header("Location: ?action=mesinfo");
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
     public function saveInfos()
     {
         echo "Méthode saveInfos appelée";
@@ -613,6 +672,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     try {
         switch ($_GET['action']) {
+            case 'modifierBilan':
+                $id = intval($_GET['id']);
+                $controller->modifierBilan($id);
+                break;
             case 'modifiermdp':
                 $controller->modifierMdp();
                 break;

@@ -68,7 +68,17 @@ class TuteurController
             $this->redirectWithError($e->getMessage());
         }
     }
+    private function ensureLoggedInAs($role)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
+
+        if (!isset($_SESSION['role']) || $_SESSION['role'] !== $role) {
+            throw new \Exception("Vous devez être connecté en tant que $role pour accéder à cette page.");
+        }
+    }
     public function mesinfo()
     {
         try {
@@ -86,17 +96,7 @@ class TuteurController
         }
     }
 
-    private function ensureLoggedInAs($role)
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
 
-
-        if (!isset($_SESSION['role']) || $_SESSION['role'] !== $role) {
-            throw new \Exception("Vous devez être connecté en tant que $role pour accéder à cette page.");
-        }
-    }
 
     private function redirectWithError($message)
     {
