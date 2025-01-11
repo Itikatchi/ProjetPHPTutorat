@@ -27,7 +27,7 @@
         <img src="../Image/cloche.svg" alt="Alerte">
         </a>
 
-        <a href="../Controller/AdministrateurController.php?action=parametrage"">
+        <a href="../Controller/ParametreController.php?action=parametrage"">
 
             <img src="../Image/parametres-curseurs.svg" alt="">
         </a>

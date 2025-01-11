@@ -53,6 +53,24 @@ require_once "../BO/Classe.php";
 require_once "../BO/Alerte.php";
 class AdministrateurController
 {
+
+    private function redirectWithError($message)
+    {
+
+        header("Location: ../../index.php?error=" . urlencode($message));
+        exit;
+    }
+    private function ensureLoggedInAs($role)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+
+        if (!isset($_SESSION['role']) || $_SESSION['role'] !== $role) {
+            throw new \Exception("Vous devez être connecté en tant que $role pour accéder à cette page.");
+        }
+    }
     public function dashboard()
     {
         try {
@@ -68,12 +86,21 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
-    private function redirectWithError($message)
+    public function logout()
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-        header("Location: ../../index.php?error=" . urlencode($message));
+
+        session_unset();
+        session_destroy();
+
+
+        header("Location: ../../index.php");
         exit;
     }
+
     public function mesinfo()
     {
         try {
@@ -307,17 +334,7 @@ class AdministrateurController
     }
 
 
-    private function ensureLoggedInAs($role)
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
 
-
-        if (!isset($_SESSION['role']) || $_SESSION['role'] !== $role) {
-            throw new \Exception("Vous devez être connecté en tant que $role pour accéder à cette page.");
-        }
-    }
 
 
 
@@ -411,32 +428,9 @@ class AdministrateurController
         }
     }
 
-    public function logout()
-    {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
 
 
-        session_unset();
-        session_destroy();
 
-
-        header("Location: ../../index.php");
-        exit;
-    }
-
-    public function parametrage()
-    {
-        try {
-            $this->ensureLoggedInAs('administrateur');
-            include "../Views/Nav/NavAdmin.php";
-
-            include "../Views/PageParametreAdmin.php";
-        } catch (\Exception $e) {
-            $this->redirectWithError($e->getMessage());
-        }
-    }
     public function saveInfosEtu()
     {
         echo "Méthode saveInfos appelée";
@@ -513,159 +507,7 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
-    public function affectationTuteurClasse()
-    {
-        try {
-            $this->ensureLoggedInAs('administrateur');
 
-            $bdd = initialiseConnexionBDD();
-            $tuteurDAO = new TuteurDAO($bdd);
-            $classeDAO = new ClasseDAO($bdd);
-
-            $tuteurs = $tuteurDAO->getAll(); // Récupère tous les tuteurs
-            $classes = $classeDAO->getAll(); // Récupère toutes les classes
-            include "../Views/Nav/NavAdmin.php";
-
-            include "../Views/PageAffectationClasse.php"; // Vue du formulaire
-        } catch (\Exception $e) {
-            $this->redirectWithError($e->getMessage());
-        }
-    }
-
-
-    public function saveAffectationTuteurClasse()
-    {
-        try {
-            $this->ensureLoggedInAs('administrateur');
-
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $bdd = initialiseConnexionBDD();
-                $tuteurDAO = new TuteurDAO($bdd);
-                $classeDAO = new ClasseDAO($bdd);
-                $affectationDAO = new AffectationTuteurClasseDAO($bdd);
-
-                $tuteurId = intval($_POST['tuteur_id']);
-                $classeId = intval($_POST['classe_id']);
-                $nbMaxEtu = intval($_POST['nb_max_etu']); // Optionnel
-
-                $tuteur = $tuteurDAO->find($tuteurId);
-                $classe = $classeDAO->find($classeId);
-
-                if ($tuteur && $classe) {
-                    $affectation = new AffectationTuteurClasse($tuteur, $classe, $nbMaxEtu);
-                    $success = $affectationDAO->create($affectation);
-
-                    if ($success) {
-                        header("Location: ?action=affectationTuteurClasse&success=1");
-                        exit;
-                    } else {
-                        throw new \Exception("Erreur lors de l'enregistrement.");
-                    }
-                } else {
-                    throw new \Exception("Tuteur ou classe introuvable.");
-                }
-            }
-        } catch (\Exception $e) {
-            $this->redirectWithError($e->getMessage());
-        }
-    }
-
-    public function ajoutEtudiant()
-    {
-        try {
-            $this->ensureLoggedInAs('administrateur');
-
-            $bdd = initialiseConnexionBDD();
-            $specialiteDAO = new SpecialiteDAO($bdd);
-            $classeDAO = new ClasseDAO($bdd);
-
-            $specialites = $specialiteDAO->getAll();
-            $classes = $classeDAO->getAll();
-
-            include "../Views/Nav/NavAdmin.php";
-            include "../Views/PageAjoutEtudiant.php";
-        } catch (\Exception $e) {
-            $this->redirectWithError($e->getMessage());
-        }
-    }
-
-
-    public function addEtudiant()
-    {
-        try {
-            $this->ensureLoggedInAs('administrateur');
-
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $bdd = initialiseConnexionBDD();
-                $etudiantDAO = new EtduiantDAO($bdd);
-
-                $nom = htmlspecialchars($_POST['nom']);
-                $prenom = htmlspecialchars($_POST['prenom']);
-                $email = htmlspecialchars($_POST['email']);
-                $mdp = password_hash($_POST['mdp'], PASSWORD_BCRYPT);
-                $tel = htmlspecialchars($_POST['tel']);
-                $specialiteId = intval($_POST['specialite']);
-                $classeId = intval($_POST['classe']);
-
-                $specialiteDAO = new SpecialiteDAO($bdd);
-                $classeDAO = new ClasseDAO($bdd);
-
-                $specialite = $specialiteDAO->find($specialiteId);
-                $classe = $classeDAO->find($classeId);
-
-                if (!$specialite || !$classe) {
-                    throw new \Exception("Spécialité ou classe introuvable.");
-                }
-
-                $etudiant = new Etudiant(
-                    null,
-                    $specialite,
-                    $classe,
-                    null,
-                    null,
-                    null,
-                    $nom,
-                    $prenom,
-                    $email,
-                    $mdp,
-                    $tel,
-                    "",
-                    "",
-                    ""
-                );
-
-                $success = $etudiantDAO->create($etudiant);
-
-                if ($success) {
-                    header("Location: ?action=listeetudiants&success=1");
-                    exit;
-                } else {
-                    throw new \Exception("Erreur lors de l'enregistrement.");
-                }
-            }
-        } catch (\Exception $e) {
-            $this->redirectWithError($e->getMessage());
-        }
-    }
-
-    public function ajoutEntrperise()
-    {
-        try {
-            $this->ensureLoggedInAs('administrateur');
-
-            $bdd = initialiseConnexionBDD();
-            $specialiteDAO = new SpecialiteDAO($bdd);
-            $classeDAO = new ClasseDAO($bdd);
-
-            $specialites = $specialiteDAO->getAll();
-            $classes = $classeDAO->getAll();
-
-            include "../Views/Nav/NavAdmin.php";
-            include "../Views/PageAjoutEntreprise.php";
-        } catch (\Exception $e) {
-            $this->redirectWithError($e->getMessage());
-        }
-    }
 }
 
 
@@ -715,18 +557,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = intval($_GET['id']);
                 $controller->detailBilan2($id);
                 break;
-            case 'ajoutEtudiant':
-                $controller->ajoutEtudiant();
-                break;
-            case 'parametrage':
-                $controller->parametrage();
-                break;
-            case 'affectationTuteurClasse':
-                $controller->affectationTuteurClasse();
-                break;
-            case 'ajoutEntreprise':
-                $controller->ajoutEntrperise();
-                break;
+
             case 'modifierInfosEtu':
                 $controller->modifierInfosEtu();
                 break;
@@ -742,15 +573,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
     $controller = new AdministrateurController();
     $controller->saveModifBilan1($_GET['id']);
 }
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveAffectationTuteurClasse') {
-    $controller = new AdministrateurController();
-    $controller->saveAffectationTuteurClasse();
-}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] === 'addEtudiant') {
-    $controller = new AdministrateurController();
-    $controller->addEtudiant();
-}
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfo') {
     $controller = new AdministrateurController();
     $controller->saveInfos();

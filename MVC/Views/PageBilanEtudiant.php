@@ -40,6 +40,9 @@
             <tr>
                 <th>Etudiant :</th>
                 <th>Année Bilan :</th>
+                <?php if($_SESSION['role'] == "administrateur"||$_SESSION['role'] == "tuteur" ) :?>
+                <th>Modifier le Bilan</th>
+                <?php endif;?>
                 <th>Details du bilan :</th>
             </tr>
             </thead>
@@ -56,6 +59,31 @@
                             }
                         }
                         ?></td>
+                    <?php if ($_SESSION['role'] == "administrateur") : ?>
+                    <td><a href="./AdministrateurController.php?action=detailBilan2&id=<?php
+                        $bil = $etudiants->getMesBilan2();
+                        foreach ($bil as $bilan) {
+                            if ($s = $bilan->getIdBil()) {
+                                echo(htmlspecialchars($s));
+                            } else {
+                                echo("L'etudiant n'a pas encore de sujet !");
+                            }
+                        }
+                        ?>">Modifier</a></td>
+                    <?php elseif ($_SESSION['role'] == "tuteur") : ?>
+                        <td><a href="./TuteurController.php?action=detailBilan2&id=<?php
+                            $bil = $etudiants->getMesBilan2();
+                            foreach ($bil as $bilan) {
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
+                            }
+                            ?>">Modifier</a></td>
+                    <?php else: ?>
+                    <?php endif; ?>
+
                     <?php if ($_SESSION['role'] == "administrateur") : ?>
                         <td><a href="./AdministrateurController.php?action=detailBilan1&id=<?php
                             $bil = $etudiants->getMesBilan1();
@@ -95,7 +123,7 @@
             <?php else : ?>
                 <tr>
                     <?php if ($_SESSION['role'] == "administrateur") : ?>
-                        <td colspan="2">Aucune Bilan trouvé.</td>
+                        <td colspan="3">Aucune Bilan trouvé.</td>
                         <td><a href="./AdministrateurController.php?action=modifierBilan1&id=<?php
                             $bil = $etudiants->getMesBilan1();
                             foreach ($bil as $bilan) {
@@ -107,7 +135,7 @@
                             }
                             ?>">Cree le nouveau bilan </a></td>
                     <?php elseif ($_SESSION['role'] == "tuteur") : ?>
-                        <td colspan="2">Aucune Bilan trouvé.</td>
+                        <td colspan="3">Aucune Bilan trouvé.</td>
 
                         <td><a href="./TuteurController.php?action=modifierBilan1&id=<?php
                             $bil = $etudiants->getMesBilan1();
@@ -134,6 +162,9 @@
             <tr>
                 <th>Etudiant :</th>
                 <th>Année Bilan :</th>
+                <?php if($_SESSION['role'] == "administrateur"||$_SESSION['role'] == "tuteur" ) :?>
+                    <th>Modifier le Bilan</th>
+                <?php endif;?>
                 <th>Details du bilan :</th>
             </tr>
             </thead>
@@ -151,6 +182,31 @@
                         }
                         ?>
                     </td>
+                    <?php if ($_SESSION['role'] == "administrateur") : ?>
+                    <td><a href="./AdministrateurController.php?action=detailBilan2&id=<?php
+                        $bil = $etudiants->getMesBilan2();
+                        foreach ($bil as $bilan) {
+                            if ($s = $bilan->getIdBil()) {
+                                echo(htmlspecialchars($s));
+                            } else {
+                                echo("L'etudiant n'a pas encore de sujet !");
+                            }
+                        }
+                        ?>">Modifier le Bilan</a></td>
+                    <?php elseif ($_SESSION['role'] == "tuteur") : ?>
+                    <td><a href="./TuteurController.php?action=detailBilan2&id=<?php
+                        $bil = $etudiants->getMesBilan2();
+                        foreach ($bil as $bilan) {
+                            if ($s = $bilan->getIdBil()) {
+                                echo(htmlspecialchars($s));
+                            } else {
+                                echo("L'etudiant n'a pas encore de sujet !");
+                            }
+                        }
+                        ?>">Modifier le Bilan</a></td>
+                    <?php else : ?>
+                    <?php endif; ?>
+
                     <?php if ($_SESSION['role'] == "administrateur") : ?>
                         <td><a href="./AdministrateurController.php?action=detailBilan2&id=<?php
                             $bil = $etudiants->getMesBilan2();
@@ -190,7 +246,7 @@
             <?php else : ?>
                 <tr>
                     <?php if ($_SESSION['role'] == "administrateur") : ?>
-                    <td colspan="2">Aucune Bilan trouvé.</td>
+                    <td colspan="3">Aucune Bilan trouvé.</td>
                     <td><a href="./AdministrateurController.php?action=modifierBilan2&id=<?php
                         $bil = $etudiants->getMesBilan2();
                         foreach ($bil as $bilan) {
@@ -202,7 +258,7 @@
                         }
                         ?>">Cree le nouveau bilan </a></td>
                     <?php elseif ($_SESSION['role'] == "tuteur") : ?>
-                        <td colspan="2">Aucune Bilan trouvé.</td>
+                        <td colspan="3">Aucune Bilan trouvé.</td>
 
                         <td><a href="./TuteurController.php?action=modifierBilan2&id=<?php
                             $bil = $etudiants->getMesBilan2();
