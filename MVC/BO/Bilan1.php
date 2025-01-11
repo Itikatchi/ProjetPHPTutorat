@@ -21,7 +21,7 @@ class Bilan1 extends Bilan
         $this->datVisEnt = $datVisEnt;
     }
 
-    public function getNotEnt(): float
+    public function getNotEnt(): ?float
     {
         return $this->notEnt;
     }
@@ -36,7 +36,7 @@ class Bilan1 extends Bilan
         return $this->datVisEnt;
     }
 
-    public function setDatVisEnt(DateTime $datVisEnt): void
+    public function setDatVisEnt(?DateTime $datVisEnt): void
     {
         $this->datVisEnt = $datVisEnt;
     }
