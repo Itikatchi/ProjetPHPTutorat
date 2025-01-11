@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Modification du Mot de Passe</title>
+    <link rel="stylesheet" href="../Style/Style.css">
+</head>
+<body>
+
+<div class="MainContainer">
+    <div class="modifetudiant-main">
+        <div class="modifetudiant-title">
+            <h1>Modification du Mot de Passe</h1>
+        </div>
+
+        <div class="modifetudiant-form-container">
+            <form method="POST" action="?action=savemdp" class="modifetudiant-form">
+                <h2 class="modifetudiant-header">Changer mon mot de passe</h2>
+
+                <div class="modifetudiant-form-group">
+                    <label for="old-password" class="modiftuteur-label">Ancien mot de passe :</label>
+                    <input type="password" id="old-password" name="old_password" class="modifetudiant-input" placeholder="Entrez votre ancien mot de passe" required>
+                </div>
+
+                <div class="modifetudiant-form-group">
+                    <label for="new-password" class="modiftuteur-label">Nouveau mot de passe :</label>
+                    <input type="password" id="new-password" name="new_password" class="modifetudiant-input" placeholder="Entrez votre nouveau mot de passe" required>
+                </div>
+
+                <div class="modifetudiant-buttons">
+                    <button style="cursor: pointer;" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Modifier</button>
+                    <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
+                            onclick="window.location.href='?action=mesinfo'">Annuler
+                    </button>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

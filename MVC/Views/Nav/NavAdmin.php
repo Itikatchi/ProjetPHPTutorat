@@ -15,7 +15,7 @@
 <body>
 <nav>
     <div class="nav-bar">
-        <a href="Views/MesInformationsEtudiant.php">
+        <a href="../Controller/AdministrateurController.php?action=mesinfo">
             <img src="../Image/reception.svg" alt="">
         </a>
         <a href="../Controller/AdministrateurController.php?action=listeetudiants"">

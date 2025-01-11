@@ -68,6 +68,135 @@ class AdministrateurController
             $this->redirectWithError($e->getMessage());
         }
     }
+    public function mesinfo()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $logtut = $_SESSION['id'];
+
+            $bdd = initialiseConnexionBDD();
+            $adminDAO = new AdministrateurDAO($bdd);
+            $admin = $adminDAO->find($logtut);
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/MesInformationsAdmin.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function modifierInfos()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $logtut = $_SESSION['id'];
+
+            $bdd = initialiseConnexionBDD();
+            $adminDAO = new AdministrateurDAO($bdd);
+            $admin = $adminDAO->find($logtut);
+
+            if (!$admin) {
+                throw new \Exception("Admin non trouvé.");
+            }
+            include "../Views/Nav/NavAdmin.php";
+
+            include "../Views/ModifierInformationsAdmin.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveInfos()
+    {
+        echo "Méthode saveInfos appelée";
+
+
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $logtut = $_SESSION['id'];
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $nom = htmlspecialchars($_POST['nom']);
+                $prenom = htmlspecialchars($_POST['prenom']);
+                $email = htmlspecialchars($_POST['email']);
+
+                $bdd = initialiseConnexionBDD();
+                $adminDAO = new AdministrateurDAO($bdd);
+                $admin = $adminDAO->find($logtut);
+
+                if (!$admin) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                $admin->setNomUti($nom);
+                $admin->setPrenomUti($prenom);
+                $admin->setEmailUti($email);
+
+                $success = $adminDAO->update($admin);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour des informations a échoué.");
+                }
+                var_dump($success);
+                header("Location: ?action=mesinfo");
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+    public function modifierMdp()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/ModifierMotDePasseAdmin.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveMdp()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $logtut = $_SESSION['id'];
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $ancienMdp = htmlspecialchars($_POST['old_password']);
+                $nouveauMdp = htmlspecialchars($_POST['new_password']);
+
+                $bdd = initialiseConnexionBDD();
+                $AdminDAO = new AdministrateurDAO($bdd);
+                $admin = $AdminDAO->find($logtut);
+
+                if (!$admin) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                if ($admin->getMdpUti() !== $ancienMdp) {
+                    throw new \Exception("L'ancien mot de passe est incorrect.");
+                }
+
+                $admin->setMdpUti($nouveauMdp);
+                $success = $AdminDAO->update($admin);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour du mot de passe a échoué.");
+                }
+
+                header("Location: ?action=mesinfo");
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
 
     public function alerte()
     {
@@ -484,6 +613,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     try {
         switch ($_GET['action']) {
+            case 'modifiermdp':
+                $controller->modifierMdp();
+                break;
+            case 'modifierInfos':
+                $controller->modifierInfos();
+                break;
+            case 'mesinfo':
+                $controller->mesinfo();
+                break;
             case 'dashboard':
                 $controller->dashboard();
                 break;
@@ -544,6 +682,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] === 'addEtudiant') 
     $controller = new AdministrateurController();
     $controller->addEtudiant();
 }
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfo') {
+    $controller = new AdministrateurController();
+    $controller->saveInfos();
+}
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'savemdp') {
+    $controller = new AdministrateurController();
+    $controller->saveMdp();
+}
 
 
