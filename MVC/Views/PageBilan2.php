@@ -31,7 +31,7 @@
             </button>
             <?php elseif ($_SESSION['role'] == "tuteur") : ?>
             <button class="boutonBack"><a
-                        href="./AdministrateurController.php?action=bilanetud&id=<?= htmlspecialchars($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
+                        href="./TuteurController.php?action=bilanetud&id=<?= htmlspecialchars($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
             </button>
             <?php endif; ?>
 

@@ -9,7 +9,7 @@
 </head>
 <body>
 
-
+<div class="MainContainer">
 <div class="modifetudiant-main">
     <div class="modifetudiant-title">
         <h1>Modification du Mot de Passe</h1>
@@ -30,9 +30,13 @@
             </div>
 
             <div class="modifetudiant-buttons">
-                <a href="?action=mesinfo" class="modifetudiant-button modifetudiant-cancel">Annuler</a>
-                <button style="cursor: pointer;" class="modifetudiant-button modifetudiant-submit">Modifier</button>
+                <button style="cursor: pointer;" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Modifier</button>
+                <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
+                        onclick="window.location.href='?action=mesinfo'">Annuler
+                </button>
+
             </div>
+
         </form>
     </div>
 </div>

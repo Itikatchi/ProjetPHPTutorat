@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="../Style/Style.css">
 </head>
 <body>
-<div class="affectation-container">
+<div class="MainContainer">
+<div class="ajout-container">
     <h1>Affectation Tuteur/Classe</h1>
-    <form method="POST" action="?action=saveAffectationTuteurClasse" class="affectation-form">
-        <div class="form-group">
+    <form method="POST" action="?action=saveAffectationTuteurClasse" class="ajout-etudiant-form">
+        <div class="ajout-etudiant-form-group">
             <label for="tuteur_id">Choisissez le tuteur :</label>
             <select id="tuteur_id" name="tuteur_id" required>
                 <option value="">Sélectionner un tuteur</option>
@@ -22,7 +23,7 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="ajout-etudiant-form-group">
             <label for="classe_id">Choisissez la classe :</label>
             <select id="classe_id" name="classe_id" required>
                 <option value="">Sélectionner une classe</option>
@@ -34,16 +35,19 @@
             </select>
         </div>
 
-        <div class="form-group">
+        <div class="ajout-etudiant-form-group">
             <label for="nb_max_etu">Nombre maximum d'étudiants :</label>
             <input type="number" id="nb_max_etu" name="nb_max_etu" min="1" placeholder="Nombre maximum d'étudiants">
         </div>
 
-        <div class="form-buttons">
-            <button type="submit" class="btn-submit">Affecter</button>
-            <a href="?action=dashboard" class="btn-cancel">Annuler</a>
+        <div class="ajout-etudiant-buttons">
+            <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Affecter</button>
+            <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
+                    onclick="window.location.href='?action=parametrage'">Annuler
+            </button>
         </div>
     </form>
+</div>
 </div>
 </body>
 </html>

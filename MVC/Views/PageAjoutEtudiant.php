@@ -7,29 +7,32 @@
     <link rel="stylesheet" href="../Style/Style.css">
 </head>
 <body>
-<div class="ajout-etudiant-container">
-    <h1>Ajout étudiant</h1>
-    <form method="POST" action="?action=addEtudiant" class="ajout-etudiant-form">
-        <div class="ajout-etudiant-form-group">
-            <label for="nom">Nom :</label>
-            <input type="text" id="nom" name="nom" required>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="prenom">Prenom :</label>
-            <input type="text" id="prenom" name="prenom" required>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="email">Email :</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="mdp">Mot de passe de base :</label>
-            <input type="password" id="mdp" name="mdp" required>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="tel">Tel :</label>
-            <input type="tel" id="tel" name="tel" required>
-        </div>
+<div class="MainContainerflex">
+    <div class="ajout-container">
+        <h1>Ajout étudiant</h1>
+        <form method="POST" action="?action=addEtudiant" class="ajout-etudiant-form">
+            <div class="ajout-etudiant-form-group">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" required>
+            </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="prenom">Prenom :</label>
+                <input type="text" id="prenom" name="prenom" required>
+            </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="mdp">Mot de passe de base :</label>
+                <input type="password" id="mdp" name="mdp" required>
+            </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="tel">Tel :</label>
+                <input type="tel" id="tel" name="tel" required>
+            </div>
+    </div>
+    <div class="ajout-container">
         <div class="ajout-etudiant-form-group">
             <label for="adresse">Adresse :</label>
             <input type="text" id="adresse" name="adresse" required>
@@ -42,6 +45,7 @@
             <label for="ville">Ville :</label>
             <input type="text" id="ville" name="ville" required>
         </div>
+
         <div class="ajout-etudiant-form-group">
             <label for="specialite">Spécialité :</label>
             <select id="specialite" name="specialite" required>
@@ -88,9 +92,12 @@
         </div>
         <div class="ajout-etudiant-buttons">
             <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Ajouter</button>
-            <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler" onclick="window.location.href='?action=dashboard'">Annuler</button>
+            <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
+                    onclick="window.location.href='?action=parametrage'">Annuler
+            </button>
         </div>
-    </form>
+        </form>
+    </div>
 </div>
 </body>
 </html>

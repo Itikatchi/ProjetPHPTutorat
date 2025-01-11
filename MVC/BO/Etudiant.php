@@ -21,7 +21,7 @@ class Etudiant extends Utilisateur
     private array $mesBilan1;
     private array $mesBilan2;
 
-    public function __construct(Tuteur $monTuteur, Specialite $maSpec, Classe $maClasse, MaitreApprentissage $monMaitreAp, Entreprise $monEnt,
+    public function __construct(?Tuteur $monTuteur, ?Specialite $maSpec, ?Classe $maClasse, ?MaitreApprentissage $monMaitreAp, ?Entreprise $monEnt,
                                 int $idUti, string $nomUti, string $prenomUti, string $emailUti, string $mdpUti,string $etu_tel,
                                 string $etu_adr,string $etu_ville,string $etu_cp)
     {

@@ -46,6 +46,21 @@ nav {
     gap: 1%;
 
 }
+.MainContainerflex{
+    justify-content: center;
+    background: var(--theme-2);
+    display: flex;
+    padding: 20px 20px 20px 20px;
+    border-radius: 10px;
+    position: relative;
+    height: 85%;
+    width: 80%;
+    margin-left: 3%;
+    box-shadow: 0 10px 40px -20px #00000091;
+    overflow: hidden;
+    gap: 4%;
+
+}
 .MainContainer .MainTitle{
     margin-left: 7%;
     margin-top: 5%;
@@ -244,15 +259,15 @@ body.login-page {
     font-size: 50px;
 }
 .TablePage{
-    width: 150%;
+    width: 80%;
     margin-left: 5%;
     margin-top: 20px;
     margin-bottom: 20px;
-    overflow-y: scroll;
+    overflow-y: visible;
     height: 900px !important;
-
+    overflow-x: hidden;
     table{
-        width: 50%;
+        width: 100%;
         border-collapse: collapse;
         background-color: #6ab06d;
         color: white;
@@ -270,7 +285,9 @@ body.login-page {
     tr:nth-child(even) {
         background-color: #66a866;
     }
+
 }
+
 
 /* //////////// */
 /* Page MesInformationsEtudiant */
@@ -524,8 +541,11 @@ body.login-page {
 
 .modifetudiant-main {
     width: 60%;
+    margin-top: 5%;
+    justify-self: center;
+    align-self: center;
     padding: 20px;
-    background-color: white;
+    background-color:  #F7FAF5;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid #ccc;
@@ -543,6 +563,7 @@ body.login-page {
 .modifetudiant-form-container {
     margin: 0 auto;
     width: 100%;
+
 }
 
 .modifetudiant-form {
@@ -562,6 +583,10 @@ body.login-page {
 .modifetudiant-form-group {
     display: flex;
     flex-direction: column;
+    width: 96%;
+    justify-content: center;
+
+
 }
 
 .modifetudiant-input {
@@ -570,7 +595,8 @@ body.login-page {
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: var(--theme-1);
+    background-color: #EFF5F1;
+
 }
 
 /* Boutons */
@@ -610,25 +636,37 @@ body.login-page {
 
 /* PAGE BILAN ETUDIANT */
 .BilanPageConsultation  {
-    width: 150%;
+    width: 100%;
     margin-left: 5%;
     margin-bottom: 35%;
 
     .contentBilan2{
         line-height: 2.5;
         font-size: 20px;
+        background-color:  var(--theme-2);
+        border-radius: 25px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 92%;
+        padding: 20px;
     }
     .contentBilan1{
         line-height: 2.5;
         font-size: 20px;
+        background-color:  var(--theme-2);
+        border-radius: 25px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 92%;
+        padding: 20px;
     }
     .BilanConsultation {
         display: flex;
         align-items: center;
         gap: 45%;
 
+
     }
     .boutonBack {
+        margin-left: 25%;
         padding: 10px 20px;
         background-color: var(--theme-1);
         color: var(--theme-2);
@@ -663,7 +701,7 @@ body.login-page {
     }
 
     table{
-        width: 50%;
+        width: 75%;
         border-collapse: collapse;
         background-color: #6ab06d;
         color: white;
@@ -686,15 +724,21 @@ body.login-page {
 
 
 .parametrage-container {
+    align-self: center;
     background-color: #F5F5F5; /* Fond blanc cassé */
     border-radius: 8px;
     padding: 40px;
-    width: 50%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 60%;
+    height: 60%;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
+    justify-content: center;
 }
 
 .parametrage-title {
+    margin-top: 10%;
     font-size: 32px;
     font-weight: bold;
     margin-bottom: 30px;
@@ -730,3 +774,93 @@ body.login-page {
     transform: scale(1);
     background-color: #5B7552;
 }
+.ajout-container {
+    align-self: center;
+    margin-top: 1%;
+    background-color: #F7FAF5;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+    width: 420px;
+    height: 85%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+}
+
+.ajout-etudiant-container h1 {
+    margin-bottom: 25px;
+    font-size: 26px;
+    color: #3C6E47;
+    font-weight: bold;
+}
+
+.ajout-etudiant-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.ajout-etudiant-form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.ajout-etudiant-form-group label {
+    font-size: 15px;
+    margin-bottom: 5px;
+    color: #3C6E47;
+}
+
+.ajout-etudiant-form-group input,
+.ajout-etudiant-form-group select {
+    padding: 12px;
+    border: 1px solid #D9E4DD;
+    border-radius: 6px;
+    background-color: #EFF5F1;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.ajout-etudiant-form-group input:focus,
+.ajout-etudiant-form-group select:focus {
+    border-color: #6C8A64;
+}
+
+.ajout-etudiant-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+}
+
+.ajout-etudiant-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
+    color: #FFF;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.ajout-etudiant-btn-ajouter {
+    background-color: #88A47C;
+}
+
+.ajout-etudiant-btn-ajouter:hover {
+    background-color: #6C8A64;
+}
+
+.ajout-etudiant-btn-annuler {
+    background-color: #D9534F;
+}
+
+.ajout-etudiant-btn-annuler:hover {
+    background-color: #C9302C;
+}
+
+
