@@ -64,8 +64,7 @@
             <!-- PARTIE TBODY -->
             <tbody>
             <?php foreach ($bilan1 as $bilan) : ?>
-            <?php $dateTest = new DateTime('31-01-2000');?>
-                <?php if ($bilan->getDatVisEnt() == $dateTest) : ?>
+                <?php if ($bilan->getDatVisEnt() == null) : ?>
                     <tr>
                         <?php if ($_SESSION['role'] == "administrateur") : ?>
                             <td colspan="2">Nouveau Bilan</td>
@@ -192,7 +191,7 @@
             Bilan 2
             <?php if ($_SESSION['role'] == "administrateur") : ?>
                 <div class="PannelBilanAdd"><a
-                            href="./AdministrateurController.php?action=CreationduBil2&id=<?= htmlspecialchars($etudiants->getIduti()) ?>">
+                            href="./AdministrateurController.php?action=CreationduBil2&id=<?php echo($etudiants->getIduti()) ?>">
                         +
                     </a>
                 </div>
@@ -220,8 +219,7 @@
             <!-- PARTIE TBODY -->
             <tbody>
             <?php foreach ($bilan2 as $bilan) : ?>
-                <?php $dateTest = new DateTime('31-01-2000');?>
-            <?php if ($bilan->getDatBil2() == $dateTest) : ?>
+            <?php if ($bilan->getDatBil2() == null) : ?>
                 <tr>
                     <?php if ($_SESSION['role'] == "administrateur") : ?>
                         <td colspan="2">Nouveau Bilan</td>

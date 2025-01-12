@@ -17,19 +17,19 @@
             </div>
             <div class="ajout-etudiant-form-group">
                 <label for="noteEnt">Note d'entreprise :</label>
-                <input type="number" min="0" max="20" step="0.0001" id="noteEnt" name="noteEnt" value="<?= htmlspecialchars($bilan1->getNotEnt()) ?>" >
+                <input type="number" min="0" max="20" step="0.0001" id="noteEnt" name="noteEnt" value="<?php echo($bilan1->getNotEnt()) ?>" >
             </div>
             <div class="ajout-etudiant-form-group">
                 <label for="noteDos">Note de Dossier :</label>
-                <input type="number"  min="0" max="20"  step="0.0001" id="noteDos" name="noteDos" value="<?= htmlspecialchars($bilan1->getNotDosBil()) ?>" >
+                <input type="number"  min="0" max="20"  step="0.0001" id="noteDos" name="noteDos" value="<?php echo($bilan1->getNotDosBil()) ?>" >
             </div>
             <div class="ajout-etudiant-form-group">
                 <label for="noteOra">Note de l'Oral :</label>
-                <input type="number" min="0" max="20" step="0.0001" id="noteOra" name="noteOra" value="<?= htmlspecialchars($bilan1->getNotOraBil()) ?>" >
+                <input type="number" min="0" max="20" step="0.0001" id="noteOra" name="noteOra" value="<?php echo($bilan1->getNotOraBil()) ?>" >
             </div>
             <div class="ajout-etudiant-form-group">
                 <label for="remarque">Remarque :</label>
-                <textarea style="resize: none; height: 150px"  id="remarque" name="remarque" ><?= htmlspecialchars($bilan1->getRemBil()) ?></textarea>
+                <textarea style="resize: none; height: 150px"  id="remarque" name="remarque" ><?php echo($bilan1->getRemBil()) ?></textarea>
             </div>
 
 

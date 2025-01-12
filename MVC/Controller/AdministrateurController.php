@@ -425,8 +425,8 @@ class AdministrateurController
             $etudiantsDAO = new EtduiantDAO($bdd);
             $etudiant = $etudiantsDAO->find($id);
             $bil1DAO = new Bilan1DAO($bdd);
-            $date = new DateTime('31-01-2000');
-            $bil1 = new Bilan1(0, $date, 0, "", 0, 0, $etudiant);
+
+            $bil1 = new Bilan1(null, null, 0, null, null, null, $etudiant);
             $bil1DAO->create($bil1);
             header("Location:./AdministrateurController.php?action=bilanetud&id=$id");
         }
@@ -442,8 +442,8 @@ class AdministrateurController
             $etudiantsDAO = new EtduiantDAO($bdd);
             $etudiant = $etudiantsDAO->find($id);
             $bil2DAO = new Bilan2DAO($bdd);
-            $date = new DateTime('31-01-2000');
-            $bil2 = new Bilan2("", $date, 0, "", 0, 0, $etudiant);
+
+            $bil2 = new Bilan2(null, null, 0, null, null, null  , $etudiant);
             $bil2DAO->create($bil2);
             header("Location:./AdministrateurController.php?action=bilanetud&id=$id");
         }

@@ -107,12 +107,9 @@ class Bilan2DAO extends DAO
                     $etudiantmodel = new EtduiantDAO($this->bdd);
                     $etudiant = $etudiantmodel->find($row['etu_id']);
                 }
-                if($row['bil2_date'] != null){
-                    $result = new Bilan2($row['bil2_sujet_memoire'], new DateTime($row['bil2_date']),$row['bil2_id'],$row['bil2_remarques'],$row['bil2_note_dossier'],$row['bil2_note_oral'],$etudiant);
-                }
-                else {
-                    $result = new Bilan2($row['bil2_sujet_memoire'],($row['bil2_date']), $row['bil2_id'], $row['bil2_remarques'], $row['bil2_note_dossier'], $row['bil2_note_oral'], $etudiant);
-                }
+                    $date = $row['bil2_date'] != null ? new DateTime($row['bil2_date']) : null;
+                    $result = new Bilan2($row['bil2_sujet_memoire'],$date, $row['bil2_id'], $row['bil2_remarques'], $row['bil2_note_dossier'], $row['bil2_note_oral'], $etudiant);
+
             }
         }
         return $result;
