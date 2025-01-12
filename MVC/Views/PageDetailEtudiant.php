@@ -69,7 +69,7 @@
                 </button>
             </div>
             <div class="boutonModifMDP">
-                <button class="BoutonModifElem"><a href="./AdministrateurController.php?action=modifierInfosEtu"> Modifier les elements</a></button>
+                <button class="BoutonModifElem"><a href="./AdministrateurController.php?action=modifierInfosEtu&id=<?= htmlspecialchars($etudiant->getIduti()) ?>"> Modifier les elements</a></button>
             </div>
         </div>
     <?php else : ?>
@@ -80,7 +80,7 @@
         </div>
         <div class="Buttondown">
             <div class="boutonModifMDP">
-                <button class="boutonBack"><a href="./TuteurController.php?action=listeetudiants">Retour</a>
+                <button class="boutonBack"><a href="./TuteurController.php?action=listeetudiants&id=<?= htmlspecialchars($etudiant->getIduti()) ?>">Retour</a>
                 </button>
             </div>
             <div class="boutonModifMDP">

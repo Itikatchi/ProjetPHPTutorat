@@ -493,14 +493,46 @@ class AdministrateurController
 
 
 
-    public function saveInfosEtu()
+
+    public function modifierInfosEtu($id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+
+            $etuDAO = new EtduiantDAO($bdd);
+            $etudiant = $etuDAO->find($id);
+
+            $specialiteDAO = new SpecialiteDAO($bdd);
+            $maitreDao = new MaitreApprentissageDAO($bdd);
+            $classeDAO = new ClasseDAO($bdd);
+            $tuteurDAO = new TuteurDAO($bdd);
+            $entrepriseDAO = new EntrepriseDAO($bdd);
+
+            $maitres= $maitreDao->getAll();
+            $entreprises = $entrepriseDAO->getAll();
+            $tuteurs = $tuteurDAO->getAll();
+            $specialites = $specialiteDAO->getAll();
+            $classes = $classeDAO->getAll();
+
+
+            if (!$etudiant) {
+                throw new \Exception("Etudiant non trouvé.");
+            }
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageModifInfoEtuTutAdmin.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function saveInfosEtu($id)
     {
         echo "Méthode saveInfos appelée";
 
         try {
-            $this->ensureLoggedInAs('etudiant');
+            $this->ensureLoggedInAs('administrateur');
 
-            $logetu = $_SESSION['id'];
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $nom = htmlspecialchars($_POST['nom']);
@@ -510,10 +542,23 @@ class AdministrateurController
                 $adresse = htmlspecialchars($_POST['adresse']);
                 $cp = htmlspecialchars($_POST['cp']);
                 $ville = htmlspecialchars($_POST['ville']);
+                $specialite = htmlspecialchars($_POST['specialite']);
+                $classe = htmlspecialchars($_POST['classe']);
+                $entreprise = htmlspecialchars($_POST['entreprise']);
+                $tuteur = htmlspecialchars($_POST['tuteur']);
 
                 $bdd = initialiseConnexionBDD();
                 $etuDAO = new EtduiantDAO($bdd);
-                $etudiant = $etuDAO->find($logetu);
+                $etudiant = $etuDAO->find($id);
+
+                $specialiteDAO = new SpecialiteDAO($bdd);
+                $specialiteobj = $specialiteDAO->find($specialite);
+                $classeDAO = new ClasseDAO($bdd);
+                $classeobj = $classeDAO->find($classe);
+                $tuteurDAO = new TuteurDAO($bdd);
+                $tuteurobj = $tuteurDAO->find($tuteur);
+                $entrepriseDAO = new EntrepriseDAO($bdd);
+                $entrepriseobj = $entrepriseDAO->find($entreprise);
 
                 if (!$etudiant) {
                     throw new \Exception("Tuteur non trouvé.");
@@ -526,6 +571,10 @@ class AdministrateurController
                 $etudiant->setEtuAdr($adresse);
                 $etudiant->setEtuCp($cp);
                 $etudiant->setEtuVille($ville);
+                $etudiant->setMaSpec($specialiteobj);
+                $etudiant->setMaClasse($classeobj);
+                $etudiant->setMonTuteur($tuteurobj);
+                $etudiant->setMonEnt($entrepriseobj);
 
                 $success = $etuDAO->update($etudiant);
 
@@ -533,7 +582,7 @@ class AdministrateurController
                     throw new \Exception("La mise à jour des informations a échoué.");
                 }
                 var_dump($success);
-                header("Location: ?action=mesinfo");
+                header("Location: ?action=detail&id=" . $id);
                 exit;
             } else {
                 throw new \Exception("Méthode invalide.");
@@ -542,34 +591,6 @@ class AdministrateurController
             echo "Erreur : " . $e->getMessage();
         }
     }
-    public function modifierInfosEtu()
-    {
-        try {
-            $this->ensureLoggedInAs('administrateur');
-            $logetu = $_SESSION['id'];
-
-            $bdd = initialiseConnexionBDD();
-            $etuDAO = new EtduiantDAO($bdd);
-            $etudiant = $etuDAO->find($logetu);
-            $specialiteDAO = new SpecialiteDAO($bdd);
-            $classeDAO = new ClasseDAO($bdd);
-            $tuteurDAO = new TuteurDAO($bdd);
-            $entrepriseDAO = new EntrepriseDAO($bdd);
-            $entreprises = $entrepriseDAO->getAll();
-            $tuteurs = $tuteurDAO->getAll();
-            $specialites = $specialiteDAO->getAll();
-            $classes = $classeDAO->getAll();
-
-            if (!$etudiant) {
-                throw new \Exception("Etudiant non trouvé.");
-            }
-            include "../Views/Nav/NavAdmin.php";
-            include "../Views/PageModifInfoEtuTutAdmin.php";
-        } catch (\Exception $e) {
-            $this->redirectWithError($e->getMessage());
-        }
-    }
-
 }
 
 
@@ -623,9 +644,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = intval($_GET['id']);
                 $controller->detailBilan2($id);
                 break;
-
             case 'modifierInfosEtu':
-                $controller->modifierInfosEtu();
+                $id = intval($_GET['id']);
+                $controller->modifierInfosEtu($id);
                 break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
@@ -642,6 +663,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'CreatBilan2' && isset($_GET['id'])) {
     $controller = new AdministrateurController();
     $controller->saveModifBilan2($_GET['id']);
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfoEtu' && isset($_GET['id'])) {
+    $controller = new AdministrateurController();
+    $controller->saveInfosEtu($_GET['id']);
 }
 
 

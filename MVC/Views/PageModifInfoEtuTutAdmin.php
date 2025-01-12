@@ -15,7 +15,7 @@
         </div>
         <div class="modifetudiant-content">
             <h2 class="modifetudiant-header">Modifier les informations</h2>
-            <form method="POST" action="?action=saveinfoEtu" class="ajout-etudiant-form">
+            <form method="POST" action="?action=saveinfoEtu&id=<?= htmlspecialchars($etudiant->getIdUti())?>" class="ajout-etudiant-form">
                 <div class="ajout-etudiant-form-group">
                     <label for="nom">Nom :</label>
                     <input type="text" id="nomEtu" name="nom"
@@ -108,20 +108,35 @@
                 <?php endforeach; ?>
             </select>
         </div>
+        <div class="ajout-etudiant-form-group">
+            <label for="maitre-apprentissage">Maître d'apprentissage :</label>
+            <select id="maitre-apprentissage" name="maitre-apprentissage">
+                <?php $maitreAppSelect = $etudiant->getMonMaitreAp()->getIdMaiAppr(); ?>
+                <?php foreach ($maitres as $maitre): ?>
+                    <option value="<?= htmlspecialchars($maitre->getIdMaiAppr()) ?>"
+                        <?= $maitre->getIdMaiAppr() === $maitreAppSelect ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($maitre->getNomMaiAppr() . " " . $maitre->getPreMaiAppr()) ?>
+                    </option>
+                <?php endforeach; ?>
+
+            </select>
+        </div>
         <div class="modifetudiant-buttons">
             <button style="cursor: pointer;" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Modifier</button>
             <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
-                    onclick="window.location.href='?action=mesinfo'">Annuler
+                    onclick="window.location.href='?action=detail&id=<?= htmlspecialchars($etudiant->getIdUti())?>'">Annuler
             </button>
 
         </div>
 
     </div>
     </form>
+    <script src='../Controller/ScripteJsMaitreAppr.js'></script>
 </div>
 </div>
 </div>
 </div>
 </body>
 </html>
+
 
