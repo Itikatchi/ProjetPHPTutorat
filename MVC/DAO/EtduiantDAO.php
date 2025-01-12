@@ -22,8 +22,11 @@ class EtduiantDAO extends DAO
     {
         $result = false;
         if ($obj instanceof Etudiant) {
-            $query = "INSERT INTO Etudiant(etu_nom,etu_pre,etu_mdp,etu_tel,etu_email,etu_adr,etu_cp,etu_ville,spe_id,classe_id,tut_id,ent_id,maitre_appr_id) VALUES(:etu_nom,:etu_pre,:etu_mdp,:etu_tel,:etu_email,:etu_adr,:etu_cp,:etu_ville,:spe_id,:classe_id,:tut_id,:ent_id,:maitre_appr_id))";
+            $query = "INSERT INTO Etudiant(etu_nom,etu_pre,etu_mdp,etu_tel,etu_email,etu_adr,etu_cp,etu_ville,spe_id,classe_id,tut_id,ent_id,maitre_appr_id) VALUES(:etu_nom,:etu_pre,:etu_mdp,:etu_tel,:etu_email,:etu_adr,:etu_cp,:etu_ville,:spe_id,:classe_id,:tut_id,:ent_id,:maitre_appr_id)";
             $stmt = $this->bdd->prepare($query);
+            $montut = $obj->getMonTuteur() ? $obj->getMonTuteur()->getIdUti() : null;
+            $monent  = $obj->getMonEnt() ? $obj->getMonEnt()->getIdEnt() : null;
+            $monmaitre = $obj->getMonMaitreAp() ? $obj->getMonMaitreAp()->getIdMaiAppr() : null;
             $r = $stmt->execute([
                 "etu_nom"=> $obj->getNomUti(),
                 "etu_pre"=> $obj->getPrenomUti(),
@@ -33,11 +36,11 @@ class EtduiantDAO extends DAO
                 "etu_adr"=> $obj->getEtuAdr(),
                 "etu_cp"=> $obj->getEtuCp(),
                 "etu_ville"=> $obj->getEtuVille(),
-                "spe_id"=> $obj->getMaSpec()->setIdSpec(),
+                "spe_id"=> $obj->getMaSpec()->getIdSpec(),
                 "classe_id"=> $obj->getMaClasse()->getIdCla(),
-                "tut_id"=> $obj->getMonTuteur()->getIdUti(),
-                "ent_id"=> $obj->getMonEnt()->getIdEnt(),
-                "maitre_appr_id"=> $obj->getMonMaitreAp()->getIdMaiAppr()
+                "tut_id"=> $montut,
+                "ent_id"=> $monent,
+                "maitre_appr_id"=> $monmaitre,
 
             ]);
             if ($r !== false) {
@@ -127,6 +130,9 @@ class EtduiantDAO extends DAO
                 if ($obj->getIdUti() == $tmp->getIdUti()) {
                     $query = "UPDATE Etudiant SET etu_nom = :etu_nom, etu_pre = :etu_pre,etu_mdp = :etu_mdp, etu_tel = :etu_tel,etu_email = :etu_email,etu_adr = :etu_adr,etu_cp = :etu_cp, etu_ville = :etu_ville, spe_id = :spe_id, classe_id = :classe_id, tut_id = :tut_id, ent_id = :ent_id, maitre_appr_id = :maitre_appr_id WHERE etu_id = :etu_id";
                     $stmt = $this->bdd->prepare($query);
+                    $montut = $obj->getMonTuteur() ? $obj->getMonTuteur()->getIdUti() : null;
+                    $monent  = $obj->getMonEnt() ? $obj->getMonEnt()->getIdEnt() : null;
+                    $monmaitre = $obj->getMonMaitreAp() ? $obj->getMonMaitreAp()->getIdMaiAppr() : null;
                     $r = $stmt->execute([
                         "etu_nom"=> $obj->getNomUti(),
                         "etu_pre"=> $obj->getPrenomUti(),
@@ -138,9 +144,9 @@ class EtduiantDAO extends DAO
                         "etu_ville"=> $obj->getEtuVille(),
                         "spe_id"=> $obj->getMaSpec()->getIdSpec(),
                         "classe_id"=> $obj->getMaClasse()->getIdCla(),
-                        "tut_id"=> $obj->getMonTuteur()->getIdUti(),
-                        "ent_id"=> $obj->getMonEnt()->getIdEnt(),
-                        "maitre_appr_id"=> $obj->getMonMaitreAp()->getIdMaiAppr(),
+                        "tut_id"=> $montut,
+                        "ent_id"=> $monent,
+                        "maitre_appr_id"=> $monmaitre,
                         "etu_id"=> $obj->getIdUti()
                     ]);
                     if ($r !== false) {

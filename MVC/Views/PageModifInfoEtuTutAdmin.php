@@ -86,39 +86,63 @@
             <label for="tuteur">Tuteur :</label>
             <select id="tuteur" name="tuteur">
                 <option value="">--Choisir--</option>
-                <?php $tuteurSelectionne = $etudiant->getMonTuteur()->getIdUti(); ?>
+                <?php if($tuteurSelectionne = $etudiant->getMonTuteur()): ?>
                 <?php foreach ($tuteurs as $tuteur): ?>
                     <option value="<?= htmlspecialchars($tuteur->getIdUti()) ?>"
+                        <?php $tuteurSelectionne = $etudiant->getMonTuteur()->getIdUti();?>
                         <?= $tuteur->getIdUti() === $tuteurSelectionne ? 'selected' : '' ?>>
                         <?= htmlspecialchars($tuteur->getNomUti() . " " . $tuteur->getPrenomUti()) ?>
                     </option>
                 <?php endforeach; ?>
+                <?php else: ?>
+                <?php foreach ($tuteurs as $tuteur): ?>
+                <option value="<?= htmlspecialchars($tuteur->getIdUti()) ?>">
+                    <?= htmlspecialchars($tuteur->getNomUti() . " " . $tuteur->getPrenomUti()) ?>
+                </option>
+                <?php endforeach; ?>
+                <?php endif;?>
+
             </select>
         </div>
         <div class="ajout-etudiant-form-group">
             <label for="entreprise">Entreprise :</label>
             <select id="entreprise" name="entreprise">
                 <option value="">--Choisir--</option>
-                <?php $entrepriseSelectionnee = $etudiant->getMonEnt()->getIdEnt(); ?>
+                <?php if($entrepriseSelectionnee = $etudiant->getMonEnt()): ?>
                 <?php foreach ($entreprises as $entreprise): ?>
                     <option value="<?= htmlspecialchars($entreprise->getIdEnt()) ?>"
                         <?= $entreprise->getIdEnt() === $entrepriseSelectionnee ? 'selected' : '' ?>>
                         <?= htmlspecialchars($entreprise->getNomEnt()) ?>
                     </option>
                 <?php endforeach; ?>
+                <?php else: ?>
+                    <?php foreach ($entreprises as $entreprise): ?>
+                        <option value="<?= htmlspecialchars($entreprise->getIdEnt()) ?>">
+                            <?= htmlspecialchars($entreprise->getNomEnt()) ?>
+                        </option>
+                    <?php endforeach; ?>
+                <?php endif;?>
             </select>
         </div>
         <div class="ajout-etudiant-form-group">
             <label for="maitre-apprentissage">Maître d'apprentissage :</label>
             <select id="maitre-apprentissage" name="maitre-apprentissage">
-                <?php $maitreAppSelect = $etudiant->getMonMaitreAp()->getIdMaiAppr(); ?>
+                <option value="">--Choisir--</option>
+                <?php if($maitreAppSelect = $etudiant->getMonMaitreAp()): ?>
                 <?php foreach ($maitres as $maitre): ?>
+                        <?php $maitreAppSelect = $etudiant->getMonMaitreAp()->getIdMaiAppr()?>
                     <option value="<?= htmlspecialchars($maitre->getIdMaiAppr()) ?>"
                         <?= $maitre->getIdMaiAppr() === $maitreAppSelect ? 'selected' : '' ?>>
                         <?= htmlspecialchars($maitre->getNomMaiAppr() . " " . $maitre->getPreMaiAppr()) ?>
                     </option>
                 <?php endforeach; ?>
-
+                <?php else: ?>
+                <?php foreach ($maitres as $maitre): ?>
+                <option value="<?= htmlspecialchars($maitre->getIdMaiAppr()) ?>">
+                    <?= htmlspecialchars($maitre->getNomMaiAppr() . " " . $maitre->getPreMaiAppr()) ?>
+                </option>
+                <?php endforeach; ?>
+                <?php endif;?>
             </select>
         </div>
         <div class="modifetudiant-buttons">
