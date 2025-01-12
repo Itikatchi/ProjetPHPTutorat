@@ -23,15 +23,15 @@
                 </div>
             <?php if ($_SESSION['role'] == "administrateur") : ?>
             <button class="boutonBack"><a
-                        href="./AdministrateurController.php?action=bilanetud&id=<?= htmlspecialchars($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
+                        href="./AdministrateurController.php?action=bilanetud&id=<?php echo($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
             </button>
             <?php elseif ($_SESSION['role'] == "etudiant") : ?>
             <button class="boutonBack"><a
-                        href="./EtudiantController.php?action=bilan&id=<?= htmlspecialchars($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
+                        href="./EtudiantController.php?action=bilan&id=<?php echo($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
             </button>
             <?php elseif ($_SESSION['role'] == "tuteur") : ?>
             <button class="boutonBack"><a
-                        href="./AdministrateurController.php?action=bilanetud&id=<?= htmlspecialchars($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
+                        href="./TuteurController.php?action=bilanetud&id=<?php echo($bilan2->getMonEtu()->getIduti()) ?>"">Retour</a>
             </button>
             <?php endif; ?>
 
@@ -39,21 +39,21 @@
 
         </div>
         <div class="contentBilan2">
-            <?= htmlspecialchars($bilan2->getMonEtu()->getPrenomUti()) . " " . htmlspecialchars($bilan2->getMonEtu()->getNomUti()) ?><br>
-            <?= "Année bilan : " . htmlspecialchars($bilan2->getDatBil2()->format('Y')) ?><br>
-            <?= "Note Oral : " . htmlspecialchars($bilan2->getNotDosBil()) ?><br>
-            <?= "Note Dossier : " . htmlspecialchars($bilan2->getNotOraBil()) ?><br>
-            <?= "Date Bilan 2 : " . htmlspecialchars($bilan2->getDatBil2()->format('d/m/Y')) ?><br>
+            <?php echo($bilan2->getMonEtu()->getPrenomUti()) . " " . ($bilan2->getMonEtu()->getNomUti()) ?><br>
+            <?php echo"Année bilan : " . ($bilan2->getDatBil2()->format('Y')) ?><br>
+            <?php echo "Note Oral : " . ($bilan2->getNotDosBil()) ?><br>
+            <?php echo "Note Dossier : " . ($bilan2->getNotOraBil()) ?><br>
+            <?php echo "Date Bilan 2 : " . ($bilan2->getDatBil2()->format('d/m/Y')) ?><br>
 
             <?php echo("Sujet du memoire :<br>");
                     if (($bilan2->getSujBil())!= null){
-                        echo htmlspecialchars($bilan2->getSujBil());
+                        echo ($bilan2->getSujBil());
                     }else{
                         echo ("L'etudiant n'a pas encore de sujet de memoire");
                     }
              ?>
             <p>REMARQUE :</p>
-            <?=  htmlspecialchars($bilan2->getRemBil()) ?>
+            <?php  echo($bilan2->getRemBil()) ?>
         </div>
 
 

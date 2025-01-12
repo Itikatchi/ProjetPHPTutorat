@@ -18,19 +18,15 @@
             <form method="POST" action="?action=saveinfo" class="ajout-etudiant-form">
                 <div class="ajout-etudiant-form-group">
                     <label for="nom">Nom :</label>
-                    <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($tuteur->getNomUti()) ?>" placeholder="Nom" required>
+                    <input type="text" id="nom" name="nom" value="<?= htmlspecialchars($admin->getNomUti()) ?>" placeholder="Nom" required>
                 </div>
                 <div class="ajout-etudiant-form-group">
                     <label for="prenom">Prénom :</label>
-                    <input type="text" id="prenom" name="prenom" value="<?= htmlspecialchars($tuteur->getPrenomUti()) ?>" placeholder="Prénom" required>
-                </div>
-                <div class="ajout-etudiant-form-group">
-                    <label for="telephone">Téléphone :</label>
-                    <input type="text" id="telephone" name="telephone" value="<?= htmlspecialchars($tuteur->getTutTel()) ?>" placeholder="Téléphone" required>
+                    <input type="text" id="prenom" name="prenom" value="<?= htmlspecialchars($admin->getPrenomUti()) ?>" placeholder="Prénom" required>
                 </div>
                 <div class="ajout-etudiant-form-group">
                     <label for="email">Email :</label>
-                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($tuteur->getEmailUti()) ?>" placeholder="Email" required>
+                    <input type="email" id="email" name="email" value="<?= htmlspecialchars($admin->getEmailUti()) ?>" placeholder="Email" required>
                 </div>
                 <div class="modifetudiant-buttons">
                     <button style="cursor: pointer;" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Modifier</button>

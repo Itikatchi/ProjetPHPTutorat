@@ -1,69 +1,94 @@
 <?php
-namespace ProjetPHPTutorat\MVC\DAO;
+namespace DAO;
 
+use BO\Tuteur;
+use PDO;
+use PDOException;
+use ProjetPHPTutorat\MVC\DAO\DAO;
 use BO\AffectationTuteurClasse;
+require_once 'DAO.php';
 
 class AffectationTuteurClasseDAO extends DAO
 {
-
-    use p2025jeuhasardetudiant\components\BO\Tuteur;
-    use PDO;
-    use PDOException;
-
     public function create($obj): bool
     {
         $result = false;
         if ($obj instanceof AffectationTuteurClasse) {
-            $query = "INSERT INTO AffectationTuteurClasse(tut_id,classe_id,tuteur_nb_max_etu) VALUES(:tut_id,:classe_id,:tuteur_nb_max_etu)";
-            $stmt = $this->bdd->prepare($query);
-            $r = $stmt->execute([
-                "tut_id" => $obj->getTuteur()->getIdUti(),
-                "classe_id"=> $obj->getClasse()->getIdCla(),
-                "tuteur_nb_max_etu"=>$obj->getNbMaxEtu()
-
-            ]);
-            if ($r !== false) {
+            try {
+                $query = "INSERT INTO Gerer (tut_id, classe_id, tuteur_nb_max_etu) VALUES (:tut_id, :classe_id, :tuteur_nb_max_etu)";
+                $stmt = $this->bdd->prepare($query);
+                $stmt->execute([
+                    "tut_id" => $obj->getTuteur()->getIdUti(),
+                    "classe_id" => $obj->getClasse()->getIdCla(),
+                    "tuteur_nb_max_etu" => $obj->getNbMaxEtu()
+                ]);
                 $result = true;
+            } catch (PDOException $e) {
+                echo "Erreur : " . $e->getMessage();
             }
         }
         return $result;
     }
-
-    public function delete($obj): bool
+    public function delete($id): bool
     {
         $result = false;
-        if ($obj instanceof AffectationTuteurClasse) {
-            $tmp = $this->find($obj->getClasse()->getIdCla());
-            $tmp2 = $this->find($obj->getTuteur()->getIdUti());
-            if ($tmp !== null || $tmp2 !== null) {
-                if ($obj->getClasse()->getIdCla() == $tmp->getClasse()->getIdCla() && $obj->getTuteur()->getIdUti() == $tmp2->getTuteur()->getIdUti()) {
-                    $query = "DELETE FROM AffectationTuteurClasse WHERE tut_id = :tut_id AND classe_id = :classe_id";
-                    $stmt = $this->bdd->prepare($query);
-                    $r = $stmt->execute([
-                        "tut_id" => $obj->getTuteur()->getIdUti(),
-                        "classe_id" => $obj->getClasse()->getIdCla()
-                    ]);
-                    if ($r !== false) {
-                        $result = true;
-                    }
-                }
-            }
+        try {
+            $query = "DELETE FROM Gerer WHERE id = :id";
+            $stmt = $this->bdd->prepare($query);
+            $stmt->execute(["id" => $id]);
+            $result = true;
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
         }
         return $result;
     }
 
     public function update($obj): bool
     {
-        // TODO: Implement update() method.
+        $result = false;
+        if ($obj instanceof AffectationTuteurClasse) {
+            try {
+                $query = "UPDATE Gerer SET tut_id = :tut_id, classe_id = :classe_id, tuteur_nb_max_etu = :tuteur_nb_max_etu WHERE id = :id";
+                $stmt = $this->bdd->prepare($query);
+                $stmt->execute([
+                    "tut_id" => $obj->getTuteur()->getIdUti(),
+                    "classe_id" => $obj->getClasse()->getIdCla(),
+                    "tuteur_nb_max_etu" => $obj->getNbMaxEtu(),
+                    "id" => $obj->getId() // Assurez-vous que votre classe AffectationTuteurClasse dispose d'une méthode getId()
+                ]);
+                $result = true;
+            } catch (PDOException $e) {
+                echo "Erreur : " . $e->getMessage();
+            }
+        }
+        return $result;
     }
+
+
+    public function getAll(): array
+    {
+        $result = [];
+        try {
+            $query = "SELECT * FROM Gerer";
+            $stmt = $this->bdd->query($query);
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            foreach ($stmt as $row) {
+                $affectation = new AffectationTuteurClasse();
+                $affectation->setId($row['id']);
+                $affectation->setTuteur($row['tut_id']);
+                $affectation->setClasse($row['classe_id']);
+                $affectation->setNbMaxEtu($row['tuteur_nb_max_etu']);
+                $result[] = $affectation;
+            }
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+        return $result;
+    }
+
 
     public function find(int $id): object
     {
         // TODO: Implement find() method.
-    }
-
-    public function getAll(): array
-    {
-        // TODO: Implement getAll() method.
     }
 }

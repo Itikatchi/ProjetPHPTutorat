@@ -2,6 +2,8 @@
 namespace DAO;
 use BO\Entreprise;
 use BO\MaitreApprentissage;
+require_once "../BO/Entreprise.php";
+require_once "../DAO/EntrepriseDAO.php";
 
 use PDO;
 use PDOException;
@@ -117,6 +119,36 @@ class MaitreApprentissageDAO extends DAO
             }
         } else {
             $result = [null] ;
+        }
+
+        return $result;
+    }
+    public function getByEntrepriseId(int $entrepriseId): array
+    {
+        $result = [];
+        $query = "SELECT * FROM MaitreApprentissage WHERE ent_id = :ent_id";
+        $stmt = $this->bdd->prepare($query);
+        $r = $stmt->execute([
+            "ent_id" => $entrepriseId
+        ]);
+
+        if ($r) {
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($rows as $row) {
+                $entreprise = null;
+                if (isset($row['ent_id'])) {
+                    $entrepriseModel = new EntrepriseDAO($this->bdd);
+                    $entreprise = $entrepriseModel->find($row['ent_id']);
+                }
+                $result[] = new MaitreApprentissage(
+                    $row['maitre_appr_id'],
+                    $row['maitre_appr_nom'],
+                    $row['maitre_appr_pre'],
+                    $row['maitre_appr_tel'],
+                    $row['maitre_appr_email'],
+                    $entreprise
+                );
+            }
         }
 
         return $result;

@@ -12,7 +12,7 @@ abstract class Bilan
     protected ?float $notOraBil;
     protected ?Etudiant $monEtu;
 
-    public function __construct(int $idBil, ?string $remBil, ?float $notDosBil, ?float $notOraBil, Etudiant $monEtu)
+    public function __construct(int $idBil, ?string $remBil, ?float $notDosBil, ?float $notOraBil, ?Etudiant $monEtu)
     {
         $this->idBil = $idBil;
         $this->remBil = $remBil;

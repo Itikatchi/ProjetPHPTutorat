@@ -22,29 +22,29 @@
                 </div>
                 <?php if ($_SESSION['role'] == "administrateur") : ?>
                     <button class="boutonBack"><a
-                                href="./AdministrateurController.php?action=bilanetud&id=<?= htmlspecialchars($bilan1->getMonEtu()->getIduti()) ?>"">Retour</a>
+                                href="./AdministrateurController.php?action=bilanetud&id=<?php echo($bilan1->getMonEtu()->getIduti()) ?>"">Retour</a>
                     </button>
                 <?php elseif ($_SESSION['role'] == "etudiant") : ?>
                     <button class="boutonBack"><a
-                                href="./EtudiantController.php?action=bilan&id=<?= htmlspecialchars($bilan1->getMonEtu()->getIduti()) ?>"">Retour</a>
+                                href="./EtudiantController.php?action=bilan&id=<?php echo($bilan1->getMonEtu()->getIduti()) ?>"">Retour</a>
                     </button>
                 <?php elseif ($_SESSION['role'] == "tuteur") : ?>
                     <button class="boutonBack"><a
-                                href="./AdministrateurController.php?action=bilanetud&id=<?= htmlspecialchars($bilan1->getMonEtu()->getIduti()) ?>"">Retour</a>
+                                href="./TuteurController.php?action=bilanetud&id=<?php echo($bilan1->getMonEtu()->getIduti()) ?>"">Retour</a>
                     </button>
                 <?php endif; ?>
             <?php endif; ?>
         </div>
         <div class="contentBilan1">
-            <?= htmlspecialchars($bilan1->getMonEtu()->getPrenomUti()) . " " . htmlspecialchars($bilan1->getMonEtu()->getNomUti()) ?>
+            <?php echo($bilan1->getMonEtu()->getPrenomUti()) . " " . ($bilan1->getMonEtu()->getNomUti()) ?>
             <br>
-            <?= "Année bilan : " . htmlspecialchars($bilan1->getDatVisEnt()->format('Y')) ?><br>
-            <?= "Note Oral : " . htmlspecialchars($bilan1->getNotDosBil()) ?><br>
-            <?= "Note Dossier : " . htmlspecialchars($bilan1->getNotOraBil()) ?><br>
-            <?= "Note Entreprise : " . htmlspecialchars($bilan1->getNotEnt()) ?><br>
-            <?= "Date de visite en entreprise : " . htmlspecialchars($bilan1->getDatVisEnt()->format('d/m/Y')) ?><br>
+            <?php echo "Année bilan : " . ($bilan1->getDatVisEnt()->format('Y')) ?><br>
+            <?php echo "Note Oral : " . ($bilan1->getNotDosBil()) ?><br>
+            <?php echo "Note Dossier : " . ($bilan1->getNotOraBil()) ?><br>
+            <?php echo "Note Entreprise : " . ($bilan1->getNotEnt()) ?><br>
+            <?php echo "Date de visite en entreprise : " . ($bilan1->getDatVisEnt()->format('d/m/Y')) ?><br>
             <p>REMARQUE :</p>
-            <?= htmlspecialchars($bilan1->getRemBil()) ?>
+            <?php echo ($bilan1->getRemBil()) ?>
         </div>
 
 

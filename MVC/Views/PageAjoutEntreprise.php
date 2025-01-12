@@ -13,44 +13,59 @@
 </head>
 <body>
 
-    <!-- Contenu principal -->
-    <div class="MainContainerEnt">
+<div class="MainContainerflex">
+    <div class="ajout-container">
         <h1>Ajout d'une entreprise</h1>
-        <form>
+        <form method="POST" action="?action=addEntreprise" class="ajout-etudiant-form">
             <!-- Section entreprise -->
-            <label for="nom">Nom :</label>
-            <input type="text" id="nom" name="nom">
-
-            <label for="adresse">Adresse :</label>
-            <input type="text" id="adresse" name="adresse">
-
-            <label for="cp">CP :</label>
-            <input type="text" id="cp" name="cp">
-
-            <label for="ville">Ville :</label>
-            <input type="text" id="ville" name="ville">
-
-            <!-- Section maître d'apprentissage -->
-            <h2>Maître d'apprentissage</h2>
-            <label for="nom_maitre">Nom :</label>
-            <input type="text" id="nom_maitre" name="nom_maitre">
-
-            <label for="prenom">Prénom :</label>
-            <input type="text" id="prenom" name="prenom">
-
-            <label for="email">Email :</label>
-            <input type="email" id="email" name="email">
-
-            <label for="tel">Tel :</label>
-            <input type="tel" id="tel" name="tel">
-
-            <!-- Boutons -->
-            <div class="buttons">
-                <a href="?action=ajoutEnt"><button type="submit" class="btn btn-ajouter">Ajouter</button></a>
-                <a href="?action=param"><button type="reset" class="btn btn-annuler">Annuler</button></a>
+            <div class="ajout-etudiant-form-group">
+                <label for="nom">Nom :</label>
+                <input type="text" id="nom" name="nom" required>
             </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="adresse">Adresse :</label>
+                <input type="text" id="adresse" name="adresse" required>
+            </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="cp">Code Postal :</label>
+                <input type="text" id="cp" name="cp" required>
+            </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="ville">Ville :</label>
+                <input type="text" id="ville" name="ville" required>
+            </div>
+    </div>
+
+    <div class="ajout-container">
+        <!-- Section maître d'apprentissage -->
+        <h2>Maître d'apprentissage</h2>
+        <div class="ajout-etudiant-form-group">
+            <label for="nom_maitre">Nom :</label>
+            <input type="text" id="nom_maitre" name="nom_maitre" required>
+        </div>
+        <div class="ajout-etudiant-form-group">
+            <label for="prenom_maitre">Prénom :</label>
+            <input type="text" id="prenom_maitre" name="prenom_maitre" required>
+        </div>
+        <div class="ajout-etudiant-form-group">
+            <label for="email_maitre">Email :</label>
+            <input type="email" id="email_maitre" name="email_maitre" required>
+        </div>
+        <div class="ajout-etudiant-form-group">
+            <label for="tel_maitre">Téléphone :</label>
+            <input type="tel" id="tel_maitre" name="tel_maitre" required>
+        </div>
+
+        <!-- Boutons -->
+        <div class="ajout-etudiant-buttons">
+            <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Ajouter</button>
+            <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
+                    onclick="window.location.href='?action=parametrage'">Annuler
+            </button>
+        </div>
         </form>
     </div>
+</div>
 </div>
 </body>
 </html>

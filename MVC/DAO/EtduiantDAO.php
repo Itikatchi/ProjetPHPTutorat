@@ -44,9 +44,8 @@ class EtduiantDAO extends DAO
                 $bil1DAO = new Bilan1DAO($this->bdd);
                 $bil2DAO = new Bilan2DAO($this->bdd);
                 $obj->setIdUti($this->bdd->lastInsertId());
-                //creation de ses bilans de bases mais vide
-                $bil1 = new Bilan1(0, null, 0, "", 0, 0, $obj);
-                $bil2 = new Bilan2("", null, 0, "", 0, 0, $obj);
+                $bil1 = new Bilan1(null,null , 0, null, null, null, $obj);
+                $bil2 = new Bilan2(null, null, 0, null, null, null, $obj);
                 $bil1DAO->create($bil1);
                 $bil2DAO->create($bil2);
                 $result = true;
