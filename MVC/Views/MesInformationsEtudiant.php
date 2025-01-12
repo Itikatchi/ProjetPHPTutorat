@@ -40,12 +40,21 @@
     <div class="InfosEntreprise">
         <h2>Informations entreprise</h2>
         <br>
-        <p>
-            Nom de l'entreprise : <?= htmlspecialchars($etudiant->getMonEnt()->getNomEnt())?><br><br>
-            Adresse de l'entreprise : <?= htmlspecialchars($etudiant->getMonEnt()->getAdrEnt())?><br><br>
-            Code postal de l'entreprise : <?= htmlspecialchars($etudiant->getMonEnt()->getCpEnt())?><br><br>
-            Ville de l'entreprise : <?= htmlspecialchars($etudiant->getMonEnt()->getVilEnt())?><br><br>
-        </p>
+        <?php if ($etudiant->getMonEnt()) : ?>
+            <?php echo($etudiant->getMonEnt()->getNomEnt()) ?><br>
+            <?php echo($etudiant->getMonEnt()->getAdrEnt()) ?> <?php echo($etudiant->getMonEnt()->getCpEnt()) ?> <?php echo($etudiant->getMonEnt()->getVilEnt()) ?>
+            <br>
+            <?php if ($etudiant->getMonMaitreAp()) : ?>
+                <?php echo($etudiant->getMonMaitreAp()->getPreMaiAppr()) ?> <?php echo($etudiant->getMonMaitreAp()->getNomMaiAppr()) ?>
+                <br>
+                <?php echo($etudiant->getMonMaitreAp()->getTelMaiAppr()) ?><br>
+                <?php echo($etudiant->getMonMaitreAp()->getMailMaiAppr()) ?><br>
+            <?php else : ?>
+                <p>L'etudiant n'a pas encore de maitre d'apprentissage</p>
+            <?php endif; ?>
+        <?php else : ?>
+            <p>L'etudiant n'a pas encore d'entreprise</p>
+        <?php endif; ?>
     </div>
 
 </div>
