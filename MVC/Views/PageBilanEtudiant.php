@@ -64,7 +64,8 @@
             <!-- PARTIE TBODY -->
             <tbody>
             <?php foreach ($bilan1 as $bilan) : ?>
-                <?php if ($bilan->getDatVisEnt() == null) : ?>
+            <?php $dateTest = new DateTime('31-01-2000');?>
+                <?php if ($bilan->getDatVisEnt() == $dateTest) : ?>
                     <tr>
                         <?php if ($_SESSION['role'] == "administrateur") : ?>
                             <td colspan="2">Nouveau Bilan</td>
@@ -219,7 +220,8 @@
             <!-- PARTIE TBODY -->
             <tbody>
             <?php foreach ($bilan2 as $bilan) : ?>
-            <?php if ($bilan->getDatBil2() == null) : ?>
+                <?php $dateTest = new DateTime('31-01-2000');?>
+            <?php if ($bilan->getDatBil2() == $dateTest) : ?>
                 <tr>
                     <?php if ($_SESSION['role'] == "administrateur") : ?>
                         <td colspan="2">Nouveau Bilan</td>
