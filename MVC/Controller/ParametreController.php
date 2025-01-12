@@ -110,10 +110,13 @@ class ParametreController{
                 $nom = htmlspecialchars($_POST['nom']);
                 $prenom = htmlspecialchars($_POST['prenom']);
                 $email = htmlspecialchars($_POST['email']);
-                $mdp = password_hash($_POST['mdp'], PASSWORD_BCRYPT);
+                $mdp = htmlspecialchars($_POST['mdp']);
                 $tel = htmlspecialchars($_POST['tel']);
                 $specialiteId = intval($_POST['specialite']);
                 $classeId = intval($_POST['classe']);
+                $adresse = htmlspecialchars($_POST['adresse']);
+                $codePostal = htmlspecialchars($_POST['code_postal']);
+                $ville = htmlspecialchars($_POST['ville']);
 
                 $specialiteDAO = new SpecialiteDAO($bdd);
                 $classeDAO = new ClasseDAO($bdd);
@@ -131,21 +134,21 @@ class ParametreController{
                     $classe,
                     null,
                     null,
-                    null,
+                    0,
                     $nom,
                     $prenom,
                     $email,
                     $mdp,
                     $tel,
-                    "",
-                    "",
-                    ""
+                    $adresse,
+                    $ville,
+                    $codePostal
                 );
 
                 $success = $etudiantDAO->create($etudiant);
 
                 if ($success) {
-                    header("Location: ?action=listeetudiants&success=1");
+                    header("Location: ../Controller/AdministrateurController.php?action=listeetudiants");
                     exit;
                 } else {
                     throw new \Exception("Erreur lors de l'enregistrement.");
@@ -228,6 +231,49 @@ class ParametreController{
         }
     }
 
+    public function ajoutTuteur()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageAjoutTuteur.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function addTuteur()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $bdd = initialiseConnexionBDD();
+                $tuteurDAO = new TuteurDAO($bdd);
+
+                $nom = htmlspecialchars($_POST['nom']);
+                $prenom = htmlspecialchars($_POST['prenom']);
+                $email = htmlspecialchars($_POST['email']);
+                $mdp = htmlspecialchars($_POST['mdp']);
+                $tel = htmlspecialchars($_POST['tel']);
+
+                $tuteur = new Tuteur($tel, 0,0,$nom, $prenom, $email, $mdp);
+
+                $success = $tuteurDAO->create($tuteur);
+
+                if ($success) {
+                    header("Location: ../Controller/ParametreController.php?action=parametrage");
+                    exit;
+                } else {
+                    throw new \Exception("Erreur lors de l'enregistrement du tuteur.");
+                }
+            }
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
 
 }
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -243,6 +289,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 break;
             case 'affectationTuteurClasse':
                 $controller->affectationTuteurClasse();
+                break;
+            case 'ajoutTuteur':
+                $controller->ajoutTuteur();
                 break;
             case 'ajoutEntreprise':
                 $controller->ajoutEntrperise();
@@ -262,4 +311,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] === 'addEtudiant') {
     $controller = new ParametreController();
     $controller->addEtudiant();
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'addTuteur') {
+    $controller = new ParametreController();
+    $controller->addTuteur();
 }
