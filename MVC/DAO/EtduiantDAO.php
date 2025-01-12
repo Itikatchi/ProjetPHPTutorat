@@ -22,7 +22,7 @@ class EtduiantDAO extends DAO
     {
         $result = false;
         if ($obj instanceof Etudiant) {
-            $query = "INSERT INTO Etudiant(etu_nom,etu_pre,etu_mdp,etu_tel,etu_email,etu_adr,etu_cp,etu_ville,spe_id,classe_id,tut_id,ent_id,maitre_appr_id) VALUES(:etu_nom,:etu_pre,:etu_mdp,:etu_tel,:etu_email,:etu_adr,:etu_cp,:etu_ville,:spe_id,:classe_id,:tut_id,:ent_id,:maitre_appr_id))";
+            $query = "INSERT INTO Etudiant(etu_nom,etu_pre,etu_mdp,etu_tel,etu_email,etu_adr,etu_cp,etu_ville,spe_id,classe_id) VALUES(:etu_nom,:etu_pre,:etu_mdp,:etu_tel,:etu_email,:etu_adr,:etu_cp,:etu_ville,:spe_id,:classe_id)";
             $stmt = $this->bdd->prepare($query);
             $r = $stmt->execute([
                 "etu_nom"=> $obj->getNomUti(),
@@ -33,18 +33,13 @@ class EtduiantDAO extends DAO
                 "etu_adr"=> $obj->getEtuAdr(),
                 "etu_cp"=> $obj->getEtuCp(),
                 "etu_ville"=> $obj->getEtuVille(),
-                "spe_id"=> $obj->getMaSpec()->setIdSpec(),
-                "classe_id"=> $obj->getMaClasse()->getIdCla(),
-                "tut_id"=> $obj->getMonTuteur()->getIdUti(),
-                "ent_id"=> $obj->getMonEnt()->getIdEnt(),
-                "maitre_appr_id"=> $obj->getMonMaitreAp()->getIdMaiAppr()
-
+                "spe_id"=> $obj->getMaSpec()->getIdSpec(),
+                "classe_id"=> $obj->getMaClasse()->getIdCla()
             ]);
             if ($r !== false) {
                 $bil1DAO = new Bilan1DAO($this->bdd);
                 $bil2DAO = new Bilan2DAO($this->bdd);
                 $obj->setIdUti($this->bdd->lastInsertId());
-                //creation de ses bilans de bases mais vide
                 $bil1 = new Bilan1(null, null, 0, null, null, null, $obj);
                 $bil2 = new Bilan2(null, null, 0, null, null, null, $obj);
                 $bil1DAO->create($bil1);

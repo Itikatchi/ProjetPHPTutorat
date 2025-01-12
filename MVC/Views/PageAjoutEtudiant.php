@@ -68,28 +68,6 @@
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="tuteur">Tuteur :</label>
-            <select id="tuteur" name="tuteur">
-                <option value="">--Choisir--</option>
-                <?php foreach ($tuteurs as $tuteur): ?>
-                    <option value="<?= htmlspecialchars($tuteur->getIdUti()) ?>">
-                        <?= htmlspecialchars($tuteur->getNomUti() . " " . $tuteur->getPrenomUti()) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="entreprise">Entreprise :</label>
-            <select id="entreprise" name="entreprise">
-                <option value="">--Choisir--</option>
-                <?php foreach ($entreprises as $entreprise): ?>
-                    <option value="<?= htmlspecialchars($entreprise->getIdEnt()) ?>">
-                        <?= htmlspecialchars($entreprise->getNomEnt()) ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
         <div class="ajout-etudiant-buttons">
             <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Ajouter</button>
             <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
