@@ -39,7 +39,6 @@
 
     <div class="InfosEntreprise">
         <h2>Informations entreprise</h2>
-        <br>
         <?php if ($etudiant->getMonEnt()) : ?>
             <?php echo($etudiant->getMonEnt()->getNomEnt()) ?><br>
             <?php echo($etudiant->getMonEnt()->getAdrEnt()) ?> <?php echo($etudiant->getMonEnt()->getCpEnt()) ?> <?php echo($etudiant->getMonEnt()->getVilEnt()) ?>

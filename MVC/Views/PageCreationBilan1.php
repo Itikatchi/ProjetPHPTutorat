@@ -29,7 +29,7 @@
             </div>
             <div class="ajout-etudiant-form-group">
                 <label for="remarque">Remarque :</label>
-                <textarea style="resize: none; height: 150px"  id="remarque" name="remarque" ><?php echo($bilan1->getRemBil()) ?></textarea>
+                <textarea style="resize: none; height: 50px"  id="remarque" name="remarque" ><?php echo($bilan1->getRemBil()) ?></textarea>
             </div>
 
 
