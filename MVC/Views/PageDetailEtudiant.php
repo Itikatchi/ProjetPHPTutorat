@@ -19,26 +19,30 @@
 <div class="MainContainer">
     <?php if (!empty($etudiant)) : ?>
     <div class="Subtitle">
-        <h1><?= htmlspecialchars($etudiant->getPreNomUti()) ?> <?= htmlspecialchars($etudiant->getNomUti()) ?></h1>
+        <h1><?php echo($etudiant->getPreNomUti()) ?> <?php echo($etudiant->getNomUti()) ?></h1>
     </div>
 
     <div class="DescriptionEtudiant">
         <h2>Information Etudiant :</h2>
-        <?= htmlspecialchars($etudiant->getEtuAdr()) ?> <?= htmlspecialchars($etudiant->getEtuVille()) ?> <?= htmlspecialchars($etudiant->getEtuCp()) ?>
+        <?php echo($etudiant->getEtuAdr()) ?> <?php echo($etudiant->getEtuVille()) ?> <?php echo($etudiant->getEtuCp()) ?>
         <br>
-        <?= htmlspecialchars($etudiant->getEmailUti()) ?><br>
-        <?= htmlspecialchars($etudiant->getMaClasse()->getNomCla()) ?><br>
+        <?php echo($etudiant->getEmailUti()) ?><br>
+        <?php echo($etudiant->getMaClasse()->getNomCla()) ?><br>
     </div>
     <div class="InfosEntreprise">
         <h2>Information d'entreprise :</h2>
         <?php if ($etudiant->getMonEnt()) : ?>
-            <?= htmlspecialchars($etudiant->getMonEnt()->getNomEnt()) ?><br>
-            <?= htmlspecialchars($etudiant->getMonEnt()->getAdrEnt()) ?> <?= htmlspecialchars($etudiant->getMonEnt()->getCpEnt()) ?> <?= htmlspecialchars($etudiant->getMonEnt()->getVilEnt()) ?>
+            <?php echo($etudiant->getMonEnt()->getNomEnt()) ?><br>
+            <?php echo($etudiant->getMonEnt()->getAdrEnt()) ?> <?php echo($etudiant->getMonEnt()->getCpEnt()) ?> <?php echo($etudiant->getMonEnt()->getVilEnt()) ?>
             <br>
-            <?= htmlspecialchars($etudiant->getMonMaitreAp()->getPreMaiAppr()) ?> <?= htmlspecialchars($etudiant->getMonMaitreAp()->getNomMaiAppr()) ?>
-            <br>
-            <?= htmlspecialchars($etudiant->getMonMaitreAp()->getTelMaiAppr()) ?><br>
-            <?= htmlspecialchars($etudiant->getMonMaitreAp()->getMailMaiAppr()) ?><br>
+            <?php if ($etudiant->getMonMaitreAp()) : ?>
+                <?php echo($etudiant->getMonMaitreAp()->getPreMaiAppr()) ?> <?php echo($etudiant->getMonMaitreAp()->getNomMaiAppr()) ?>
+                <br>
+                <?php echo($etudiant->getMonMaitreAp()->getTelMaiAppr()) ?><br>
+                <?php echo($etudiant->getMonMaitreAp()->getMailMaiAppr()) ?><br>
+            <?php else : ?>
+                <p>L'etudiant n'a pas encore de maitre d'apprentissage</p>
+            <?php endif; ?>
         <?php else : ?>
             <p>L'etudiant n'a pas encore d'entreprise</p>
         <?php endif; ?>
@@ -60,7 +64,7 @@
     <?php if ($_SESSION['role'] == "administrateur") : ?>
         <div class="boutonModifMDP">
             <button class="boutonModifBilan"><a
-                        href="./AdministrateurController.php?action=bilanetud&id=<?= htmlspecialchars($etudiant->getIduti()) ?>">Les
+                        href="./AdministrateurController.php?action=bilanetud&id=<?php echo($etudiant->getIduti()) ?>">Les
                     Bilans</a></button>
         </div>
         <div class="Buttondown">
@@ -69,22 +73,27 @@
                 </button>
             </div>
             <div class="boutonModifMDP">
-                <button class="BoutonModifElem"><a href="./AdministrateurController.php?action=modifierInfosEtu&id=<?= htmlspecialchars($etudiant->getIduti()) ?>"> Modifier les elements</a></button>
+                <button class="BoutonModifElem"><a
+                            href="./AdministrateurController.php?action=modifierInfosEtu&id=<?php echo($etudiant->getIduti()) ?>">
+                        Modifier les elements</a></button>
             </div>
         </div>
     <?php else : ?>
         <div class="boutonModifMDP">
             <button class="boutonModifBilan"><a
-                        href="./TuteurController.php?action=bilanetud&id=<?= htmlspecialchars($etudiant->getIduti()) ?>">Les
+                        href="./TuteurController.php?action=bilanetud&id=<?php echo($etudiant->getIduti()) ?>">Les
                     Bilans</a></button>
         </div>
         <div class="Buttondown">
             <div class="boutonModifMDP">
-                <button class="boutonBack"><a href="./TuteurController.php?action=listeetudiants&id=<?= htmlspecialchars($etudiant->getIduti()) ?>">Retour</a>
+                <button class="boutonBack"><a
+                            href="./TuteurController.php?action=listeetudiants&id=<?php echo($etudiant->getIduti()) ?>">Retour</a>
                 </button>
             </div>
             <div class="boutonModifMDP">
-                <button class="BoutonModifElem"><a href="./TuteurController.php?action=modifierInfosEtu&id=<?= htmlspecialchars($etudiant->getIduti()) ?>"> Modifier les elements</a></button>
+                <button class="BoutonModifElem"><a
+                            href="./TuteurController.php?action=modifierInfosEtu&id=<?php echo($etudiant->getIduti()) ?>">
+                        Modifier les elements</a></button>
             </div>
         </div>
     <?php endif; ?>

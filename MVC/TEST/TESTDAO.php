@@ -78,7 +78,7 @@ var_dump($test2);
 $test3 = $entDao->delete($Entrepise2);
 var_dump($test3);
 
-*/
+/*
 echo '------------------------------------ Tuteur -------------------------------';
 $bdd = initialiseConnexionBDD();
 $tuteurDao = new TuteurDAO($bdd);

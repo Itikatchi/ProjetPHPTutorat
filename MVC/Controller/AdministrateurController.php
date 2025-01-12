@@ -607,26 +607,49 @@ class AdministrateurController
                 $adresse = htmlspecialchars($_POST['adresse']);
                 $cp = htmlspecialchars($_POST['cp']);
                 $ville = htmlspecialchars($_POST['ville']);
-                $specialite = htmlspecialchars($_POST['specialite']);
-                $classe = htmlspecialchars($_POST['classe']);
-                $entreprise = htmlspecialchars($_POST['entreprise']);
-                $tuteur = htmlspecialchars($_POST['tuteur']);
-                $maitre = htmlspecialchars($_POST['maitre-apprentissage']);
-
+                $specialite = intval($_POST['specialite']);
+                $classe = intval($_POST['classe']);
                 $bdd = initialiseConnexionBDD();
                 $etuDAO = new EtduiantDAO($bdd);
                 $etudiant = $etuDAO->find($id);
+
+                if($_POST['entreprise'] == ''){
+                    $entreprise = null;
+                    $etudiant->setMonEnt($entreprise);
+                }else{
+                    $entreprise = htmlspecialchars($_POST['entreprise']);
+                    $entrepriseDAO = new EntrepriseDAO($bdd);
+                    $entrepriseobj = $entrepriseDAO->find($entreprise);
+                    $etudiant->setMonEnt($entrepriseobj);
+                }
+
+                if($_POST['tuteur'] == ""){
+                    $tuteur = null;
+                    $etudiant->setMonTuteur($tuteur);
+                }else{
+                    $tuteur = htmlspecialchars($_POST['tuteur']);
+                    $tuteurDAO = new TuteurDAO($bdd);
+                    $tuteurobj = $tuteurDAO->find($tuteur);
+                    $etudiant->setMonTuteur($tuteurobj);
+                }
+
+                if($_POST['maitre-apprentissage'] == ""){
+                    $maitre = null;
+                    $etudiant->setMonMaitreAp($maitre);
+                }else{
+                    $maitre = htmlspecialchars($_POST['maitre-apprentissage']);
+                    $maitreDAO = new MaitreApprentissageDAO($bdd);
+                    $maitreobj = $maitreDAO->find($maitre);
+                    $etudiant->setMonMaitreAp($maitreobj);
+                }
 
                 $specialiteDAO = new SpecialiteDAO($bdd);
                 $specialiteobj = $specialiteDAO->find($specialite);
                 $classeDAO = new ClasseDAO($bdd);
                 $classeobj = $classeDAO->find($classe);
-                $tuteurDAO = new TuteurDAO($bdd);
-                $tuteurobj = $tuteurDAO->find($tuteur);
-                $entrepriseDAO = new EntrepriseDAO($bdd);
-                $entrepriseobj = $entrepriseDAO->find($entreprise);
-                $maitreDAO = new MaitreApprentissageDAO($bdd);
-                $maitreobj = $maitreDAO->find($maitre);
+
+
+
 
                 if (!$etudiant) {
                     throw new \Exception("Tuteur non trouvé.");
@@ -641,9 +664,9 @@ class AdministrateurController
                 $etudiant->setEtuVille($ville);
                 $etudiant->setMaSpec($specialiteobj);
                 $etudiant->setMaClasse($classeobj);
-                $etudiant->setMonTuteur($tuteurobj);
-                $etudiant->setMonEnt($entrepriseobj);
-                $etudiant->setMonMaitreAp($maitreobj);
+
+
+
 
                 $success = $etuDAO->update($etudiant);
 
