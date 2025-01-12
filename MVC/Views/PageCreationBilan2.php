@@ -24,7 +24,7 @@
                 <input type="number" min="0" max="20" step="0.0001" id="noteOra" name="noteOra" value="<?= htmlspecialchars($bilan2->getNotOraBil()) ?>" >
             </div>
             <div class="ajout-etudiant-form-group">
-                <label for="sujetMemoire">Remarque :</label>
+                <label for="sujetMemoire">Sujet De memoire :</label>
                 <textarea style="resize: none; height: 50px"  id="sujetMemoire" name="sujetMemoire" ><?= htmlspecialchars($bilan2->getSujBil()) ?></textarea>
             </div>
             <div class="ajout-etudiant-form-group">

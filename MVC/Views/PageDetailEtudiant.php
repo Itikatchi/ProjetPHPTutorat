@@ -84,7 +84,7 @@
                 </button>
             </div>
             <div class="boutonModifMDP">
-                <button class="BoutonModifElem"><a href=""> Modifier les elements</a></button>
+                <button class="BoutonModifElem"><a href="./TuteurController.php?action=modifierInfosEtu&id=<?= htmlspecialchars($etudiant->getIduti()) ?>"> Modifier les elements</a></button>
             </div>
         </div>
     <?php endif; ?>

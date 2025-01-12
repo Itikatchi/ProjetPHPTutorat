@@ -275,7 +275,26 @@ class TuteurController
         header("Location: ../../index.php");
         exit;
     }
+    public function verifyTuteurEleve($id)
+    {
+        $logtut = $_SESSION['id'];
+        $bdd = initialiseConnexionBDD();
+        $etudiantsDAO = new EtduiantDAO($bdd);
+        $tutDAO = new TuteurDAO($bdd);
+        $tuteur = $tutDAO->find($logtut);
+        $listeEtud = $etudiantsDAO->getAllEtuByTut($tuteur);
+        $listeIdUti = [];
+        foreach ($listeEtud as $student) {
 
+            $idetu = (int)$student->getIdUti();
+
+            $listeIdUti[] = $idetu;
+        }
+        if (!in_array($id, $listeIdUti)) {
+            $this->redirectWithError("Vous ne pouvez pas acceder à cette page");
+            throw new \Exception("Vous n'êtes pas autorisé à accéder à cet étudiant.");
+        }
+    }
     public function details($id)
     {
         if (!$id) {
@@ -283,8 +302,9 @@ class TuteurController
         }
         try {
             $this->ensureLoggedInAs('tuteur');
-
+            $this->verifyTuteurEleve($id);
             $bdd = initialiseConnexionBDD();
+
             $etudiantsDAO = new EtduiantDAO($bdd);
             $etudiant = $etudiantsDAO->find($id);
 
@@ -299,7 +319,7 @@ class TuteurController
     {
         try {
             $this->ensureLoggedInAs('tuteur');
-
+            $this->verifyTuteurEleve($id);
             $bdd = initialiseConnexionBDD();
             $etudiantsDAO = new EtduiantDAO($bdd);
             $etudiants = $etudiantsDAO->find($id);
@@ -329,17 +349,310 @@ class TuteurController
             $this->redirectWithError($e->getMessage());
         }
     }
+    public function CreatBil1($id)
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiant = $etudiantsDAO->find($id);
+            $bil1DAO = new Bilan1DAO($bdd);
+            $bil1 = new Bilan1(null, null, 0, null, null, null, $etudiant);
+            $bil1DAO->create($bil1);
+            header("Location:./TuteurController.php?action=bilanetud&id=$id");
+        }
+        catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function CreatBil2($id)
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiant = $etudiantsDAO->find($id);
+            $bil2DAO = new Bilan2DAO($bdd);
+            $bil2 = new Bilan2(null, null, 0, "", null, null, $etudiant);
+            $bil2DAO->create($bil2);
+            header("Location:./TuteurController.php?action=bilanetud&id=$id");
+        }
+        catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function delBilan1(int $id)
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $bdd = initialiseConnexionBDD();
 
+            $bil1DAO = new Bilan1DAO($bdd);
+            $bilan1 = $bil1DAO->find($id);
+            $idredirect = $bilan1->getMonEtu()->getIdUti();
+            $bil1DAO->delete($bilan1);
+            header("Location:./TuteurController.php?action=bilanetud&id=$idredirect");
+        }
+        catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function delBilan2(int $id)
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $bdd = initialiseConnexionBDD();
+
+            $bil2DAO = new Bilan2DAO($bdd);
+            $bilan2 = $bil2DAO->find($id);
+            $idredirect = $bilan2->getMonEtu()->getIdUti();
+            $bil2DAO->delete($bilan2);
+            header("Location:./TuteurController.php?action=bilanetud&id=$idredirect");
+        }
+        catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+///////////////////////////////////////////MODIFIER LES BILAN 1////////////////////////////////////
+    public function modifierBilan1($id)
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $bdd = initialiseConnexionBDD();
+            $bilan1dao = new Bilan1DAO($bdd);
+            $bilan1 = $bilan1dao->find($id);
+            $this->verifyTuteurEleve($bilan1->getMonEtu()->getIdUti());
+            if (!$bilan1) {
+                throw new \Exception("Bilan1 non trouvé.");
+            }
+            include "../Views/Nav/NavTuteur.php";
+            include "../Views/PageCreationBilan1.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveModifBilan1($id)
+    {
+        echo "Méthode saveInfos appelée";
+        try {
+            $this->ensureLoggedInAs('tuteur');
+
+
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $dateVisEnt = htmlspecialchars($_POST['dateVisEnt']);
+                $noteEnt = floatval($_POST['noteEnt']);
+                $noteDos = floatval($_POST['noteDos']);
+                $noteOra = floatval($_POST['noteOra']);
+                $remarque = htmlspecialchars($_POST['remarque']);
+
+                $bdd = initialiseConnexionBDD();
+                $bilan1dao = new Bilan1DAO($bdd);
+                $bilan1 = $bilan1dao->find($id);
+
+                if (!$bilan1) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                $bilan1->setNotEnt($noteEnt);
+                $bilan1->setNotOraBil($noteOra);
+                $bilan1->setNotDosBil($noteDos);
+                $bilan1->setRemBil($remarque);
+                $bilan1->setDatVisEnt(new DateTime($dateVisEnt));
+
+                $success = $bilan1dao->update($bilan1);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour des informations a échoué.");
+                }
+                var_dump($success);
+                header("Location: ?action=detailBilan1&id=" . $id);
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+    ///////////////////////////////////////////MODIFIER LES BILAN 2////////////////////////////////////
+    public function modifierBilan2($id)
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $bdd = initialiseConnexionBDD();
+            $bilan2dao = new Bilan2DAO($bdd);
+            $bilan2 = $bilan2dao->find($id);
+            $this->verifyTuteurEleve($bilan2->getMonEtu()->getIdUti());
+
+            if (!$bilan2) {
+                throw new \Exception("Bilan2 non trouvé.");
+            }
+            include "../Views/Nav/NavTuteur.php";
+            include "../Views/PageCreationBilan2.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveModifBilan2($id)
+    {
+        echo "Méthode saveInfos appelée";
+        try {
+            $this->ensureLoggedInAs('tuteur');
+
+
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $dateBil2 = htmlspecialchars($_POST['dateBil2']);
+                $sujetBil = htmlspecialchars($_POST['sujetMemoire']);
+                $noteDos = floatval($_POST['noteDos']);
+                $noteOra = floatval($_POST['noteOra']);
+                $remarque = htmlspecialchars($_POST['remarque']);
+
+                $bdd = initialiseConnexionBDD();
+                $bilan2dao = new Bilan2DAO($bdd);
+                $bilan2 = $bilan2dao->find($id);
+
+                if (!$bilan2) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                $bilan2->setSujBil($sujetBil);
+                $bilan2->setNotOraBil($noteOra);
+                $bilan2->setNotDosBil($noteDos);
+                $bilan2->setRemBil($remarque);
+                $bilan2->setDatBil2(new DateTime($dateBil2));
+
+                $success = $bilan2dao->update($bilan2);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour des informations a échoué.");
+                }
+                var_dump($success);
+                header("Location: ?action=detailBilan2&id=" . $id);
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+    public function modifierInfosEtu($id)
+    {
+        try {
+            $this->ensureLoggedInAs('tuteur');
+            $this->verifyTuteurEleve($id);
+            $bdd = initialiseConnexionBDD();
+
+            $etuDAO = new EtduiantDAO($bdd);
+            $etudiant = $etuDAO->find($id);
+
+            $specialiteDAO = new SpecialiteDAO($bdd);
+            $maitreDao = new MaitreApprentissageDAO($bdd);
+            $classeDAO = new ClasseDAO($bdd);
+            $tuteurDAO = new TuteurDAO($bdd);
+            $entrepriseDAO = new EntrepriseDAO($bdd);
+
+            $maitres= $maitreDao->getAll();
+            $entreprises = $entrepriseDAO->getAll();
+            $tuteurs = $tuteurDAO->getAll();
+            $specialites = $specialiteDAO->getAll();
+            $classes = $classeDAO->getAll();
+
+
+            if (!$etudiant) {
+                throw new \Exception("Etudiant non trouvé.");
+            }
+            include "../Views/Nav/NavTuteur.php";
+            include "../Views/PageModifInfoEtuTutAdmin.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function saveInfosEtu($id)
+    {
+        echo "Méthode saveInfos appelée";
+
+        try {
+            $this->ensureLoggedInAs('tuteur');
+
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $nom = htmlspecialchars($_POST['nom']);
+                $prenom = htmlspecialchars($_POST['prenom']);
+                $telephone = htmlspecialchars($_POST['telephone']);
+                $email = htmlspecialchars($_POST['email']);
+                $adresse = htmlspecialchars($_POST['adresse']);
+                $cp = htmlspecialchars($_POST['cp']);
+                $ville = htmlspecialchars($_POST['ville']);
+                $specialite = htmlspecialchars($_POST['specialite']);
+                $classe = htmlspecialchars($_POST['classe']);
+                $entreprise = htmlspecialchars($_POST['entreprise']);
+                $tuteur = htmlspecialchars($_POST['tuteur']);
+                $maitre = htmlspecialchars($_POST['maitre-apprentissage']);
+
+                $bdd = initialiseConnexionBDD();
+                $etuDAO = new EtduiantDAO($bdd);
+                $etudiant = $etuDAO->find($id);
+
+                $specialiteDAO = new SpecialiteDAO($bdd);
+                $specialiteobj = $specialiteDAO->find($specialite);
+                $classeDAO = new ClasseDAO($bdd);
+                $classeobj = $classeDAO->find($classe);
+                $tuteurDAO = new TuteurDAO($bdd);
+                $tuteurobj = $tuteurDAO->find($tuteur);
+                $entrepriseDAO = new EntrepriseDAO($bdd);
+                $entrepriseobj = $entrepriseDAO->find($entreprise);
+                $maitreDAO = new MaitreApprentissageDAO($bdd);
+                $maitreobj = $maitreDAO->find($maitre);
+
+                if (!$etudiant) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                $etudiant->setNomUti($nom);
+                $etudiant->setPrenomUti($prenom);
+                $etudiant->setEtuTel($telephone);
+                $etudiant->setEmailUti($email);
+                $etudiant->setEtuAdr($adresse);
+                $etudiant->setEtuCp($cp);
+                $etudiant->setEtuVille($ville);
+                $etudiant->setMaSpec($specialiteobj);
+                $etudiant->setMaClasse($classeobj);
+                $etudiant->setMonTuteur($tuteurobj);
+                $etudiant->setMonEnt($entrepriseobj);
+                $etudiant->setMonMaitreAp($maitreobj);
+
+                $success = $etuDAO->update($etudiant);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour des informations a échoué.");
+                }
+                var_dump($success);
+                header("Location: ?action=detail&id=" . $id);
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
     public function detailBilan1($id)
     {
         try {
             $this->ensureLoggedInAs('tuteur');
 
+
             $bdd = initialiseConnexionBDD();
 
             $Bilan1Dao = new Bilan1DAO($bdd);
             $bilan1 = $Bilan1Dao->find($id);
-
+            $this->verifyTuteurEleve($bilan1->getMonEtu()->getIdUti());
             include "../Views/Nav/NavTuteur.php";
             include "../Views/PageBilan1.php";
         } catch (\Exception $e) {
@@ -356,7 +669,7 @@ class TuteurController
 
             $Bilan2Dao = new Bilan2DAO($bdd);
             $bilan2 = $Bilan2Dao->find($id);
-
+            $this->verifyTuteurEleve($bilan2->getMonEtu()->getIdUti());
 
             include "../Views/Nav/NavTuteur.php";
             include "../Views/PageBilan2.php";
@@ -365,12 +678,30 @@ class TuteurController
         }
     }
 
+
+
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new TuteurController();
     try {
         switch ($_GET['action']) {
+            case 'delBilan1':
+                $id = intval($_GET['id']);
+                $controller->delBilan1($id);
+                break;
+            case 'delBilan2':
+                $id = intval($_GET['id']);
+                $controller->delBilan2($id);
+                break;
+            case 'CreationduBil1':
+                $id = intval($_GET['id']);
+                $controller->creatBil1($id);
+                break;
+            case 'CreationduBil2':
+                $id = intval($_GET['id']);
+                $controller->creatBil2($id);
+                break;
             case 'dashboard':
                 $controller->dashboard();
                 break;
@@ -414,6 +745,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $id = intval($_GET['id']);
                 $controller->detailBilan2($id);
                 break;
+            case 'modifierBilan2':
+                $id = intval($_GET['id']);
+                $controller->modifierBilan2($id);
+                break;
+            case 'modifierBilan1':
+                $id = intval($_GET['id']);
+                $controller->modifierBilan1($id);
+                break;
+            case 'modifierInfosEtu':
+                $id = intval($_GET['id']);
+                $controller->modifierInfosEtu($id);
+                break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
         }} catch (\Exception $e) {
@@ -423,6 +766,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     exit;
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'CreatBilan1' && isset($_GET['id'])) {
+    $controller = new TuteurController();
+    $controller->saveModifBilan1($_GET['id']);
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'CreatBilan2' && isset($_GET['id'])) {
+    $controller = new TuteurController();
+    $controller->saveModifBilan2($_GET['id']);
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfoEtu' && isset($_GET['id'])) {
+    $controller = new TuteurController();
+    $controller->saveInfosEtu($_GET['id']);
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfo') {

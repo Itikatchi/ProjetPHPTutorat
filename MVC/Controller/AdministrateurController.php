@@ -398,8 +398,6 @@ class AdministrateurController
 
 
 
-
-
     public function details($id)
     {
         if (!$id) {
@@ -419,7 +417,71 @@ class AdministrateurController
 
         }
     }
+    public function CreatBil1($id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiant = $etudiantsDAO->find($id);
+            $bil1DAO = new Bilan1DAO($bdd);
+            $bil1 = new Bilan1(null, null, 0, null, null, null, $etudiant);
+            $bil1DAO->create($bil1);
+            header("Location:./AdministrateurController.php?action=bilanetud&id=$id");
+        }
+        catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function CreatBil2($id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $bdd = initialiseConnexionBDD();
+            $etudiantsDAO = new EtduiantDAO($bdd);
+            $etudiant = $etudiantsDAO->find($id);
+            $bil2DAO = new Bilan2DAO($bdd);
+            $bil2 = new Bilan2(null, null, 0, "", null, null, $etudiant);
+            $bil2DAO->create($bil2);
+            header("Location:./AdministrateurController.php?action=bilanetud&id=$id");
+        }
+        catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+    public function delBilan1(int $id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $bdd = initialiseConnexionBDD();
 
+            $bil1DAO = new Bilan1DAO($bdd);
+            $bilan1 = $bil1DAO->find($id);
+            $idredirect = $bilan1->getMonEtu()->getIdUti();
+            $bil1DAO->delete($bilan1);
+            header("Location:./AdministrateurController.php?action=bilanetud&id=$idredirect");
+        }
+        catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function delBilan2(int $id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $bdd = initialiseConnexionBDD();
+
+            $bil2DAO = new Bilan2DAO($bdd);
+            $bilan2 = $bil2DAO->find($id);
+            $idredirect = $bilan2->getMonEtu()->getIdUti();
+            $bil2DAO->delete($bilan2);
+            header("Location:./AdministrateurController.php?action=bilanetud&id=$idredirect");
+        }
+        catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
     public function bilanetud($id)
     {
         try {
@@ -438,6 +500,7 @@ class AdministrateurController
                     $bil1truefalse = false;
                 }
             }
+
             $Bilan2Dao = new Bilan2DAO($bdd);
             $bilan2 = $Bilan2Dao->getallBilan2ByEleve($etudiants);
             foreach ($bilan2 as $bilan) {
@@ -546,6 +609,7 @@ class AdministrateurController
                 $classe = htmlspecialchars($_POST['classe']);
                 $entreprise = htmlspecialchars($_POST['entreprise']);
                 $tuteur = htmlspecialchars($_POST['tuteur']);
+                $maitre = htmlspecialchars($_POST['maitre-apprentissage']);
 
                 $bdd = initialiseConnexionBDD();
                 $etuDAO = new EtduiantDAO($bdd);
@@ -559,6 +623,8 @@ class AdministrateurController
                 $tuteurobj = $tuteurDAO->find($tuteur);
                 $entrepriseDAO = new EntrepriseDAO($bdd);
                 $entrepriseobj = $entrepriseDAO->find($entreprise);
+                $maitreDAO = new MaitreApprentissageDAO($bdd);
+                $maitreobj = $maitreDAO->find($maitre);
 
                 if (!$etudiant) {
                     throw new \Exception("Tuteur non trouvé.");
@@ -575,6 +641,7 @@ class AdministrateurController
                 $etudiant->setMaClasse($classeobj);
                 $etudiant->setMonTuteur($tuteurobj);
                 $etudiant->setMonEnt($entrepriseobj);
+                $etudiant->setMonMaitreAp($maitreobj);
 
                 $success = $etuDAO->update($etudiant);
 
@@ -599,6 +666,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     try {
         switch ($_GET['action']) {
+            case 'delBilan1':
+                $id = intval($_GET['id']);
+                $controller->delBilan1($id);
+                break;
+            case 'delBilan2':
+                $id = intval($_GET['id']);
+                $controller->delBilan2($id);
+                break;
+            case 'CreationduBil1':
+                $id = intval($_GET['id']);
+                $controller->creatBil1($id);
+                break;
+            case 'CreationduBil2':
+                $id = intval($_GET['id']);
+                $controller->creatBil2($id);
+                break;
             case 'modifierBilan2':
                 $id = intval($_GET['id']);
                 $controller->modifierBilan2($id);

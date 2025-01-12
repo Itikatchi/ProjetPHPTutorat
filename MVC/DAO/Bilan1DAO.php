@@ -138,7 +138,6 @@ class Bilan1DAO extends DAO
     }
     public function getallBilan1ByEleve(Etudiant $etudiant) : ?array
     {
-        $result = [];
         $query = "SELECT * FROM Bilan1 WHERE etu_id = :etu_id";
         $stmt = $this->bdd->prepare($query);
         $stmt->execute([
@@ -155,9 +154,10 @@ class Bilan1DAO extends DAO
                 }
 
             }
+        }else {
+            $result = [null] ;
         }
 
         return $result;
     }
-
 }

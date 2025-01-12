@@ -712,6 +712,26 @@ body.login-page {
         margin-top: 20px;
 
     }
+    .PannelBilanAdd {
+        justify-content: center;
+        display: flex;
+        width: 50px; /* Plus petit */
+        height: 50px;
+        background-color: #6ab06d;
+        color: black;
+        font-family: 'Inter', sans-serif;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        line-height: 50px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        margin-left: 350px; /* Décalage entre les deux */
+        margin-top: 20px;
+        position: absolute; /* Pour les superposer légèrement */
+
+
+    }
 
     table{
         width: 75%;
