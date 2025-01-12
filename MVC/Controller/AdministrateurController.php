@@ -146,7 +146,7 @@ class AdministrateurController
             $bilan1dao = new Bilan1DAO($bdd);
             $bilan1 = $bilan1dao->find($id);
             if (!$bilan1) {
-                throw new \Exception("Tuteur non trouvé.");
+                throw new \Exception("Bilan1 non trouvé.");
             }
             include "../Views/Nav/NavAdmin.php";
             include "../Views/PageCreationBilan1.php";
@@ -191,6 +191,68 @@ class AdministrateurController
                 }
                 var_dump($success);
                 header("Location: ?action=detailBilan1&id=" . $id);
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+    ///////////////////////////////////////////MODIFIER LES BILAN 2////////////////////////////////////
+    public function modifierBilan2($id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $bdd = initialiseConnexionBDD();
+            $bilan2dao = new Bilan2DAO($bdd);
+            $bilan2 = $bilan2dao->find($id);
+            if (!$bilan2) {
+                throw new \Exception("Bilan2 non trouvé.");
+            }
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageCreationBilan2.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveModifBilan2($id)
+    {
+        echo "Méthode saveInfos appelée";
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $dateBil2 = htmlspecialchars($_POST['dateBil2']);
+                $sujetBil = htmlspecialchars($_POST['sujetMemoire']);
+                $noteDos = floatval($_POST['noteDos']);
+                $noteOra = floatval($_POST['noteOra']);
+                $remarque = htmlspecialchars($_POST['remarque']);
+
+                $bdd = initialiseConnexionBDD();
+                $bilan2dao = new Bilan2DAO($bdd);
+                $bilan2 = $bilan2dao->find($id);
+
+                if (!$bilan2) {
+                    throw new \Exception("Tuteur non trouvé.");
+                }
+
+                $bilan2->setSujBil($sujetBil);
+                $bilan2->setNotOraBil($noteOra);
+                $bilan2->setNotDosBil($noteDos);
+                $bilan2->setRemBil($remarque);
+                $bilan2->setDatBil2(new DateTime($dateBil2));
+
+                $success = $bilan2dao->update($bilan2);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour des informations a échoué.");
+                }
+                var_dump($success);
+                header("Location: ?action=detailBilan2&id=" . $id);
                 exit;
             } else {
                 throw new \Exception("Méthode invalide.");
@@ -516,6 +578,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     try {
         switch ($_GET['action']) {
+            case 'modifierBilan2':
+                $id = intval($_GET['id']);
+                $controller->modifierBilan2($id);
+                break;
             case 'modifierBilan1':
                 $id = intval($_GET['id']);
                 $controller->modifierBilan1($id);
@@ -573,7 +639,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
     $controller = new AdministrateurController();
     $controller->saveModifBilan1($_GET['id']);
 }
-
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'CreatBilan2' && isset($_GET['id'])) {
+    $controller = new AdministrateurController();
+    $controller->saveModifBilan2($_GET['id']);
+}
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfo') {

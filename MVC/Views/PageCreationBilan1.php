@@ -17,7 +17,7 @@
             </div>
             <div class="ajout-etudiant-form-group">
                 <label for="noteEnt">Note d'entreprise :</label>
-                <input type="number" min="0" max="20" id="noteEnt" name="noteEnt" value="<?= htmlspecialchars($bilan1->getNotEnt()) ?>" >
+                <input type="number" min="0" max="20" step="0.0001" id="noteEnt" name="noteEnt" value="<?= htmlspecialchars($bilan1->getNotEnt()) ?>" >
             </div>
             <div class="ajout-etudiant-form-group">
                 <label for="noteDos">Note de Dossier :</label>
@@ -25,7 +25,7 @@
             </div>
             <div class="ajout-etudiant-form-group">
                 <label for="noteOra">Note de l'Oral :</label>
-                <input type="number" min="0" max="20" id="noteOra" name="noteOra" value="<?= htmlspecialchars($bilan1->getNotOraBil()) ?>" >
+                <input type="number" min="0" max="20" step="0.0001" id="noteOra" name="noteOra" value="<?= htmlspecialchars($bilan1->getNotOraBil()) ?>" >
             </div>
             <div class="ajout-etudiant-form-group">
                 <label for="remarque">Remarque :</label>
@@ -36,7 +36,7 @@
             <div class="ajout-etudiant-buttons">
                 <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Ajouter</button>
                 <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
-                        onclick="window.location.href='?action=detail&id=<?php echo($bilan1->getMonEtu()->getIdUti())?>'">Annuler
+                        onclick="window.location.href='?action=bilanetud&id=<?php echo($bilan1->getMonEtu()->getIdUti())?>'">Annuler
                 </button>
             </div>
         </form>
