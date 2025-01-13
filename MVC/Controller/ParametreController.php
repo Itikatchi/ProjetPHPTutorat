@@ -218,14 +218,75 @@ class ParametreController{
             $this->ensureLoggedInAs('administrateur');
 
             $bdd = initialiseConnexionBDD();
-            $specialiteDAO = new SpecialiteDAO($bdd);
-            $classeDAO = new ClasseDAO($bdd);
+            $entrepriseDAO = new EntrepriseDAO($bdd);
 
-            $specialites = $specialiteDAO->getAll();
-            $classes = $classeDAO->getAll();
+            $entreprises = $entrepriseDAO->getAll();
 
             include "../Views/Nav/NavAdmin.php";
             include "../Views/PageAjoutEntreprise.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function addEntreprise()
+    {
+        try {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $bdd = initialiseConnexionBDD();
+                $entrepriseDAO = new EntrepriseDAO($bdd);
+
+                $nom = htmlspecialchars($_POST['nom']);
+                $adresse = htmlspecialchars($_POST['adresse']);
+                $cp = htmlspecialchars($_POST['cp']);
+                $ville = htmlspecialchars($_POST['ville']);
+
+                $entreprise = new Entreprise(0, $nom, $adresse, $cp, $ville);
+                $success = $entrepriseDAO->create($entreprise);
+
+                if ($success) {
+                    header("Location: ?action=parametrage");
+                } else {
+                    throw new \Exception("Erreur lors de l'ajout de l'entreprise.");
+                }
+            }
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function addMaitre()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $bdd = initialiseConnexionBDD();
+                $maitreapprentissageDAO = new MaitreApprentissageDAO($bdd);
+
+                $nom_maitre = htmlspecialchars($_POST['nom_maitre']);
+                $prenom_maitre = htmlspecialchars($_POST['prenom_maitre']);
+                $mail_maitre = htmlspecialchars($_POST['email_maitre']);
+                $tel_maitre = htmlspecialchars($_POST['tel_maitre']);
+                $entrepriseID = intval($_POST['entreprise']);
+
+                $entrepriseDAO = new EntrepriseDAO($bdd);
+
+                $entreprise = $entrepriseDAO->find($entrepriseID);
+
+                if (!$entreprise) {
+                    throw new \Exception("Entreprise introuvable.");
+                }
+
+                $maitreapprentissage = new MaitreApprentissage(0, $nom_maitre, $prenom_maitre, $mail_maitre, $tel_maitre, $entreprise);
+
+                $success = $maitreapprentissageDAO->create($maitreapprentissage);
+                if ($success) {
+                    header("Location: ?action=parametrage");
+                } else {
+                    throw new \Exception("Erreur lors de l'ajout du maître d'apprentissage.");
+                }
+            }
         } catch (\Exception $e) {
             $this->redirectWithError($e->getMessage());
         }
@@ -267,7 +328,7 @@ class ParametreController{
                     header("Location: ../Controller/ParametreController.php?action=parametrage");
                     exit;
                 } else {
-                    throw new \Exception("Erreur lors de l'enregistrement du tuteur.");
+                    throw new \Exception("Erreur lors de l'enregistrement de l'entreprise.");
                 }
             }
         } catch (\Exception $e) {
@@ -315,4 +376,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_GET['action'] === 'addEtudiant') 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'addTuteur') {
     $controller = new ParametreController();
     $controller->addTuteur();
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'addEntreprise') {
+    $controller = new ParametreController();
+    $controller->addEntreprise();
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'addMaitre') {
+    $controller = new ParametreController();
+    $controller->addMaitre();
 }

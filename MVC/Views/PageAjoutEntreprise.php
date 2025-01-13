@@ -17,7 +17,6 @@
     <div class="ajout-container">
         <h1>Ajout d'une entreprise</h1>
         <form method="POST" action="?action=addEntreprise" class="ajout-etudiant-form">
-            <!-- Section entreprise -->
             <div class="ajout-etudiant-form-group">
                 <label for="nom">Nom :</label>
                 <input type="text" id="nom" name="nom" required>
@@ -34,35 +33,54 @@
                 <label for="ville">Ville :</label>
                 <input type="text" id="ville" name="ville" required>
             </div>
+            <div class="ajout-etudiant-buttons">
+                <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Ajouter</button>
+                <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
+                        onclick="window.location.href='?action=parametrage'">Annuler
+                </button>
+            </div>
+        </form>
+
     </div>
 
     <div class="ajout-container">
         <!-- Section maître d'apprentissage -->
         <h2>Maître d'apprentissage</h2>
-        <div class="ajout-etudiant-form-group">
-            <label for="nom_maitre">Nom :</label>
-            <input type="text" id="nom_maitre" name="nom_maitre" required>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="prenom_maitre">Prénom :</label>
-            <input type="text" id="prenom_maitre" name="prenom_maitre" required>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="email_maitre">Email :</label>
-            <input type="email" id="email_maitre" name="email_maitre" required>
-        </div>
-        <div class="ajout-etudiant-form-group">
-            <label for="tel_maitre">Téléphone :</label>
-            <input type="tel" id="tel_maitre" name="tel_maitre" required>
-        </div>
+        <form method="POST" action="?action=addMaitre" class="ajout-etudiant-form">
+            <div class="ajout-etudiant-form-group">
+                <label for="nom_maitre">Nom :</label>
+                <input type="text" id="nom_maitre" name="nom_maitre" required>
+            </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="prenom_maitre">Prénom :</label>
+                <input type="text" id="prenom_maitre" name="prenom_maitre" required>
+            </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="email_maitre">Email :</label>
+                <input type="email" id="email_maitre" name="email_maitre" required>
+            </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="tel_maitre">Téléphone :</label>
+                <input type="tel" id="tel_maitre" name="tel_maitre" required>
+            </div>
+            <div class="ajout-etudiant-form-group">
+                <label for="entreprise">Entreprise :</label>
+                <select id="entreprise" name="entreprise" required>
+                    <option value="">--Choisir--</option>
+                    <?php foreach ($entreprises as $entreprise): ?>
+                        <option value="<?= htmlspecialchars($entreprise->getIdEnt()) ?>">
+                            <?= htmlspecialchars($entreprise->getNomEnt()) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
 
-        <!-- Boutons -->
-        <div class="ajout-etudiant-buttons">
-            <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Ajouter</button>
-            <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
+            <div class="ajout-etudiant-buttons">
+                <button type="submit" class="ajout-etudiant-btn ajout-etudiant-btn-ajouter">Ajouter</button>
+                <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
                     onclick="window.location.href='?action=parametrage'">Annuler
-            </button>
-        </div>
+                </button>
+            </div>
         </form>
     </div>
 </div>
