@@ -2,7 +2,7 @@
 
 namespace BO;
 
-class   Entreprise
+class  Entreprise
 {
     private int $idEnt;
     private string $nomEnt;
