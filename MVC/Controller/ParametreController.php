@@ -278,7 +278,7 @@ class ParametreController{
                     throw new \Exception("Entreprise introuvable.");
                 }
 
-                $maitreapprentissage = new MaitreApprentissage(0, $nom_maitre, $prenom_maitre, $mail_maitre, $tel_maitre, $entreprise);
+                $maitreapprentissage = new MaitreApprentissage(0, $nom_maitre, $prenom_maitre, $tel_maitre,$mail_maitre, $entreprise);
 
                 $success = $maitreapprentissageDAO->create($maitreapprentissage);
                 if ($success) {

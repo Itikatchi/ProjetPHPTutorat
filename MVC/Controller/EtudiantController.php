@@ -274,16 +274,16 @@ class EtudiantController
             $this->redirectWithError($e->getMessage());
         }
     }
-    public function detailBilan2()
+    public function detailBilan2($id)
     {
         try {
             $this->ensureLoggedInAs('etudiant');
-            $logetu = $_SESSION['id'];
+
 
             $bdd = initialiseConnexionBDD();
 
             $Bilan2Dao = new Bilan2DAO($bdd);
-            $bilan2 = $Bilan2Dao->find($logetu);
+            $bilan2 = $Bilan2Dao->find($id);
 
             include "../Views/Nav/NavEtudiant.php";
             include "../Views/PageBilan2.php";
@@ -291,7 +291,7 @@ class EtudiantController
             $this->redirectWithError($e->getMessage());
         }
     }
-    public function detailBilan1()
+    public function detailBilan1($id)
     {
         try {
             $this->ensureLoggedInAs('etudiant');
@@ -300,7 +300,7 @@ class EtudiantController
             $bdd = initialiseConnexionBDD();
 
             $Bilan1Dao = new Bilan1DAO($bdd);
-            $bilan1 = $Bilan1Dao->find($logetu);
+            $bilan1 = $Bilan1Dao->find($id);
 
             include "../Views/Nav/NavEtudiant.php";
             include "../Views/PageBilan1.php";
@@ -330,10 +330,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $controller->modifiermdpEtu();
                 break;
             case 'detailBilan2':
-                $controller->detailBilan2();
+                $id = intval($_GET['id']);
+                $controller->detailBilan2($id);
                 break;
             case 'detailBilan1':
-                $controller->detailBilan1();
+                $id = intval($_GET['id']);
+                $controller->detailBilan1($id);
                 break;
             case 'bilan':
                 $controller->bilan();

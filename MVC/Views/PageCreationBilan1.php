@@ -13,7 +13,10 @@
         <form method="POST" action="?action=CreatBilan1&id=<?php echo($bilan1->getIdBil());?>" class="ajout-etudiant-form">
             <div class="ajout-etudiant-form-group">
                 <label for="dateVisEnt">Date de Visite en Entreprise :</label>
-                <input type="date" id="dateVisEnt" name="dateVisEnt" value="<?php echo($bilan1->getDatVisEnt()->format("Y-m-d")) ?>" required>
+                <input type="date" id="dateVisEnt" name="dateVisEnt" value="<?php
+                if($bilan1->getDatVisEnt())
+                {echo($bilan1->getDatVisEnt()->format("Y-m-d"));
+                } ?>" required>
             </div>
             <div class="ajout-etudiant-form-group">
                 <label for="noteEnt">Note d'entreprise :</label>
