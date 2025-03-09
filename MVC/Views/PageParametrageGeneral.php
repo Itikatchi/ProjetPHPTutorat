@@ -12,11 +12,14 @@
         <h1 class="parametrage-title">PARAMETRAGE</h1>
         <div class="parametrage-grid">
             <a href="?action=GestionClasse" class="parametrage-button">Gestion Classe</a>
-            <a href="?action=ajoutTuteur" class="parametrage-button">Gestion Spécialité</a>
-            <a href="?action=affectationTuteurClasse" class="parametrage-button">Gestion Date Alerte</a>
-            <a href="parametrageGenerale.php" class="parametrage-button"></a>
+            <a href="?action=GestionSpe" class="parametrage-button">Gestion Spécialité</a>
+            <a href="?action=GestionAlerte" class="parametrage-button">Gestion Date Alerte</a>
+            <a href="#" class="parametrage-button"></a>
         </div>
     </div>
+    <button type="button" class="ajout-etudiant-btn ajout-etudiant-btn-annuler"
+            onclick="window.location.href='?action=parametrage'" style="width: 200px; align-self: center">Retour
+    </button>
 </div>
 </body>
 </html>

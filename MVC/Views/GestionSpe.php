@@ -17,31 +17,31 @@
 
 <div class="MainContainer">
     <div class="BilanPageConsultation">
-            <div class="PannelBilan">
-                Les Classes :
-            </div>
+        <div class="PannelBilan">
+            Les Classes :
+        </div>
         <table>
             <thead>
             <tr>
-                <th>Classe :</th>
+                <th>Specialité :</th>
                 <th>Nombre d'étudiants :</th>
                 <th>Supprimer la classe :</th>
             </tr>
             </thead>
             <tbody>
 
-            <?php foreach ($classe as $cla) : ?>
+            <?php foreach ($Specialite as $spe) : ?>
                 <?php
-                $idClasse = $cla->getIdCla();
-                $nombreEtudiants = $EtudiantDAO->countByClasse($idClasse); // Compte le nombre d'étudiants
+                $idSpe = $spe->getIdSpec();
+                $nombreEtudiants = $EtudiantDAO->countBySpe($idSpe); // Compte le nombre d'étudiants
                 ?>
 
                 <tr>
-                    <td><?php echo htmlspecialchars($cla->getNomCla()); ?></td>
+                    <td><?php echo htmlspecialchars($spe->getNomSpec()); ?></td>
                     <td><?php echo $nombreEtudiants; ?></td>
                     <td>
                         <?php if ($nombreEtudiants == 0) : ?>
-                            <a href="./ParametreController.php?action=delclasse&id=<?php echo htmlspecialchars($idClasse); ?>">
+                            <a href="./ParametreController.php?action=delspe&id=<?php echo htmlspecialchars($idSpe); ?>">
                                 Supprimer la classe
                             </a>
                         <?php else : ?>
@@ -58,8 +58,8 @@
     <div class="Buttondown" style="position: fixed">
         <div class="boutonModifMDP">
             <button class="BoutonModifElem"><a
-                        href="./ParametreController.php?action=AjouterClasse">
-                    Ajouter une nouvelle classe</a></button>
+                    href="./ParametreController.php?action=AjouterSpe">
+                    Ajouter une nouvelle Spécialité</a></button>
         </div>
         <div class="boutonModifMDP">
             <button class="boutonBack"><a href="./ParametreController.php?action=parametrageGenerale">Retour</a>

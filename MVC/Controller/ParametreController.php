@@ -424,11 +424,146 @@ class ParametreController{
         }
     }
 
+    public function GestionSpe()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $EtudiantDAO = new EtduiantDAO($bdd);
+            $SpecialiteDAO = new SpecialiteDAO($bdd);
+            $Specialite = $SpecialiteDAO->getAll();
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/GestionSpe.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function AjouterSpe()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageAjouterSpe.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function delspe(int $id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $bdd = initialiseConnexionBDD();
+
+            $speDAO = new SpecialiteDAO($bdd);
+            $spe = $speDAO->find($id);
+            $speDAO->delete($spe);
+
+            header("Location:./ParametreController.php?action=GestionSpe");
+        }
+        catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function addSpe()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $bdd = initialiseConnexionBDD();
+                $SpeDAO = new SpecialiteDAO($bdd);
+                $nom = htmlspecialchars($_POST['nom']);
+
+                $spe = new Specialite(0,$nom);
+
+                $success = $SpeDAO->create($spe);
+
+                if ($success) {
+                    header("Location: ../Controller/ParametreController.php?action=GestionSpe");
+                    exit;
+                } else {
+                    throw new \Exception("Erreur lors de l'enregistrement de l'entreprise.");
+                }
+            }
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function GestionAlerte()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $AlerteDAO = new AlerteDAO($bdd);
+            $alerte = $AlerteDAO->find(1);
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageModifAlerte.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function saveAlerte()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $dateEnt = htmlspecialchars($_POST['dateEnt']);
+                $dateMem = htmlspecialchars($_POST['dateMem']);
+                $DateBil2 = htmlspecialchars($_POST['DateBil2']);
+
+                $bdd = initialiseConnexionBDD();
+                $AlerteDao = new AlerteDAO($bdd);
+                $alerte = $AlerteDao->find(1);
+
+                $alerte->setDateVisiteEnt(new DateTime($dateEnt));
+                $alerte->setDateSujMemoire(new DateTime($dateMem));
+                $alerte->setDatLimBil2(new DateTime($DateBil2));
+
+                $success = $AlerteDao->update($alerte);
+
+                if (!$success) {
+                    throw new \Exception("La mise à jour du mot de passe a échoué.");
+                }
+
+                header("Location: ?action=parametrageGenerale");
+                exit;
+            } else {
+                throw new \Exception("Méthode invalide.");
+            }
+        } catch (\Exception $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    }
+
 }
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new ParametreController();
     try {
         switch ($_GET['action']) {
+            case 'GestionAlerte':
+                $controller->GestionAlerte();
+                break;
+            case 'GestionSpe':
+                $controller->GestionSpe();
+                break;
+            case 'AjouterSpe':
+                $controller->AjouterSpe();
+                break;
+            case 'delspe':
+                $id = intval($_GET['id']);
+                $controller->delspe($id);
+                break;
             case 'AjouterClasse':
                 $controller->AjouterClasse();
                 break;
@@ -488,4 +623,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'addClasse') {
     $controller = new ParametreController();
     $controller->addClasse();
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'addSpe') {
+    $controller = new ParametreController();
+    $controller->addSpe();
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveAlerte') {
+    $controller = new ParametreController();
+    $controller->saveAlerte();
 }

@@ -449,4 +449,18 @@ class EtduiantDAO extends DAO
             return 0;
         }
     }
+    public function countBySpe($id): int {
+        $query = "SELECT COUNT(*) as total FROM Etudiant WHERE spe_id = :spe_id";
+        $stmt = $this->bdd->prepare($query);
+        $r = $stmt->execute([
+            "spe_id" => $id
+        ]);
+
+        if ($r) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int) $row['total'];
+        } else {
+            return 0;
+        }
+    }
 }

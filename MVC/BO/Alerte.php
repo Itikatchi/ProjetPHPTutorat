@@ -8,16 +8,16 @@ class Alerte
     private int $idAl;
     private ?DateTime $dateVisiteEnt;
     private ?DateTime $dateSujMemoire;
-    private ?DateTime $datLimBil1;
     private ?DateTime $datLimBil2;
 
 
-    public function __construct(int $idAl, ?DateTime $datLimBil2, ?DateTime $dateVisiteEnt, ?DateTime $dateSujMemoire)
+    public function __construct(int $idAl, ?DateTime $dateVisiteEnt, ?DateTime $dateSujMemoire, ?DateTime $datLimBil2)
     {
         $this->idAl = $idAl;
-        $this->datLimBil2 = $datLimBil2;
         $this->dateVisiteEnt = $dateVisiteEnt;
         $this->dateSujMemoire = $dateSujMemoire;
+        $this->datLimBil2 = $datLimBil2;
+
     }
 
     public function getIdAl(): int
@@ -30,7 +30,7 @@ class Alerte
         $this->idAl = $idAl;
     }
 
-    public function   getDateVisiteEnt(): DateTime
+    public function getDateVisiteEnt(): DateTime
     {
         return $this->dateVisiteEnt;
     }
