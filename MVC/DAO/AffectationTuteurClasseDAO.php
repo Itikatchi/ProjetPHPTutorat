@@ -15,7 +15,7 @@ class AffectationTuteurClasseDAO extends DAO
         $result = false;
         if ($obj instanceof AffectationTuteurClasse) {
             try {
-                $query = "INSERT INTO Gerer (tut_id, classe_id, tuteur_nb_max_etu) VALUES (:tut_id, :classe_id, :tuteur_nb_max_etu)";
+                $query = "INSERT INTO gerer (tut_id, classe_id, tuteur_nb_max_etu) VALUES (:tut_id, :classe_id, :tuteur_nb_max_etu)";
                 $stmt = $this->bdd->prepare($query);
                 $stmt->execute([
                     "tut_id" => $obj->getTuteur()->getIdUti(),
@@ -33,7 +33,7 @@ class AffectationTuteurClasseDAO extends DAO
     {
         $result = false;
         try {
-            $query = "DELETE FROM Gerer WHERE id = :id";
+            $query = "DELETE FROM gerer WHERE id = :id";
             $stmt = $this->bdd->prepare($query);
             $stmt->execute(["id" => $id]);
             $result = true;
@@ -48,7 +48,7 @@ class AffectationTuteurClasseDAO extends DAO
         $result = false;
         if ($obj instanceof AffectationTuteurClasse) {
             try {
-                $query = "UPDATE Gerer SET tut_id = :tut_id, classe_id = :classe_id, tuteur_nb_max_etu = :tuteur_nb_max_etu WHERE id = :id";
+                $query = "UPDATE gerer SET tut_id = :tut_id, classe_id = :classe_id, tuteur_nb_max_etu = :tuteur_nb_max_etu WHERE id = :id";
                 $stmt = $this->bdd->prepare($query);
                 $stmt->execute([
                     "tut_id" => $obj->getTuteur()->getIdUti(),
@@ -69,7 +69,7 @@ class AffectationTuteurClasseDAO extends DAO
     {
         $result = [];
         try {
-            $query = "SELECT * FROM Gerer";
+            $query = "SELECT * FROM gerer";
             $stmt = $this->bdd->query($query);
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             foreach ($stmt as $row) {

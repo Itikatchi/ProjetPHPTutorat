@@ -18,7 +18,7 @@ class EntrepriseDAO extends DAO
     {
         $result = false;
         if ($obj instanceof Entreprise) {
-            $query = "INSERT INTO Entreprise(ent_nom,ent_adr,ent_cp,ent_ville) VALUES(:ent_nom,:ent_adr,:ent_cp,:ent_ville)";
+            $query = "INSERT INTO entreprise(ent_nom,ent_adr,ent_cp,ent_ville) VALUES(:ent_nom,:ent_adr,:ent_cp,:ent_ville)";
             $stmt = $this->bdd->prepare($query);
             $r = $stmt->execute([
                 "ent_nom" => $obj->getNomEnt(),
@@ -42,7 +42,7 @@ class EntrepriseDAO extends DAO
             $tmp = $this->find($obj->getIdEnt());
             if ($tmp !== null) {
                 if ($obj->getIdEnt() == $tmp->getIdEnt()) {
-                    $query = "DELETE FROM Entreprise WHERE ent_id = :ent_id";
+                    $query = "DELETE FROM entreprise WHERE ent_id = :ent_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "ent_id" => $obj->getIdEnt()
@@ -63,7 +63,7 @@ class EntrepriseDAO extends DAO
             $tmp = $this->find($obj->getIdEnt());
             if ($tmp !== null) {
                 if ($obj->getIdEnt() == $tmp->getIdEnt()) {
-                    $query = "UPDATE Entreprise SET ent_nom = :ent_nom, ent_adr = :ent_adr,ent_cp = :ent_cp, ent_ville = :ent_ville WHERE ent_id = :ent_id";
+                    $query = "UPDATE entreprise SET ent_nom = :ent_nom, ent_adr = :ent_adr,ent_cp = :ent_cp, ent_ville = :ent_ville WHERE ent_id = :ent_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "ent_nom" => $obj->getNomEnt(),
@@ -84,7 +84,7 @@ class EntrepriseDAO extends DAO
     public function find(int $id): object
     {
         $result = null;
-        $query = "SELECT * FROM Entreprise WHERE ent_id = :ent_id";
+        $query = "SELECT * FROM entreprise WHERE ent_id = :ent_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "ent_id" => $id
@@ -100,7 +100,7 @@ class EntrepriseDAO extends DAO
 
     public function getAll(): array
     {
-        $query = "SELECT * FROM Entreprise";
+        $query = "SELECT * FROM entreprise";
         $stmt = $this->bdd->query($query);
         if ($stmt) {
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
