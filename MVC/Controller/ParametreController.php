@@ -336,12 +336,106 @@ class ParametreController{
         }
     }
 
+    public function parametrageGenerale()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageParametrageGeneral.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function GestionClasse()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $EtudiantDAO = new EtduiantDAO($bdd);
+            $ClasseDAO = new ClasseDAO($bdd);
+            $classe = $ClasseDAO->getAll();
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/GestionClasse.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function delclasse(int $id)
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+            $bdd = initialiseConnexionBDD();
+
+            $classeDao = new ClasseDAO($bdd);
+            $cla = $classeDao->find($id);
+            $classeDao->delete($cla);
+
+            header("Location:./ParametreController.php?action=GestionClasse");
+        }
+        catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function AjouterClasse()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageAjouterClasse.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+
+    }
+
+    public function addClasse()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $bdd = initialiseConnexionBDD();
+                $ClasseDAO = new ClasseDAO($bdd);
+                $nom = htmlspecialchars($_POST['nom']);
+
+                $classe = new Classe(0,$nom);
+
+                $success = $ClasseDAO->create($classe);
+
+                if ($success) {
+                    header("Location: ../Controller/ParametreController.php?action=GestionClasse");
+                    exit;
+                } else {
+                    throw new \Exception("Erreur lors de l'enregistrement de l'entreprise.");
+                }
+            }
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
 }
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new ParametreController();
     try {
         switch ($_GET['action']) {
-
+            case 'AjouterClasse':
+                $controller->AjouterClasse();
+                break;
+            case 'delclasse':
+                $id = intval($_GET['id']);
+                $controller->delclasse($id);
+                break;
             case 'parametrage':
                 $controller->parametrage();
                 break;
@@ -356,6 +450,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 break;
             case 'ajoutEntreprise':
                 $controller->ajoutEntrperise();
+                break;
+            case 'parametrageGenerale':
+                $controller->parametrageGenerale();
+                break;
+            case 'GestionClasse':
+                $controller->GestionClasse();
                 break;
             default:
                 throw new \Exception("Action inconnue : " . htmlspecialchars($_GET['action']));
@@ -384,4 +484,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'addMaitre') {
     $controller = new ParametreController();
     $controller->addMaitre();
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'addClasse') {
+    $controller = new ParametreController();
+    $controller->addClasse();
 }

@@ -14,7 +14,7 @@
             <a href="?action=ajoutEtudiant" class="parametrage-button">Ajouter un étudiant</a>
             <a href="?action=ajoutTuteur" class="parametrage-button">Ajouter un Tuteur</a>
             <a href="?action=affectationTuteurClasse" class="parametrage-button">Affectation Tuteur/Classe</a>
-            <a href="parametrageGenerale.php" class="parametrage-button">Paramétrage Générale</a>
+            <a href="?action=parametrageGenerale" class="parametrage-button">Paramétrage Générale</a>
             <a href="modifierTuteur.php" class="parametrage-button">Modification d'un Tuteur</a>
             <a href="?action=ajoutEntreprise" class="parametrage-button">Ajouter une entreprise</a>
         </div>

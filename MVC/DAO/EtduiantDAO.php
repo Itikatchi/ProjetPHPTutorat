@@ -435,4 +435,18 @@ class EtduiantDAO extends DAO
 
         return $result;
     }
+    public function countByClasse($id): int {
+        $query = "SELECT COUNT(*) as total FROM Etudiant WHERE classe_id = :classe_id";
+        $stmt = $this->bdd->prepare($query);
+        $r = $stmt->execute([
+            "classe_id" => $id
+        ]);
+
+        if ($r) {
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            return (int) $row['total'];
+        } else {
+            return 0;
+        }
+    }
 }

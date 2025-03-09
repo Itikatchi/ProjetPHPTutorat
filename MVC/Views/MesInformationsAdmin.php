@@ -32,15 +32,15 @@
 </div>
 
 
-<div class="rightPage">
-    <div class="logo">
-        <img src="../Image/FSI_logo.png" class="imgFSI" alt="Logo FSI">
-    </div>
+    <div class="rightPage">
+        <div class="logo">
+            <img src="../Image/FSI_logo.png" class="imgFSI" alt="Logo FSI">
+        </div>
 
-    <div class="boutonModifEtudiant">
-        <a href="?action=modifierInfos" class="boutonModifierInfos">Modifier vos informations</a>
-    </div>
+        <div class="boutonModifEtudiant">
+            <a href="?action=modifierInfos" class="boutonModifierInfos">Modifier vos informations</a>
+        </div>
 
-</div>
+    </div>
 </body>
 </html>
