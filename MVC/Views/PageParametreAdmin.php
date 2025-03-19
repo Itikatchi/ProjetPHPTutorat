@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paramétrage</title>
-    <link rel="stylesheet" href="../Style/style.css">
+    <link rel="stylesheet" href="../Style/Style.css">
 </head>
 <body>
 <div class="MainContainer">
@@ -15,7 +15,7 @@
             <a href="?action=ajoutTuteur" class="parametrage-button">Ajouter un Tuteur</a>
             <a href="?action=affectationTuteurClasse" class="parametrage-button">Affectation Tuteur/Classe</a>
             <a href="?action=parametrageGenerale" class="parametrage-button">Paramétrage Générale</a>
-            <a href="modifierTuteur.php" class="parametrage-button">Modification d'un Tuteur</a>
+            <a href="?action=modifInfosTuteur" class="parametrage-button">Modification d'un Tuteur</a>
             <a href="?action=ajoutEntreprise" class="parametrage-button">Ajouter une entreprise</a>
         </div>
     </div>

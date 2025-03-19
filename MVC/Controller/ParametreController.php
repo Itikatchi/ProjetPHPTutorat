@@ -546,6 +546,90 @@ class ParametreController{
         }
     }
 
+    public function pageChoixTuteur()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            $bdd = initialiseConnexionBDD();
+            $tuteurDAO = new TuteurDAO($bdd);
+            $tuteurs = $tuteurDAO->getAll();
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/ChoixModifTuteur.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function modifierTuteur()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            if (!isset($_GET['id']) || empty($_GET['id'])) {
+                throw new \Exception("Aucun tuteur sélectionné.");
+            }
+
+            $bdd = initialiseConnexionBDD();
+            $tuteurDAO = new TuteurDAO($bdd);
+            $tuteur = $tuteurDAO->find($_GET['id']);
+
+            if (!$tuteur) {
+                throw new \Exception("Tuteur introuvable.");
+            }
+
+            include "../Views/Nav/NavAdmin.php";
+            include "../Views/PageModifTuteur.php";
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+    public function enregistrerModificationTuteur()
+    {
+        try {
+            $this->ensureLoggedInAs('administrateur');
+
+            if (!isset($_POST['id'], $_POST['tut_pre'], $_POST['tut_nom'], $_POST['tut_mdp'], $_POST['tut_tel'], $_POST['tut_email'])) {
+                throw new \Exception("Tous les champs doivent être remplis.");
+            }
+
+            $id = intval($_POST['id']);
+            $prenom = htmlspecialchars($_POST['tut_pre']);
+            $nom = htmlspecialchars($_POST['tut_nom']);
+            $mdp = htmlspecialchars($_POST['tut_mdp']);
+            $tel = htmlspecialchars($_POST['tut_tel']);
+            $email = filter_var($_POST['tut_email']);
+
+            if (!$email) {
+                throw new \Exception("L'email n'est pas valide.");
+            }
+
+            $bdd = initialiseConnexionBDD();
+            $tuteurDAO = new TuteurDAO($bdd);
+
+            $tuteur = $tuteurDAO->find($id);
+            if (!$tuteur) {
+                throw new \Exception("Tuteur introuvable.");
+            }
+
+            $tuteur->setPrenomUti($prenom);
+            $tuteur->setNomUti($nom);
+            $tuteur->setMdpUti($mdp);
+            $tuteur->setTutTel($tel);
+            $tuteur->setEmailUti($email);
+
+            $tuteurDAO->update($tuteur);
+
+            header("Location: ?action=modifInfosTuteur&success=Modification enregistrée !");
+            exit;
+        } catch (\Exception $e) {
+            $this->redirectWithError($e->getMessage());
+        }
+    }
+
+
 }
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $controller = new ParametreController();
@@ -586,6 +670,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             case 'ajoutEntreprise':
                 $controller->ajoutEntrperise();
                 break;
+            case 'modifInfosTuteur':
+                $controller->pageChoixTuteur();
+                break;
+            case 'modifTuteur':
+                 $controller->modifierTuteur();
+                 break;
             case 'parametrageGenerale':
                 $controller->parametrageGenerale();
                 break;
@@ -631,4 +721,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['ac
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveAlerte') {
     $controller = new ParametreController();
     $controller->saveAlerte();
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action']) && $_GET['action'] === 'saveinfoTut') {
+    $controller = new ParametreController();
+    $controller->enregistrerModificationTuteur();
 }

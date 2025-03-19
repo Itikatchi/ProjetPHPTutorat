@@ -32,43 +32,8 @@ class AlerteDAO extends DAO
 
     public function update($obj): bool
     {
-
-
-        $result = false;
-        if ($obj instanceof Alerte) {
-            $tmp = $this->find($obj->getIdAl());
-            if ($tmp !== null) {
-                if ($obj->getIdAl() == $tmp->getIdAl()) {
-                    $query = "UPDATE Alerte 
-                          SET alerte_date_visite_entreprise = :alerte_date_visite_entreprise, 
-                              alerte_date_sujet_memoire = :alerte_date_sujet_memoire, 
-                              alerte_date_note_bilan2 = :alerte_date_note_bilan2 
-                          WHERE alerte_id = :alerte_id";
-                    $stmt = $this->bdd->prepare($query);
-
-                    $dateVisite = $obj->getDateVisiteEnt();
-                    $dateVisiteString = ($dateVisite instanceof DateTime) ? $dateVisite->format('Y-m-d') : $dateVisite;
-
-                    $dateMemoire = $obj->getDateSujMemoire();
-                    $dateMemoireString = ($dateMemoire instanceof DateTime) ? $dateMemoire->format('Y-m-d') : $dateMemoire;
-
-                    $dateBilan = $obj->getDatLimBil2();
-                    $dateBilanString = ($dateBilan instanceof DateTime) ? $dateBilan->format('Y-m-d') : $dateBilan;
-                    $r = $stmt->execute([
-                        "alerte_date_visite_entreprise" => $dateVisiteString,
-                        "alerte_date_sujet_memoire" => $dateMemoireString,
-                        "alerte_date_note_bilan2" => $dateBilanString,
-                        "alerte_id" => $obj->getIdAl()
-                    ]);
-                    if ($r !== false) {
-                        $result = true;
-                    }
-                }
-            }
-        }
-        return $result;
+        // TODO: Implement update() method.
     }
-
 
     public function find(int $id): object
     {
@@ -113,7 +78,7 @@ class AlerteDAO extends DAO
         $result = [];
         $al1 = $this->find(1);
         $dateOjd = new DateTime();
-        if ($al1->getDateVisiteEnt() < $dateOjd) {
+        if ($al1->getDatLimBil2() < $dateOjd) {
             $etuDAO = new EtduiantDAO($this->bdd);
             $mesEtu = $etuDAO->getAllEtuByTut($tut);
             foreach ($mesEtu as $et) {
@@ -131,7 +96,7 @@ class AlerteDAO extends DAO
         $result = [];
         $al1 = $this->find(1);
         $dateOjd = new DateTime();
-        if ($al1->getDateVisiteEnt() < $dateOjd) {
+        if ($al1->getDateSujMemoire() < $dateOjd) {
             $etuDAO = new EtduiantDAO($this->bdd);
             $mesEtu = $etuDAO->getAllEtuByTut($tut);
             foreach ($mesEtu as $et) {

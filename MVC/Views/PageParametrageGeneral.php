@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paramétrage</title>
-    <link rel="stylesheet" href="../Style/style.css">
+    <link rel="stylesheet" href="../Style/Style.css">
 </head>
 <body>
 <div class="MainContainer">
