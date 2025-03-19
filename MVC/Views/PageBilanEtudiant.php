@@ -78,17 +78,17 @@
 
                                 ?>">Ajouter des donnée au bilan</a></td>
                             <?php if (count($bilan1) > 1) : ?>
-                            <td><a href="./AdministrateurController.php?action=delBilan1&id=<?php
+                                <td><a href="./AdministrateurController.php?action=delBilan1&id=<?php
 
-                                if ($s = $bilan->getIdBil()) {
-                                    echo(htmlspecialchars($s));
-                                } else {
-                                    echo("L'etudiant n'a pas encore de sujet !");
-                                }
+                                    if ($s = $bilan->getIdBil()) {
+                                        echo(htmlspecialchars($s));
+                                    } else {
+                                        echo("L'etudiant n'a pas encore de sujet !");
+                                    }
 
-                                ?>">Supprimer le bilan !</a></td>
-                            <?php else:?>
-                            <td></td>
+                                    ?>">Supprimer le bilan !</a></td>
+                            <?php else: ?>
+                                <td></td>
                             <?php endif; ?>
                         <?php elseif ($_SESSION['role'] == "tuteur") : ?>
                             <td colspan="2">Nouveau Bilan</td>
@@ -101,17 +101,17 @@
                                 }
                                 ?>">Ajouter des donnée au bilan </a></td>
                             <?php if (count($bilan1) > 1) : ?>
-                            <td><a href="./TuteurController.php?action=delBilan1&id=<?php
+                                <td><a href="./TuteurController.php?action=delBilan1&id=<?php
 
-                                if ($s = $bilan->getIdBil()) {
-                                    echo(htmlspecialchars($s));
-                                } else {
-                                    echo("L'etudiant n'a pas encore de sujet !");
-                                }
+                                    if ($s = $bilan->getIdBil()) {
+                                        echo(htmlspecialchars($s));
+                                    } else {
+                                        echo("L'etudiant n'a pas encore de sujet !");
+                                    }
 
-                                ?>">Supprimer le bilan !</a></td>
-                            <?php else:?>
-                            <td></td>
+                                    ?>">Supprimer le bilan !</a></td>
+                            <?php else: ?>
+                                <td></td>
                             <?php endif; ?>
                         <?php else : ?>
                             <td colspan="4">Votre Bilan est Vide</td>
@@ -219,129 +219,129 @@
             <!-- PARTIE TBODY -->
             <tbody>
             <?php foreach ($bilan2 as $bilan) : ?>
-            <?php if ($bilan->getDatBil2() == null) : ?>
-                <tr>
-                    <?php if ($_SESSION['role'] == "administrateur") : ?>
-                        <td colspan="2">Nouveau Bilan</td>
-                        <td><a href="./AdministrateurController.php?action=modifierBilan2&id=<?php
+                <?php if ($bilan->getDatBil2() == null) : ?>
+                    <tr>
+                        <?php if ($_SESSION['role'] == "administrateur") : ?>
+                            <td colspan="2">Nouveau Bilan</td>
+                            <td><a href="./AdministrateurController.php?action=modifierBilan2&id=<?php
 
-                            if ($s = $bilan->getIdBil()) {
-                                echo(htmlspecialchars($s));
-                            } else {
-                                echo("L'etudiant n'a pas encore de sujet !");
-                            }
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
 
-                            ?>">Ajouter des donnée au bilan</a></td>
-                        <?php if (count($bilan2) > 1) : ?>
-                        <td><a href="./AdministrateurController.php?action=delBilan2&id=<?php
+                                ?>">Ajouter des donnée au bilan</a></td>
+                            <?php if (count($bilan2) > 1) : ?>
+                                <td><a href="./AdministrateurController.php?action=delBilan2&id=<?php
 
-                            if ($s = $bilan->getIdBil()) {
-                                echo(htmlspecialchars($s));
-                            } else {
-                                echo("L'etudiant n'a pas encore de sujet !");
-                            }
+                                    if ($s = $bilan->getIdBil()) {
+                                        echo(htmlspecialchars($s));
+                                    } else {
+                                        echo("L'etudiant n'a pas encore de sujet !");
+                                    }
 
-                            ?>">Supprimer le bilan !</a></td>
-                        <?php else:?>
-                            <td></td>
+                                    ?>">Supprimer le bilan !</a></td>
+                            <?php else: ?>
+                                <td></td>
+                            <?php endif; ?>
+                        <?php elseif ($_SESSION['role'] == "tuteur") : ?>
+                            <td colspan="2">Nouveau Bilan</td>
+                            <td><a href="./TuteurController.php?action=modifierBilan2&id=<?php
+
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
+                                ?>">Ajouter des donnée au bilan </a></td>
+                            <?php if (count($bilan2) > 1) : ?>
+                                <td><a href="./TuteurController.php?action=delBilan2&id=<?php
+
+                                    if ($s = $bilan->getIdBil()) {
+                                        echo(htmlspecialchars($s));
+                                    } else {
+                                        echo("L'etudiant n'a pas encore de sujet !");
+                                    }
+
+                                    ?>">Supprimer le bilan !</a></td>
+                            <?php else: ?>
+                                <td></td>
+                            <?php endif; ?>
+                        <?php else : ?>
+                            <td colspan="4">Votre Bilan est Vide</td>
                         <?php endif; ?>
-                    <?php elseif ($_SESSION['role'] == "tuteur") : ?>
-                        <td colspan="2">Nouveau Bilan</td>
-                        <td><a href="./TuteurController.php?action=modifierBilan2&id=<?php
+                    </tr>
+                <?php else : ?>
+                    <tr>
+                        <td><?= htmlspecialchars($etudiants->getPrenomUti()) ?> <?= htmlspecialchars($etudiants->getNomUti()) ?></td>
+                        <td><?php
 
-                            if ($s = $bilan->getIdBil()) {
-                                echo(htmlspecialchars($s));
+                            if ($bilan->getDatBil2() != null) {
+                                echo($bilan->getDatBil2()->format('Y'));
                             } else {
-                                echo("L'etudiant n'a pas encore de sujet !");
-                            }
-                            ?>">Ajouter des donnée au bilan </a></td>
-                        <?php if (count($bilan2) > 1) : ?>
-                        <td><a href="./TuteurController.php?action=delBilan2&id=<?php
-
-                            if ($s = $bilan->getIdBil()) {
-                                echo(htmlspecialchars($s));
-                            } else {
-                                echo("L'etudiant n'a pas encore de sujet !");
+                                echo("L'etudiant n'a pas de premier bilan.");
                             }
 
-                            ?>">Supprimer le bilan !</a></td>
-                        <?php else:?>
-                            <td></td>
+                            ?>
+                        </td>
+                        <?php if ($_SESSION['role'] == "administrateur") : ?>
+                            <td><a href="./AdministrateurController.php?action=modifierBilan2&id=<?php
+
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
+
+                                ?>">Modifier</a></td>
+                        <?php elseif ($_SESSION['role'] == "tuteur") : ?>
+                            <td><a href="./TuteurController.php?action=modifierBilan2&id=<?php
+
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
+                                ?>">Modifier</a></td>
+                        <?php else: ?>
                         <?php endif; ?>
-                    <?php else : ?>
-                        <td colspan="4">Votre Bilan est Vide</td>
-                    <?php endif; ?>
-                </tr>
-            <?php else : ?>
-                <tr>
-                <td><?= htmlspecialchars($etudiants->getPrenomUti()) ?> <?= htmlspecialchars($etudiants->getNomUti()) ?></td>
-                <td><?php
 
-                    if ($bilan->getDatBil2() != null) {
-                        echo($bilan->getDatBil2()->format('Y'));
-                    } else {
-                        echo("L'etudiant n'a pas de premier bilan.");
-                    }
+                        <?php if ($_SESSION['role'] == "administrateur") : ?>
+                            <td><a href="./AdministrateurController.php?action=detailBilan2&id=<?php
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
+                                ?>">Details</a></td>
+                        <?php elseif ($_SESSION['role'] == "etudiant") : ?>
+                            <td><a href="./EtudiantController.php?action=detailBilan2&id=<?php
 
-                    ?>
-                </td>
-                <?php if ($_SESSION['role'] == "administrateur") : ?>
-                    <td><a href="./AdministrateurController.php?action=modifierBilan2&id=<?php
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
 
-                        if ($s = $bilan->getIdBil()) {
-                            echo(htmlspecialchars($s));
-                        } else {
-                            echo("L'etudiant n'a pas encore de sujet !");
-                        }
+                                ?>">Details</a></td>
+                        <?php elseif ($_SESSION['role'] == "tuteur") : ?>
+                            <td><a href="./TuteurController.php?action=detailBilan2&id=<?php
 
-                        ?>">Modifier</a></td>
-                <?php elseif ($_SESSION['role'] == "tuteur") : ?>
-                    <td><a href="./TuteurController.php?action=modifierBilan2&id=<?php
+                                if ($s = $bilan->getIdBil()) {
+                                    echo(htmlspecialchars($s));
+                                } else {
+                                    echo("L'etudiant n'a pas encore de sujet !");
+                                }
 
-                        if ($s = $bilan->getIdBil()) {
-                            echo(htmlspecialchars($s));
-                        } else {
-                            echo("L'etudiant n'a pas encore de sujet !");
-                        }
-                        ?>">Modifier</a></td>
-                <?php else: ?>
+                                ?>">Details</a></td>
+                        <?php endif; ?>
+                    </tr>
                 <?php endif; ?>
-
-                <?php if ($_SESSION['role'] == "administrateur") : ?>
-                    <td><a href="./AdministrateurController.php?action=detailBilan2&id=<?php
-                        if ($s = $bilan->getIdBil()) {
-                            echo(htmlspecialchars($s));
-                        } else {
-                            echo("L'etudiant n'a pas encore de sujet !");
-                        }
-                        ?>">Details</a></td>
-                <?php elseif ($_SESSION['role'] == "etudiant") : ?>
-                    <td><a href="./EtudiantController.php?action=detailBilan2&id=<?php
-
-                        if ($s = $bilan->getIdBil()) {
-                            echo(htmlspecialchars($s));
-                        } else {
-                            echo("L'etudiant n'a pas encore de sujet !");
-                        }
-
-                        ?>">Details</a></td>
-                <?php elseif ($_SESSION['role'] == "tuteur") : ?>
-                    <td><a href="./TuteurController.php?action=detailBilan2&id=<?php
-
-                        if ($s = $bilan->getIdBil()) {
-                            echo(htmlspecialchars($s));
-                        } else {
-                            echo("L'etudiant n'a pas encore de sujet !");
-                        }
-
-                        ?>">Details</a></td>
-                <?php endif; ?>
-                </tr>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

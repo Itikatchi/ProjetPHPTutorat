@@ -17,7 +17,7 @@ class AdministrateurDAO extends DAO
     {
         $result = false;
         if ($obj instanceof Administrateur) {
-            $query = "INSERT INTO administrateur(adm_pre,adm_nom,adm_email,adm_mdp) VALUES(:adm_pre,:adm_nom,:adm_email,:adm_mdp)";
+            $query = "INSERT INTO Administrateur(adm_pre,adm_nom,adm_email,adm_mdp) VALUES(:adm_pre,:adm_nom,:adm_email,:adm_mdp)";
             $stmt = $this->bdd->prepare($query);
             $r = $stmt->execute([
                 "adm_pre"=> $obj->getPrenomUti(),
@@ -39,7 +39,7 @@ class AdministrateurDAO extends DAO
             $tmp = $this->find($obj->getIdUti());
             if ($tmp !== null) {
                 if ($obj->getIdUti() == $tmp->getIdUti()) {
-                    $query = "DELETE FROM administrateur WHERE adm_id = :adm_id";
+                    $query = "DELETE FROM Administrateur WHERE adm_id = :adm_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "adm_id" => $obj->getIdUti()
@@ -60,7 +60,7 @@ class AdministrateurDAO extends DAO
             $tmp = $this->find($obj->getIdUti());
             if ($tmp !== null) {
                 if ($obj->getIdUti() == $tmp->getIdUti()) {
-                    $query = "UPDATE administrateur SET adm_pre = :adm_pre,adm_nom = :adm_nom,adm_email = :adm_email,adm_mdp = :adm_mdp WHERE adm_id = :adm_id";
+                    $query = "UPDATE Administrateur SET adm_pre = :adm_pre,adm_nom = :adm_nom,adm_email = :adm_email,adm_mdp = :adm_mdp WHERE adm_id = :adm_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "adm_pre"=> $obj->getPrenomUti(),
@@ -81,7 +81,7 @@ class AdministrateurDAO extends DAO
     public function find(int $id): object
     {
         $result = null;
-        $query = "SELECT * FROM administrateur WHERE adm_id = :adm_id";
+        $query = "SELECT volume FROM Administrateur WHERE adm_id = :adm_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "adm_id" => $id
@@ -97,7 +97,7 @@ class AdministrateurDAO extends DAO
 
     public function getAll(): array
     {
-        $query = "SELECT * FROM administrateur";
+        $query = "SELECT * FROM Administrateur";
         $stmt = $this->bdd->query($query);
         if ($stmt) {
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -113,7 +113,7 @@ class AdministrateurDAO extends DAO
     public function authentification($email, $mdp): ?Administrateur
     {
         $result = null;
-        $query = "SELECT * FROM administrateur WHERE adm_email = :email AND adm_mdp = :mdp;";
+        $query = "SELECT * FROM Administrateur WHERE adm_email = :email AND adm_mdp = :mdp;";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             'email' => $email,

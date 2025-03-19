@@ -16,7 +16,7 @@ class TuteurDAO extends DAO {
     {
         $result = false;
         if ($obj instanceof Tuteur) {
-            $query = "INSERT INTO tuteur(tut_pre,tut_nom,tut_mdp,tut_tel,tut_email,tut_nb_etu_actu) VALUES(:tut_pre, :tut_nom, :tut_mdp, :tut_tel, :tut_email, :tut_nb_etu_actu)";
+            $query = "INSERT INTO Tuteur(tut_pre,tut_nom,tut_mdp,tut_tel,tut_email,tut_nb_etu_actu) VALUES(:tut_pre, :tut_nom, :tut_mdp, :tut_tel, :tut_email, :tut_nb_etu_actu)";
             $stmt = $this->bdd->prepare($query);
             $r = $stmt->execute([
                 "tut_pre" => $obj->getPrenomUti(),
@@ -39,7 +39,7 @@ class TuteurDAO extends DAO {
             $tmp = $this->find($obj->getIdUti());
             if ($tmp !== null) {
                 if ($obj->getIdUti() == $tmp->getIdUti()) {
-                    $query = "DELETE FROM tuteur WHERE tut_id = :tut_id";
+                    $query = "DELETE FROM Tuteur WHERE tut_id = :tut_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "tut_id" => $obj->getIdUti()
@@ -60,7 +60,7 @@ class TuteurDAO extends DAO {
             $tmp = $this->find($obj->getIdUti());
             if ($tmp !== null) {
                 if ($obj->getIdUti() == $tmp->getIdUti()) {
-                    $query = "UPDATE tuteur SET tut_pre = :tut_pre, tut_nom = :tut_nom,tut_mdp = :tut_mdp, tut_tel = :tut_tel, tut_email = :tut_email, tut_nb_etu_actu = :tut_nb_etu_actu WHERE tut_id = :tut_id";
+                    $query = "UPDATE Tuteur SET tut_pre = :tut_pre, tut_nom = :tut_nom,tut_mdp = :tut_mdp, tut_tel = :tut_tel, tut_email = :tut_email, tut_nb_etu_actu = :tut_nb_etu_actu WHERE tut_id = :tut_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "tut_pre" => $obj->getPrenomUti(),
@@ -83,7 +83,7 @@ class TuteurDAO extends DAO {
     public function find(int $id): object
     {
         $result = null;
-        $query = "SELECT * FROM tuteur WHERE tut_id = :tut_id";
+        $query = "SELECT * FROM Tuteur WHERE tut_id = :tut_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "tut_id" => $id
@@ -100,7 +100,7 @@ class TuteurDAO extends DAO {
 
     public function getAll(): array
     {
-        $query = "SELECT * FROM tuteur";
+        $query = "SELECT * FROM Tuteur";
         $stmt = $this->bdd->query($query);
         if ($stmt) {
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -116,7 +116,7 @@ class TuteurDAO extends DAO {
     public function authentification($email, $mdp): ?Tuteur
     {
         $result = null;
-        $query = "SELECT * FROM tuteur WHERE tut_email = :email AND tut_mdp = :mdp;";
+        $query = "SELECT * FROM Tuteur WHERE tut_email = :email AND tut_mdp = :mdp;";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             'email' => $email,

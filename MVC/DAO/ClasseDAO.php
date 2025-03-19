@@ -17,7 +17,7 @@ class ClasseDAO extends DAO
     {
         $result = false;
         if ($obj instanceof Classe) {
-            $query = "INSERT INTO classe(classe_nom) VALUES(:classe_nom)";
+            $query = "INSERT INTO Classe(classe_nom) VALUES(:classe_nom)";
             $stmt = $this->bdd->prepare($query);
             $r = $stmt->execute([
                 "classe_nom" => $obj->getNomCla()
@@ -37,7 +37,7 @@ class ClasseDAO extends DAO
             $tmp = $this->find($obj->getIdCla());
             if ($tmp !== null) {
                 if ($obj->getIdCla() == $tmp->getIdCla()) {
-                    $query = "DELETE FROM classe WHERE classe_id = :classe_id";
+                    $query = "DELETE FROM Classe WHERE classe_id = :classe_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "classe_id" => $obj->getIdCla()
@@ -59,7 +59,7 @@ class ClasseDAO extends DAO
             $tmp = $this->find($obj->getIdCla());
             if ($tmp !== null) {
                 if ($obj->getIdCla() == $tmp->getIdCla()) {
-                    $query = "UPDATE classe SET classe_nom = :classe_nom WHERE classe_id = :classe_id";
+                    $query = "UPDATE Classe SET classe_nom = :classe_nom WHERE classe_id = :classe_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "classe_nom" => $obj->getNomCla(),
@@ -78,7 +78,7 @@ class ClasseDAO extends DAO
     public function find(int $id): object
     {
         $result = null;
-        $query = "SELECT * FROM classe WHERE classe_id = :classe_id";
+        $query = "SELECT * FROM Classe WHERE classe_id = :classe_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "classe_id" => $id
@@ -95,7 +95,7 @@ class ClasseDAO extends DAO
 
     public function getAll(): array
     {
-        $query = "SELECT * FROM classe";
+        $query = "SELECT * FROM Classe";
         $stmt = $this->bdd->query($query);
         if ($stmt) {
             $stmt->setFetchMode(PDO::FETCH_ASSOC);

@@ -39,7 +39,7 @@ class AlerteDAO extends DAO
             $tmp = $this->find($obj->getIdAl());
             if ($tmp !== null) {
                 if ($obj->getIdAl() == $tmp->getIdAl()) {
-                    $query = "UPDATE alerte 
+                    $query = "UPDATE Alerte 
                           SET alerte_date_visite_entreprise = :alerte_date_visite_entreprise, 
                               alerte_date_sujet_memoire = :alerte_date_sujet_memoire, 
                               alerte_date_note_bilan2 = :alerte_date_note_bilan2 
@@ -73,7 +73,7 @@ class AlerteDAO extends DAO
     public function find(int $id): object
     {
         $result = null;
-        $query = "SELECT * FROM alerte WHERE alerte_id = :alerte_id";
+        $query = "SELECT * FROM Alerte WHERE alerte_id = :alerte_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "alerte_id" => $id
@@ -95,7 +95,7 @@ class AlerteDAO extends DAO
         $result = [];
         $al1 = $this->find(1);
         $dateOjd = new DateTime();
-        if ($al1->getDateVisiteEnt() < $dateOjd) {
+        if ($al1->getDatLimBil2() < $dateOjd) {
             $etuDAO = new EtduiantDAO($this->bdd);
             $mesEtu = $etuDAO->getAllEtuByTut($tut);
             foreach ($mesEtu as $et) {
@@ -113,7 +113,7 @@ class AlerteDAO extends DAO
         $result = [];
         $al1 = $this->find(1);
         $dateOjd = new DateTime();
-        if ($al1->getDateVisiteEnt() < $dateOjd) {
+        if ($al1->getDateSujMemoire() < $dateOjd) {
             $etuDAO = new EtduiantDAO($this->bdd);
             $mesEtu = $etuDAO->getAllEtuByTut($tut);
             foreach ($mesEtu as $et) {

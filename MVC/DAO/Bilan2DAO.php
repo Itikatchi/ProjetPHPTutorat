@@ -21,7 +21,7 @@ class Bilan2DAO extends DAO
     {
         $result = false;
         if ($obj instanceof Bilan2) {
-            $query = "INSERT INTO bilan2(bil2_sujet_memoire,bil2_date,bil2_note_dossier,bil2_note_oral,bil2_remarques,etu_id) VALUES(:bil2_sujet_memoire,:bil2_date,:bil2_note_dossier,:bil2_note_oral,:bil2_remarques,:etu_id)";
+            $query = "INSERT INTO Bilan2(bil2_sujet_memoire,bil2_date,bil2_note_dossier,bil2_note_oral,bil2_remarques,etu_id) VALUES(:bil2_sujet_memoire,:bil2_date,:bil2_note_dossier,:bil2_note_oral,:bil2_remarques,:etu_id)";
             $stmt = $this->bdd->prepare($query);
             $dateVisite = $obj->getDatBil2();
             $dateString = ($dateVisite instanceof DateTime) ? $dateVisite->format('Y-m-d H:i:s') : $dateVisite;
@@ -48,7 +48,7 @@ class Bilan2DAO extends DAO
             $tmp = $this->find($obj->getIdBil());
             if ($tmp !== null) {
                 if ($obj->getIdBil() == $tmp->getIdBil()) {
-                    $query = "DELETE FROM bilan2 WHERE bil2_id = :bil2_id";
+                    $query = "DELETE FROM Bilan2 WHERE bil2_id = :bil2_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "bil2_id" => $obj->getIdBil()
@@ -69,7 +69,7 @@ class Bilan2DAO extends DAO
             $tmp = $this->find($obj->getIdBil());
             if ($tmp !== null) {
                 if ($obj->getIdBil() == $tmp->getIdBil()) {
-                    $query = "UPDATE bilan2 SET bil2_sujet_memoire = :bil2_sujet_memoire,bil2_date =:bil2_date, bil2_note_dossier = :bil2_note_dossier,bil2_note_oral = :bil2_note_oral, bil2_remarques = :bil2_remarques, etu_id = :etu_id WHERE bil2_id = :bil2_id";
+                    $query = "UPDATE Bilan2 SET bil2_sujet_memoire = :bil2_sujet_memoire,bil2_date =:bil2_date, bil2_note_dossier = :bil2_note_dossier,bil2_note_oral = :bil2_note_oral, bil2_remarques = :bil2_remarques, etu_id = :etu_id WHERE bil2_id = :bil2_id";
                     $stmt = $this->bdd->prepare($query);
                     $dateVisite = $obj->getDatBil2();
                     $dateString = ($dateVisite instanceof DateTime) ? $dateVisite->format('Y-m-d H:i:s') : $dateVisite;
@@ -94,7 +94,7 @@ class Bilan2DAO extends DAO
     public function find(int $id): object
     {
         $result = null;
-        $query = "SELECT * FROM bilan2 WHERE bil2_id = :bil2_id";
+        $query = "SELECT * FROM Bilan2 WHERE bil2_id = :bil2_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "bil2_id" => $id
@@ -117,7 +117,7 @@ class Bilan2DAO extends DAO
 
     public function getAll(): array
     {
-        $query = "SELECT * FROM bilan2";
+        $query = "SELECT * FROM Bilan2";
         $stmt = $this->bdd->query($query);
         if ($stmt) {
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -143,7 +143,7 @@ class Bilan2DAO extends DAO
 
     public function getallBilan2ByEleve(Etudiant $etudiant) : ?array
     {
-        $query = "SELECT * FROM bilan2 WHERE etu_id = :etu_id";
+        $query = "SELECT * FROM Bilan2 WHERE etu_id = :etu_id";
         $stmt = $this->bdd->prepare($query);
         $stmt->execute([
             "etu_id" => $etudiant->getIdUti()

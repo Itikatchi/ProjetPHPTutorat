@@ -106,11 +106,10 @@ CREATE TABLE Administrateur (
 )ENGINE=InnoDB;
 
 CREATE TABLE Gerer (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     tut_id INT NOT NULL,
     classe_id INT NOT NULL,
     tuteur_nb_max_etu INT,
-    PRIMARY KEY (tut_id, classe_id),
-    FOREIGN KEY (tut_id) REFERENCES Tuteur(tut_id),
-    FOREIGN KEY (classe_id) REFERENCES Classe(classe_id)
-
+    FOREIGN KEY (tut_id) REFERENCES Tuteur(tut_id) ON DELETE CASCADE,
+    FOREIGN KEY (classe_id) REFERENCES Classe(classe_id) ON DELETE CASCADE
 )ENGINE=InnoDB;

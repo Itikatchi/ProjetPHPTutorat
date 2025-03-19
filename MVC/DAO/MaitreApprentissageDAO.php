@@ -18,7 +18,7 @@ class MaitreApprentissageDAO extends DAO
     {
         $result = false;
         if ($obj instanceof MaitreApprentissage) {
-            $query = "INSERT INTO maitreapprentissage(maitre_appr_pre,maitre_appr_nom,maitre_appr_tel,maitre_appr_email,ent_id) VALUES(:maitre_appr_pre, :maitre_appr_nom, :maitre_appr_tel, :maitre_appr_email, :ent_id)";
+            $query = "INSERT INTO MaitreApprentissage(maitre_appr_pre,maitre_appr_nom,maitre_appr_tel,maitre_appr_email,ent_id) VALUES(:maitre_appr_pre, :maitre_appr_nom, :maitre_appr_tel, :maitre_appr_email, :ent_id)";
             $stmt = $this->bdd->prepare($query);
             $r = $stmt->execute([
                 "maitre_appr_pre" => $obj->getPreMaiAppr(),
@@ -40,7 +40,7 @@ class MaitreApprentissageDAO extends DAO
             $tmp = $this->find($obj->getIdMaiAppr());
             if ($tmp !== null) {
                 if ($obj->getIdMaiAppr() == $tmp->getIdMaiAppr()) {
-                    $query = "DELETE FROM maitreapprentissage WHERE maitre_appr_id = :maitre_appr_id";
+                    $query = "DELETE FROM MaitreApprentissage WHERE maitre_appr_id = :maitre_appr_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "maitre_appr_id" => $obj->getIdMaiAppr()
@@ -61,7 +61,7 @@ class MaitreApprentissageDAO extends DAO
             $tmp = $this->find($obj->getIdMaiAppr());
             if ($tmp !== null) {
                 if ($obj->getIdMaiAppr() == $tmp->getIdMaiAppr()) {
-                    $query = "UPDATE maitreapprentissage SET maitre_appr_pre = :maitre_appr_pre, maitre_appr_nom = :maitre_appr_nom,maitre_appr_tel = :maitre_appr_tel, maitre_appr_email = :maitre_appr_email, ent_id = :ent_id WHERE maitre_appr_id = :maitre_appr_id";
+                    $query = "UPDATE MaitreApprentissage SET maitre_appr_pre = :maitre_appr_pre, maitre_appr_nom = :maitre_appr_nom,maitre_appr_tel = :maitre_appr_tel, maitre_appr_email = :maitre_appr_email, ent_id = :ent_id WHERE maitre_appr_id = :maitre_appr_id";
                     $stmt = $this->bdd->prepare($query);
                     $r = $stmt->execute([
                         "maitre_appr_pre" => $obj->getPreMaiAppr(),
@@ -83,7 +83,7 @@ class MaitreApprentissageDAO extends DAO
     public function find(int $id): object
     {
         $result = null;
-        $query = "SELECT * FROM maitreapprentissage WHERE maitre_appr_id = :maitre_appr_id";
+        $query = "SELECT * FROM MaitreApprentissage WHERE maitre_appr_id = :maitre_appr_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "maitre_appr_id" => $id
@@ -105,7 +105,7 @@ class MaitreApprentissageDAO extends DAO
 
     public function getAll(): array
     {
-        $query = "SELECT * FROM maitreapprentissage";
+        $query = "SELECT * FROM MaitreApprentissage";
         $stmt = $this->bdd->query($query);
         if ($stmt) {
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -126,7 +126,7 @@ class MaitreApprentissageDAO extends DAO
     public function getByEntrepriseId(int $entrepriseId): array
     {
         $result = [];
-        $query = "SELECT * FROM maitreapprentissage WHERE ent_id = :ent_id";
+        $query = "SELECT * FROM MaitreApprentissage WHERE ent_id = :ent_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "ent_id" => $entrepriseId

@@ -128,7 +128,7 @@ class EtduiantDAO extends DAO
             $tmp = $this->find($obj->getIdUti());
             if ($tmp !== null) {
                 if ($obj->getIdUti() == $tmp->getIdUti()) {
-                    $query = "UPDATE etudiant SET etu_nom = :etu_nom, etu_pre = :etu_pre,etu_mdp = :etu_mdp, etu_tel = :etu_tel,etu_email = :etu_email,etu_adr = :etu_adr,etu_cp = :etu_cp, etu_ville = :etu_ville, spe_id = :spe_id, classe_id = :classe_id, tut_id = :tut_id, ent_id = :ent_id, maitre_appr_id = :maitre_appr_id WHERE etu_id = :etu_id";
+                    $query = "UPDATE Etudiant SET etu_nom = :etu_nom, etu_pre = :etu_pre,etu_mdp = :etu_mdp, etu_tel = :etu_tel,etu_email = :etu_email,etu_adr = :etu_adr,etu_cp = :etu_cp, etu_ville = :etu_ville, spe_id = :spe_id, classe_id = :classe_id, tut_id = :tut_id, ent_id = :ent_id, maitre_appr_id = :maitre_appr_id WHERE etu_id = :etu_id";
                     $stmt = $this->bdd->prepare($query);
                     $montut = $obj->getMonTuteur() ? $obj->getMonTuteur()->getIdUti() : null;
                     $monent  = $obj->getMonEnt() ? $obj->getMonEnt()->getIdEnt() : null;
@@ -162,7 +162,7 @@ class EtduiantDAO extends DAO
         $bil1DAO = new Bilan1DAO($this->bdd);
         $bil2DAO = new Bilan2DAO($this->bdd);
         $result = null;
-        $query = "SELECT * FROM etudiant WHERE etu_id = :etu_id";
+        $query = "SELECT * FROM Etudiant WHERE etu_id = :etu_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "etu_id" => $id
@@ -234,7 +234,7 @@ class EtduiantDAO extends DAO
         $result = [];
         $bil1DAO = new Bilan1DAO($this->bdd);
         $bil2DAO = new Bilan2DAO($this->bdd);
-        $query = "SELECT * FROM etudiant";
+        $query = "SELECT * FROM Etudiant";
         $stmt = $this->bdd->query($query);
         if ($stmt) {
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
@@ -302,7 +302,7 @@ class EtduiantDAO extends DAO
     public function authentification($email, $mdp): ?object
     {
         $result = null;
-        $query = "SELECT * FROM etudiant WHERE etu_email = :email AND etu_mdp = :mdp;";
+        $query = "SELECT * FROM Etudiant WHERE etu_email = :email AND etu_mdp = :mdp;";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             'email' => $email,
@@ -367,7 +367,7 @@ class EtduiantDAO extends DAO
         $result = [];
         $bil1DAO = new Bilan1DAO($this->bdd);
         $bil2DAO = new Bilan2DAO($this->bdd);
-        $query = "SELECT * FROM etudiant WHERE tut_id = :tut_id";
+        $query = "SELECT * FROM Etudiant WHERE tut_id = :tut_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "tut_id" => $tut->getIdUti()
@@ -436,7 +436,7 @@ class EtduiantDAO extends DAO
         return $result;
     }
     public function countByClasse($id): int {
-        $query = "SELECT COUNT(*) as total FROM etudiant WHERE classe_id = :classe_id";
+        $query = "SELECT COUNT(*) as total FROM Etudiant WHERE classe_id = :classe_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "classe_id" => $id
@@ -450,7 +450,7 @@ class EtduiantDAO extends DAO
         }
     }
     public function countBySpe($id): int {
-        $query = "SELECT COUNT(*) as total FROM etudiant WHERE spe_id = :spe_id";
+        $query = "SELECT COUNT(*) as total FROM Etudiant WHERE spe_id = :spe_id";
         $stmt = $this->bdd->prepare($query);
         $r = $stmt->execute([
             "spe_id" => $id

@@ -244,5 +244,6 @@ $AlertDAO = new AlerteDAO($bdd);
 var_dump($AlertDAO);
 $tut = new TuteurDAO($bdd);
 $tuteur = $tut->find(3);
-$stud = $AlertDAO->getAllall2();
-var_dump($stud);*/
+$stud = $AlertDAO->getAllall3();
+var_dump($stud);
+*/
