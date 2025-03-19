@@ -30,11 +30,6 @@ use BO\Alerte;
 
 
 
-//use ProjetPHPTutorat\MVC\DAO\AdministrateurDAO;
-//use ProjetPHPTutorat\MVC\DAO\SpecialiteDAO;
-//use ProjetPHPTutorat\MVC\DAO\MaitreApprentissageDAO;
-//use ProjetPHPTutorat\MVC\DAO\TuteurDAO;
-
 
 require_once "../BDDManager.php";
 

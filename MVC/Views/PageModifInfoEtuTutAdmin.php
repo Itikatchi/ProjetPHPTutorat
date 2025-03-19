@@ -110,6 +110,7 @@
                 <option value="">--Choisir--</option>
                 <?php if($entrepriseSelectionnee = $etudiant->getMonEnt()): ?>
                 <?php foreach ($entreprises as $entreprise): ?>
+                        <?php $entrepriseSelectionnee = $etudiant->getMonEnt()->getIdEnt()?>
                     <option value="<?= htmlspecialchars($entreprise->getIdEnt()) ?>"
                         <?= $entreprise->getIdEnt() === $entrepriseSelectionnee ? 'selected' : '' ?>>
                         <?= htmlspecialchars($entreprise->getNomEnt()) ?>
